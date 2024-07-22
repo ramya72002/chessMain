@@ -5,15 +5,25 @@ import { FaHome, FaQuestionCircle, FaGraduationCap, FaChalkboardTeacher, FaCalen
 import axios from 'axios';
 import './side.scss';
 
+interface UserDetails {
+  name: string;
+  email: string;
+  image: string;
+  level:string;
+
+  // Add other properties if needed
+}
+
 const Sidebar = () => {
   const [profilePic, setProfilePic] = useState('/images/portal/b4.png'); // Default profile picture
   const [showAvatarOptions, setShowAvatarOptions] = useState(false); // Toggle state for avatar options visibility
-  const [userDetails, setUserDetails] = useState(null); // State to store user details
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null); // State to store user details
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (typeof window !== 'undefined') {
-        const storedUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails  = userDetailsString ? JSON.parse(userDetailsString) : null; 
         console.log(typeof window);
         if (storedUserDetails && storedUserDetails.image) {
           setProfilePic(storedUserDetails.image);
@@ -46,30 +56,32 @@ const Sidebar = () => {
     fetchUserDetails();
   }, []);
 
-  const changeProfilePic = async (newPic) => {
+  const changeProfilePic = async (newPic: string) => {
     try {
       // Update profile picture locally first
       setProfilePic(newPic);
       setShowAvatarOptions(false); // Close avatar options after selection
-
+  
       // Ensure code runs only on the client side
       if (typeof window !== 'undefined') {
         // Retrieve updated userDetails from localStorage
-        const storedUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        
         if (!storedUserDetails) {
           throw new Error('User details not found in localStorage');
         }
-
+  
         // Prepare data to send to the backend
         const data = {
           name: storedUserDetails.name,
           image: newPic,
         };
-
+  
         // Call API to update image in the database
         const response = await axios.post('https://backend-chess-tau.vercel.app/imageupdate', data);
         console.log('API Response:', response.data);
-
+  
         if (response.data.success) {
           // Update localStorage with updated user details
           const updatedUserDetails = { ...storedUserDetails, image: newPic };
@@ -84,7 +96,7 @@ const Sidebar = () => {
       console.error('Error updating profile picture:', error);
     }
   };
-
+  
   // List of available avatar images for girls and boys
   const girlAvatars = [
     '/images/portal/g1.png',
