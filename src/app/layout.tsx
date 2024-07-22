@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="layout-container">
           {(pathname === "/portalhome" || pathname === "/learnclass"||pathname=="/puzzles"||pathname=="/levels/level1"||pathname=="/levels/level2"
-            ||pathname=="/levels/level3"||pathname=="/levels/level4"
+            ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"
           ) && <Sidebar />}
           <div className="content-container">
             <PortalHeader />

@@ -6,8 +6,8 @@ import './Puzzles.scss';
 const Puzzles = () => {
   const router = useRouter();
 
-  const handleLevelClick = (level) => {
-    router.push('/ChessPuzzle');
+  const handleLevelClick = (level: number) => {
+    router.push('/chessPuzzle');
   };
 
   return (

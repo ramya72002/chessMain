@@ -5,14 +5,23 @@ import './ChessPuzzle.scss';
 
 const Chessboard = dynamic(() => import('chessboardjsx'), { ssr: false });
 
-const ChessPuzzle = () => {
-  const [isCorrect, setIsCorrect] = useState(null); // State to track correctness of move
-  const [selectedPuzzle, setSelectedPuzzle] = useState(null); // State to track selected puzzle
-  const [lastMovedPiece, setLastMovedPiece] = useState(null); // State to track the last moved piece and its target position
+// Define types for lastMovedPiece
+interface LastMovedPiece {
+  piece: string;
+  target: string;
+}
 
-  // Function to call API to update puzzle score
+
+const ChessPuzzle = () => {
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  // State to track correctness of move
+  const [selectedPuzzle, setSelectedPuzzle] =useState<string | null>(null);
+  const [lastMovedPiece, setLastMovedPiece] = useState<LastMovedPiece | null>(null);
+
   const updatePuzzleScore = async () => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const userDetailsString = localStorage.getItem('userDetails');
+    const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+
     if (!userDetails || !userDetails.email) {
       console.error('User details not found in localStorage');
       return;
@@ -43,7 +52,7 @@ const ChessPuzzle = () => {
   };
 
   // Function to handle move verification based on selected puzzle
-  const handleMove = (sourceSquare, targetSquare) => {
+  const handleMove = (sourceSquare: any, targetSquare: any) => {
     let isCorrectMove = false;
 
     // Replace with puzzle-specific logic based on selectedPuzzle
@@ -89,7 +98,7 @@ const ChessPuzzle = () => {
   }, [lastMovedPiece]);
 
   // Function to check if the King move is valid
-  const isKingMoveValid = (sourceSquare, targetSquare) => {
+  const isKingMoveValid = (sourceSquare: any, targetSquare: string) => {
     // Define valid target positions for the King puzzle
     const validPositions = ['e6', 'e4', 'd5', 'f5', 'd4', 'd6', 'f4', 'f6'];
 
@@ -98,7 +107,7 @@ const ChessPuzzle = () => {
   };
 
   // Function to check if the Queen move is valid
-  const isQueenMoveValid = (sourceSquare, targetSquare) => {
+  const isQueenMoveValid = (sourceSquare: any, targetSquare: string) => {
     // Define valid target positions for the Queen puzzle
     const validPositions = [
       'a1', 'b1', 'c1', 'e1', 'f1', 'g1', 'h1', // Horizontal moves
@@ -109,7 +118,7 @@ const ChessPuzzle = () => {
   };
 
   // Function to check if the Rook move is valid
-  const isRookMoveValid = (sourceSquare, targetSquare) => {
+  const isRookMoveValid = (sourceSquare: any, targetSquare: string) => {
     const validPositions = [
       'a4', 'b4', 'c4', 'e4', 'f4', 'g4', 'h4', // Horizontal moves
       'd1', 'd2', 'd3', 'd5', 'd6', 'd7', 'd8'  // Vertical moves
@@ -118,7 +127,7 @@ const ChessPuzzle = () => {
   };
 
   // Function to check if the Bishop move is valid
-  const isBishopMoveValid = (sourceSquare, targetSquare) => {
+  const isBishopMoveValid = (sourceSquare: any, targetSquare: string) => {
     const validPositions = [
       'a1', 'b2', 'c3', 'e5', 'f6', 'g7', 'h8', // Diagonal moves towards bottom-right (northeast)
       'a7', 'b6', 'c5', 'e3', 'f2', 'g1'        // Diagonal moves towards top-left (southwest)
@@ -127,7 +136,7 @@ const ChessPuzzle = () => {
   };
 
   // Function to check if the Knight move is valid
-  const isKnightMoveValid = (sourceSquare, targetSquare) => {
+  const isKnightMoveValid = (sourceSquare: any, targetSquare: string) => {
     const validPositions = [
       'c2', 'e2', 'b3', 'f3', 'b5', 'f5', 'c6', 'e6' // L-shaped moves
     ];
@@ -135,14 +144,14 @@ const ChessPuzzle = () => {
   };
 
   // Function to check if the Pawn move is valid
-  const isPawnMoveValid = (sourceSquare, targetSquare) => {
+  const isPawnMoveValid = (sourceSquare: any, targetSquare: string) => {
     // Example valid moves for a pawn puzzle
     const validPositions = ['d3', 'd4'];
     return validPositions.includes(targetSquare);
   };
 
   // Function to handle puzzle selection
-  const selectPuzzle = (puzzle) => {
+  const selectPuzzle = (puzzle: React.SetStateAction<string | null>) => {
     setSelectedPuzzle(puzzle);
     setIsCorrect(null); // Reset correctness state when changing puzzles
   };
@@ -155,13 +164,27 @@ const ChessPuzzle = () => {
 
   // Function to handle moving to the next puzzle
   const nextPuzzle = () => {
-    // Logic to go to the next puzzle
     const puzzleOrder = ['king', 'queen', 'rook', 'bishop', 'knight', 'pawn'];
-    const currentIndex = puzzleOrder.indexOf(selectedPuzzle);
-    const nextIndex = (currentIndex + 1) % puzzleOrder.length;
-    setSelectedPuzzle(puzzleOrder[nextIndex]);
+  
+    setSelectedPuzzle(prevPuzzle => {
+      if (prevPuzzle === null) {
+        // Default to the first puzzle if the previous puzzle is null
+        return puzzleOrder[0];
+      }
+  
+      const currentIndex = puzzleOrder.indexOf(prevPuzzle);
+      if (currentIndex === -1) {
+        // If the previous puzzle is not found in the order, default to the first puzzle
+        return puzzleOrder[0];
+      }
+  
+      const nextIndex = (currentIndex + 1) % puzzleOrder.length;
+      return puzzleOrder[nextIndex];
+    });
+  
     setIsCorrect(null);
   };
+  
 
   // Render different puzzles based on selectedPuzzle
   let puzzleComponent;
