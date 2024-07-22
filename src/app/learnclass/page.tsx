@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Learnclass.scss';
+import { Session } from '../types/types';
 
 const Learnclass = () => {
-  const [sessions, setSessions] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading indicator
-  const [messages, setMessages] = useState({}); // State for response messages
+  const [sessions, setSessions] = useState<Session[]>([]);  const [loading, setLoading] = useState(true); // State for loading indicator
+// Define the type inline
+const [messages, setMessages] = useState<{ [key: string]: string }>({});
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Learnclass = () => {
     fetchSessions();
   }, []);
 
-  const handleEnrollClick = async (session) => {
+  const handleEnrollClick = async (session:Session) => {
     if (!userEmail) {
       setMessages(prevMessages => ({
         ...prevMessages,
