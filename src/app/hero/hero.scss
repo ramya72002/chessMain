@@ -1,0 +1,193 @@
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.image-wrapper {
+    position: relative;
+    width: 30%;
+    height: 100%;
+}
+
+.image-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+}
+
+.slide-from-bottom {
+    animation-name: slideFromBottom;
+}
+
+.slide-from-top {
+    animation-name: slideFromTop;
+}
+
+@keyframes slideFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #CE1010CC;
+    opacity: 0;
+    animation: slideOverlay 2s forwards ease-in-out;
+    animation-delay: 2s;
+}
+
+@keyframes slideOverlay {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(50%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+  
+.right-side {
+    position: absolute;
+    right: 0;
+    width: 58%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 65px;
+    opacity: 0;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    animation-name: fadeIn;
+    animation-delay: 3s;
+    transform: translateX(-120px);
+}
+
+.image-wrapper1 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    opacity: 0;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    transition: transform 0.4s;
+    overflow: hidden;
+}
+
+.image-wrapper1 img {
+    width: 100%;
+}
+
+.overlay1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    background: linear-gradient(rgba(0.5, 0, 0, 0), #295481);
+    opacity: 0;
+    transition: 1s;
+}
+
+.image-wrapper1.hover .overlay1 {
+    opacity: 1;
+}
+
+.text-overlay1 {
+    position: absolute;
+    bottom: 30px;
+    padding-left: 10px;
+    color: #fff;
+    font-family: "NeueHaasDisplay-Bold", Sans-serif;
+    font-size: 25px;
+    text-align: left;
+    font-weight: 800;
+}
+
+.arrow {
+    margin-left: 5px;
+    font-size: 30px;
+}
+
+.zoom-in {
+    opacity: 1;
+    animation-name: zoomIn;
+    animation-delay: 3s;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+.elementor-heading-title {
+    padding-left: 25px;
+    text-align: left;
+    color: #fff;
+    font-family: "NeueHaasDisplay-Bold", Sans-serif;
+    font-size: 6vw;
+    line-height: 95px;
+    letter-spacing: -1.3px;
+    font-weight: 900;
+    padding-top: 60px;
+}

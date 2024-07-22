@@ -1,0 +1,112 @@
+.rounded-10 {
+    border-radius: 10px;
+  }
+  
+  .email-box {
+    transform: translateX(0); /* Initially position email box */
+    transition: transform 0.3s ease-in-out; /* Smooth transition effect */
+  }
+  
+  .signin-box {
+    transform: translateX(0); /* Initially position sign-in box */
+    transition: transform 0.3s ease-in-out; /* Smooth transition effect */
+  }
+  
+  // .slide-from-left {
+  //   transform: translateX(-100%); /* Slide email box from left */
+  // }
+  
+  // .slide-from-right {
+  //   transform: translateX(100%); /* Slide sign-in box from right */
+  // }
+  .signup-field {
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slide-in 0.5s forwards;
+  }
+  
+  .signup-label {
+    display: block;
+    color: #333;
+    margin-bottom: 0.1rem;
+    font-weight: 600;
+  }
+  
+  .signup-input, .signup-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  
+  .signup-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4e89e3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    animation: slide-in 0.5s forwards;
+    animation-delay: 0.4s;
+  }
+  
+  .signup-field:nth-child(1) {
+    animation-name: slide-in-left;
+    animation-delay: 0.1s;
+  }
+  
+  .signup-field:nth-child(2) {
+    animation-name: slide-in-right;
+    animation-delay: 0.2s;
+  }
+  
+  .signup-field:nth-child(3) {
+    animation-name: slide-in-left;
+    animation-delay: 0.3s;
+  }
+  
+  @keyframes slide-in {
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .signup-button:hover {
+    background-color: #098cff;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  

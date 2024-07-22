@@ -1,0 +1,177 @@
+"use client";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { FaHome, FaQuestionCircle, FaGraduationCap, FaChalkboardTeacher, FaCalendarAlt, FaNewspaper } from 'react-icons/fa';
+import axios from 'axios';
+import './side.scss';
+
+const Sidebar = () => {
+  const [profilePic, setProfilePic] = useState('/images/portal/b4.png'); // Default profile picture
+  const [showAvatarOptions, setShowAvatarOptions] = useState(false); // Toggle state for avatar options visibility
+  const [userDetails, setUserDetails] = useState(null); // State to store user details
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (typeof window !== 'undefined') {
+        const storedUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+        console.log(typeof window);
+        if (storedUserDetails && storedUserDetails.image) {
+          setProfilePic(storedUserDetails.image);
+          setUserDetails(storedUserDetails);
+        }
+
+        // Prepare data to send to the backend
+     
+        const  email= storedUserDetails.email
+       
+
+        try {
+          if(email){
+           
+          const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
+          setUserDetails(response.data.data); // Assuming response.data.data contains user details
+
+          if (response.data.data) {
+            setUserDetails(response.data.data);
+            console.log('Profile picture updated successfully');
+          } else {
+            console.error('Failed to update profile picture:', response.data.message);
+          }}
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+        }
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  const changeProfilePic = async (newPic) => {
+    try {
+      // Update profile picture locally first
+      setProfilePic(newPic);
+      setShowAvatarOptions(false); // Close avatar options after selection
+
+      // Ensure code runs only on the client side
+      if (typeof window !== 'undefined') {
+        // Retrieve updated userDetails from localStorage
+        const storedUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+        if (!storedUserDetails) {
+          throw new Error('User details not found in localStorage');
+        }
+
+        // Prepare data to send to the backend
+        const data = {
+          name: storedUserDetails.name,
+          image: newPic,
+        };
+
+        // Call API to update image in the database
+        const response = await axios.post('https://backend-chess-tau.vercel.app/imageupdate', data);
+        console.log('API Response:', response.data);
+
+        if (response.data.success) {
+          // Update localStorage with updated user details
+          const updatedUserDetails = { ...storedUserDetails, image: newPic };
+          localStorage.setItem('userDetails', JSON.stringify(updatedUserDetails));
+          setUserDetails(updatedUserDetails);
+          console.log('Profile picture updated successfully');
+        } else {
+          console.error('Failed to update profile picture:', response.data.message);
+        }
+      }
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+    }
+  };
+
+  // List of available avatar images for girls and boys
+  const girlAvatars = [
+    '/images/portal/g1.png',
+    '/images/portal/g2.png',
+    '/images/portal/g3.png',
+    '/images/portal/g4.png',
+    '/images/portal/g5.png',
+    '/images/portal/g6.png',
+    '/images/portal/g7.png',
+    '/images/portal/g8.png',
+    '/images/portal/g9.png',
+    // Add more girl avatar images as needed
+  ];
+
+  const boyAvatars = [
+    '/images/portal/b1.png',
+    '/images/portal/b2.png',
+    '/images/portal/b3.png',
+    '/images/portal/b4.png',
+    '/images/portal/b5.png',
+    '/images/portal/b6.png',
+    '/images/portal/b7.png',
+    '/images/portal/b8.png',
+    '/images/portal/b9.png',
+    // Add more boy avatar images as needed
+  ];
+
+  return (
+    <div className="sidebar">
+      <div className="profile">
+      <div className="avatarContainer" onClick={() => setShowAvatarOptions(!showAvatarOptions)}>
+  <Image src={profilePic} alt="Profile Picture" width={200} height={200} className="avatar" />
+  {showAvatarOptions && (
+    <div className="avatarSelection">
+      <button className="closeButton" onClick={() => setShowAvatarOptions(false)}>X</button>
+      <p>Select Profile Picture:</p>
+      <div className="avatarTabs">
+        <div className="avatarTab">
+          <h3>Girls</h3>
+          <div className="avatarList">
+            {girlAvatars.map((avatar, index) => (
+              <div key={index} className="avatarOption" onClick={() => changeProfilePic(avatar)}>
+                <Image src={avatar} alt={`Girl Avatar ${index}`} width={200} height={200} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="avatarTab">
+          <h3>Boys</h3>
+          <div className="avatarList">
+            {boyAvatars.map((avatar, index) => (
+              <div key={index} className="avatarOption" onClick={() => changeProfilePic(avatar)}>
+                <Image src={avatar} alt={`Boy Avatar ${index}`} width={60} height={60} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+        <div className="name">{userDetails ? userDetails.name : 'Student'}</div>
+        <div className="role">Student</div>
+        <button className="viewProfile">View Profile</button>
+      </div>
+      <nav className="nav">
+        <a href="/portalhome" className="navItem home">
+          <FaHome /> Dashboard
+        </a>
+        <a href="/tests" className="navItem tests">
+          <FaQuestionCircle /> Assignments
+        </a>
+        <a href="/learnclass" className="navItem classes">
+          <FaGraduationCap /> Learning Classes
+        </a>
+        <a href="/teachers" className="navItem teachers">
+          <FaChalkboardTeacher /> Teachers
+        </a>
+        <a href="/events" className="navItem events">
+          <FaCalendarAlt /> Tournaments
+        </a>
+        <a href="/news" className="navItem news">
+          <FaNewspaper /> News
+        </a>
+      </nav>
+    </div>
+  );
+};
+
+export default Sidebar;

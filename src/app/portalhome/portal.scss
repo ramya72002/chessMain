@@ -1,0 +1,98 @@
+/* portal.scss */
+
+.container {
+  padding: 20px;
+  font-family: 'Comic Neue', cursive;
+  
+}
+
+.statsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  height: 150px;
+}
+
+.statBox {
+  background-color: #ffcc80; /* Bright orange */
+  padding: 20px; /* Increased padding */
+  border-radius: 8px;
+  text-align: center;
+  flex: 1;
+  margin: 0 10px;
+  color: #0e0e0e;
+}
+.statBox p,h1 {
+  margin-bottom: 10px; /* Add margin between paragraph and heading */
+}
+
+.levelsContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 5px; /* Increased gap for better spacing */
+  position: relative; /* Added position relative for containing ropes */
+}
+
+.levelButton {
+  background-color: #4caf50; /* Default green */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 120px; /* Adjusted button size */
+  height: 120px; /* Adjusted button size */
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: transform 0.2s;
+  z-index: 2; /* Ensure buttons are above the ropes */
+}
+
+.levelButton:hover {
+  transform: scale(1.1); /* Add a slight scale effect on hover */
+}
+
+.levelButtonDisabled {
+  background-color: #757575; /* Gray color for disabled buttons */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 120px; /* Adjusted button size */
+  height: 120px; /* Adjusted button size */
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: transform 0.2s;
+  z-index: 2; /* Ensure buttons are above the ropes */
+  cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px; /* Adjust tooltip position */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #29b6f6; /* Bright blue */
+  color: #fff;
+  padding: 8px; /* Increased padding */
+  border-radius: 5px;
+  font-size: 14px; /* Larger font size */
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.levelLabel {
+  position: absolute;
+  bottom: -30px; /* Adjust label position */
+  width: 100%; /* Center the label horizontally */
+  text-align: center;
+  font-size: 12px; /* Larger font size */
+  font-weight: bold; /* Added font weight */
+  color: #0e0e0e; /* Dark text color */
+}
