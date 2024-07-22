@@ -40,7 +40,8 @@ const Level3Test = () => {
   };
 
   const handleProceedToLevel3 = async () => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const userDetailsString = localStorage.getItem('userDetails');
+    const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     const response = await fetch('https://backend-chess-tau.vercel.app/updatelevel', {
         method: 'POST',
         headers: {
@@ -54,8 +55,8 @@ const Level3Test = () => {
       const result = await response.json();
       
       if (result.success) {
-        const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-        userDetails.level = 'level3';
+        const userDetailsString = localStorage.getItem('userDetails');
+        const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;        userDetails.level = 'level3';
         localStorage.setItem('userDetails', JSON.stringify(userDetails));
         console.log("l1",localStorage)
         // Navigate to portalhome

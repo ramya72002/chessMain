@@ -9,10 +9,11 @@ import step6Image from './images/step6.gif';
 const Level3 = () => {
   const router = useRouter();
 
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState<{ level: string | null } | null>(null);
 
   useEffect(() => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const userDetailsString = localStorage.getItem('userDetails');
+const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     if(userDetails){
       setUserDetails(userDetails)
     }

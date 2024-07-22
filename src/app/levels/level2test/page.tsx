@@ -40,7 +40,8 @@ const Level2Test = () => {
   };
 
   const handleProceedToLevel2 = async () => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    const userDetailsString = localStorage.getItem('userDetails');
+const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     const response = await fetch('https://backend-chess-tau.vercel.app/updatelevel', {
         method: 'POST',
         headers: {
@@ -54,7 +55,8 @@ const Level2Test = () => {
       const result = await response.json();
       
       if (result.success) {
-        const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const userDetailsString = localStorage.getItem('userDetails');
+        const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;;
         userDetails.level = 'level2';
         localStorage.setItem('userDetails', JSON.stringify(userDetails));
         console.log("l1",localStorage)
