@@ -175,7 +175,7 @@ const Sidebar = () => {
         <a href="/teachers" className="navItem teachers">
           <FaChalkboardTeacher /> Teachers
         </a>
-        <a href="/events" className="navItem events">
+        <a href="/tornuments" className="navItem events">
           <FaCalendarAlt /> Tournaments
         </a>
         <a href="/news" className="navItem news">
