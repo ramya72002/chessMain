@@ -25,7 +25,7 @@ export default function RootLayout({
             ||pathname=="/levels/level4test"
           ) && <Sidebar />}
            <div className="content-container">
-            {pathname !== "/" && pathname !== "/signin" && <PortalHeader />}
+            {pathname !== "/" && pathname !== "/signin"&& pathname !== "/tornuments" && <PortalHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>

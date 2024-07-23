@@ -37,6 +37,12 @@ const Hero: React.FC = () => {
         if (index === 1) {
             router.push('/signup');
         }
+        if (index === 2) {
+            router.push('/tornuments');
+        }
+        if (index === 3) {
+            router.push('/admin');
+        }
     };
 
     return (

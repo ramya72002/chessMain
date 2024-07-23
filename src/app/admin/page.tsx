@@ -7,7 +7,6 @@ import './Admin.scss'; // Import the optimized SCSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-
 interface FormData {
   date: Date | null;
   hour: string;
@@ -18,7 +17,6 @@ interface FormData {
 }
 
 interface Session {
-  _id: string;
   date: string;
   time: string;
   coach_name: string;
@@ -42,12 +40,11 @@ const Admin: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [sessionAdded, setSessionAdded] = useState(false);
 
-
   useEffect(() => {
     const fetchSessions = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
+        const response = await axios.get('http://127.0.0.1:80/sessions');
         setSessions(response.data);
       } catch (error) {
         console.error('Error fetching sessions:', error);
@@ -55,10 +52,9 @@ const Admin: React.FC = () => {
         setLoading(false);
       }
     };
-  
+
     fetchSessions();
   }, [sessionAdded]);
-  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -75,57 +71,44 @@ const Admin: React.FC = () => {
     });
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setSubmitting(true);
-
-  try {
-    const errors = validateForm(formData);
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-
-    const formattedData = formatFormData(formData);
-
-    const response = await axios.post('https://backend-chess-tau.vercel.app/add-session', formattedData);
-    console.log('Session added successfully:', response.data);
-
-    // Reset form after successful submission
-    setFormData(initialFormData);
-    setSessionAdded(prev => !prev); // Toggle sessionAdded state to force re-render
-  } catch (error) {
-    console.error('Error adding session:', error);
-    // Handle error appropriately
-  } finally {
-    setSubmitting(false);
-  }
-};
-const handleDeleteSession = async (sessionId: string) => {
     try {
-      // Find the session to delete based on sessionId
-      const sessionToDelete = sessions.find(session => session._id === sessionId);
-      if (!sessionToDelete) return;
+      const errors = validateForm(formData);
+      if (Object.keys(errors).length > 0) {
+        setFormErrors(errors);
+        return;
+      }
 
-      // Extract date and time from sessionToDelete
-      const { date, time } = sessionToDelete;
+      const formattedData = formatFormData(formData);
 
-      // Prepare data to send to the API
+      const response = await axios.post('http://127.0.0.1:80/add-session', formattedData);
+      console.log('Session added successfully:', response.data);
+
+      setFormData(initialFormData);
+      setSessionAdded(prev => !prev); // Toggle sessionAdded state to force re-render
+    } catch (error) {
+      console.error('Error adding session:', error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDeleteSession = async (date: string, time: string) => {
+    try {
       const data = {
         date,
         time
       };
 
-      // Send DELETE request to the API
-      const response = await axios.delete('https://backend-chess-tau.vercel.app/del-session', { data });
+      const response = await axios.delete('http://127.0.0.1:80/del-session', { data });
       console.log('Session deleted successfully:', response.data);
 
-      // Update sessions after successful deletion
-      setSessions(prevSessions => prevSessions.filter(session => session._id !== sessionId));
+      setSessions(prevSessions => prevSessions.filter(session => session.date !== date || session.time !== time));
     } catch (error) {
       console.error('Error deleting session:', error);
-      // Handle error appropriately
     }
   };
 
@@ -261,30 +244,27 @@ const handleDeleteSession = async (sessionId: string) => {
               <p>Loading sessions...</p>
             ) : (
               sessions.map(session => (
-                <div key={session._id} className="session-box">
+                <div key={`${session.date}-${session.time}`} className="session-box">
                   <div className="session-details">
                     <p>Date: {session.date}</p>
                     <p>Time: {session.time}</p>
                     <p>Coach: {session.coach_name}</p>
                   </div>
                   <div className="session-link">
-                <a href={session.session_link} target="_blank" rel="noopener noreferrer">
-                  Join Session
-                </a></div>
-                {/* Delete button for each session */}
-                <button className="delete-button" onClick={() => handleDeleteSession(session._id)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                        </button>
-
-              
+                    <a href={session.session_link} target="_blank" rel="noopener noreferrer">
+                      Join Session
+                    </a>
+                  </div>
+                  <button className="delete-button" onClick={() => handleDeleteSession(session.date, session.time)}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </div>
               ))
             )}
           </div>
         </div>
       </div>
-      </div>
-   
+    </div>
   );
 };
 
