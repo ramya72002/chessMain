@@ -7,7 +7,7 @@ import './hero.scss';
 const Hero: React.FC = () => {
     const [visibleTextIndex, setVisibleTextIndex] = useState(-1);
     const [hoveredImageIndex, setHoveredImageIndex] = useState(-1);
-    const texts = ['customers', 'users', 'partners', 'employees'];
+    const texts = ['About Us', 'Student Login', 'Tornuments', 'Clubs'];
     const router = useRouter();
 
     useEffect(() => {
