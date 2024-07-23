@@ -48,13 +48,12 @@ const PortalHome = () => {
 
   return (
     <div className="container">
-      
-          <div style={{ color: "white",fontSize:"25px",fontWeight:"bold" }}>Quick Start</div>
-          <div className="statsContainer">
+      <div style={{ color: "white",fontSize:"25px",fontWeight:"bold" }}>Quick Start</div>
+      <div className="statsContainer">
         <div className="statBox">
           <div style={{ color: "blue",fontSize:"20px",fontWeight:"bold" }}>You collected:</div>
           <div style={{ color: "blue",fontSize:"20px" }}>{userDetails?.collected || 0}</div>
-          </div>
+        </div>
         <div className="statBox">
           <div style={{ color: "green",fontSize:"20px" ,fontWeight:"bold" }}>Puzzle Score</div>
           <div style={{ color: "green",fontSize:"20px" }}>{userDetails?.puzzle_score || 0}</div>
@@ -85,7 +84,7 @@ const PortalHome = () => {
               >
                 {parseInt(level) <= selectedLevel ? (
                   <>
-                    Level {level}
+                    <img src={`/images/chess_piece_${level}.png`} alt={`Level ${level} icon`} />
                     <div className="levelLabel">{getLevelLabel(level)}</div>
                   </>
                 ) : (
@@ -101,7 +100,7 @@ const PortalHome = () => {
       </div>
     </div>
   );
-};
+};  
 
 const getColor = (level: string) => {
   switch (level) {
