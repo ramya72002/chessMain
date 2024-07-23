@@ -8,20 +8,18 @@ import './portal.scss'; // Import the styles
 
 const PortalHome = () => {
   const router = useRouter();
-  const [userDetails, setUserDetails] = useState<any>(null); // State to store user details
-  const [loading, setLoading] = useState(true); // State to manage loading state
-  const [selectedLevel, setSelectedLevel] = useState<number>(1); // State to manage selected level
-  const [hoveredLevel, setHoveredLevel] = useState<string | null>(null); // State to manage hovered level
+  const [userDetails, setUserDetails] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedLevel, setSelectedLevel] = useState<number>(1);
+  const [hoveredLevel, setHoveredLevel] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch user details based on email from local storage
     const fetchUserDetails = async () => {
       try {
         const email = localStorage.getItem('email');
         if (email) {
           const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
-          setUserDetails(response.data.data); // Assuming response.data.data contains user details
-          console.log("uuuuuuuuuuuu",response)
+          setUserDetails(response.data.data);
           const level = response.data.data.level.replace('level', '');
           setSelectedLevel(parseInt(level, 10));
           localStorage.setItem('userDetails', JSON.stringify(response.data.data));
@@ -43,24 +41,24 @@ const PortalHome = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
     <div className="container">
-      <div style={{ color: "white",fontSize:"25px",fontWeight:"bold" }}>Quick Start</div>
+      <div className="header">Quick Start</div>
       <div className="statsContainer">
         <div className="statBox">
-          <div style={{ color: "blue",fontSize:"20px",fontWeight:"bold" }}>You collected:</div>
-          <div style={{ color: "blue",fontSize:"20px" }}>{userDetails?.collected || 0}</div>
+          <div className="statTitle">You collected:</div>
+          <div className="statValue">{userDetails?.collected || 0}</div>
         </div>
         <div className="statBox">
-          <div style={{ color: "green",fontSize:"20px" ,fontWeight:"bold" }}>Puzzle Score</div>
-          <div style={{ color: "green",fontSize:"20px" }}>{userDetails?.puzzle_score || 0}</div>
+          <div className="statTitle">Puzzle Score</div>
+          <div className="statValue">{userDetails?.puzzle_score || 0}</div>
         </div>
         <div className="statBox">
-          <div style={{ color: "red" ,fontSize:"20px",fontWeight:"bold" }}>Time spent reading:</div>
-          <div style={{ color: "red",fontSize:"20px" }}>{userDetails?.timeSpent || '0 h 0 m'}</div>
+          <div className="statTitle">Time spent reading:</div>
+          <div className="statValue">{userDetails?.timeSpent || '0 h 0 m'}</div>
         </div>
       </div>
 
@@ -68,11 +66,11 @@ const PortalHome = () => {
         {['1', '2', '3', '4'].map((level, index) => (
           <React.Fragment key={level}>
             {index > 0 && (
-              <svg style={{ width: '50px', height: '50px', overflow: 'visible' }}>
+              <svg className="connector">
                 <line x1="0" y1="60" x2="100" y2="60" stroke="gray" strokeWidth="3" />
               </svg>
             )}
-            <div style={{ position: 'relative' }}>
+            <div className="levelWrapper">
               <button
                 className={parseInt(level) <= selectedLevel ? "levelButton" : "levelButtonDisabled"}
                 onClick={() => handleLevelClick(level)}
