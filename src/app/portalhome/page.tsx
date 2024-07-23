@@ -67,7 +67,7 @@ const PortalHome = () => {
           <React.Fragment key={level}>
             {index > 0 && (
               <svg className="connector">
-                <line x1="0" y1="60" x2="100" y2="60" stroke="gray" strokeWidth="3" />
+                <line x1="0" y1="60" x2="100" y2="60" stroke="green" strokeWidth="10" />
               </svg>
             )}
             <div className="levelWrapper">

@@ -66,11 +66,28 @@
   position: relative;
 }
 
+/* Updated styles for the kids' learning path connector */
 .connector {
-  width:100px;
-  height: 50px;
+  width: 120px;
+  height: 60px;
   overflow: visible;
+  // background: linear-gradient(to right, #ff9a9e, #fad0c4); /* Gradient background */
+  border-radius: 5px; /* Rounded corners */
+  gap: 0px;
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Adding a fun connector line style */
+.connector line {
+  stroke: #5b9c66; /* Bright color for the line */
+  // stroke-width: 8;
+  gap: 1px;
+  stroke-dasharray: 10, 2; /* Dashed line for a playful effect */
+}
+
 
 .levelWrapper {
   position: relative;
