@@ -41,8 +41,7 @@ const Level2Test = () => {
 
   const handleProceedToLevel2 = async () => {
     const userDetailsString = localStorage.getItem('userDetails');
-const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-    const response = await fetch('https://backend-chess-tau.vercel.app/updatelevel', {
+    const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;    const response = await fetch('https://backend-chess-tau.vercel.app/updatelevel', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -17,7 +17,31 @@
     margin-bottom: 10px;
     font-size: 2em; /* Larger font size */
   }
+  .level-test-button {
+    padding: 10px 20px;
+    background-color: #1fe426;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
   
+    &:hover {
+      background-color: #15b31f;
+    }
+  
+    &:focus {
+      outline: none;
+      /* Add focused styles if needed */
+    }
+  
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
 
   h3 {
     color: #3498db; /* Bright blue */

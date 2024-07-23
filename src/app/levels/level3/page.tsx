@@ -61,7 +61,7 @@ const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
       <iframe width="960" height="520" src="https://www.youtube.com/embed/ffRmXZZDuWM" title="Good Moves | How to Play Chess" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
       </div>
       {userDetails?.level === "level3" && (
-        <button className="level-test-button" onClick={() => router.push('/level4test')}>
+        <button className="level-test-button" onClick={() => router.push('/levels/level4test')}>
           Take Level 3 Test to Proceed to Level 4
         </button>
       )}</div>

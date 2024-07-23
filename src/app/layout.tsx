@@ -21,11 +21,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="layout-container">
           {(pathname === "/portalhome" || pathname === "/learnclass"||pathname=="/puzzles"||pathname=="/levels/level1"||pathname=="/levels/level2"
-            ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"
+            ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
+            ||pathname=="/levels/level4test"
           ) && <Sidebar />}
-          <div className="content-container">
-          {pathname !== "/" && <PortalHeader />}
-          {pathname === "/" ? <Hero /> : children}
+           <div className="content-container">
+            {pathname !== "/" && pathname !== "/signin" && <PortalHeader />}
+            {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>
       </body>

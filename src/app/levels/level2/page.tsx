@@ -119,7 +119,7 @@ const userDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
         />
       </div>
       {userDetails?.level === "level2" && (
-        <button className="level-test-button" onClick={() => router.push('/level3test')}>
+        <button className="level-test-button" onClick={() => router.push('/levels/level3test')}>
           Take Level 2 Test to Proceed to Level 3
         </button>
       )}</div>
