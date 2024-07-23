@@ -27,7 +27,7 @@ export default function RootLayout({
           ) && <Sidebar />}
            <div className="content-container">
             {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&& pathname !== "/admin"&&pathname !== "/admin_tournaments" && pathname !== "/tornuments" && <PortalHeader />}
-            {pathname === "/admin" || pathname === "/admin_tournaments" && <AdminHeader />}
+            {(pathname === "/admin" || pathname === "/admin_tournaments") && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>
