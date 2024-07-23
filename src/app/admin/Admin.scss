@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
+  background-color: #f1eeee;
 }
 
 .delete-button {
@@ -27,13 +27,24 @@ body {
 .admin-container {
   width: 1000px;
   padding: 20px;
-  background: #fff;
+  background: #bbc951;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   animation: slideIn 0.5s ease-in-out;
   align-items: center;
   // justify-content: center;
 }
+.form-group label {
+  color: black; /* Set label text color to black */
+}
+
+.form-group .react-datepicker-wrapper,
+.form-group .react-datepicker__input-container,
+.form-group .react-datepicker__input-container input {
+  color: black; /* Set DatePicker text color to black */
+  border: 1px solid #cccccc00;
+}
+
 
 .admin-content {
   display: flex;
@@ -59,11 +70,12 @@ body {
 label {
   margin-bottom: 5px;
   font-weight: 700;
+  color: black;
 }
 
 .form-control {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #0c0000;
   border-radius: 4px;
   transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
@@ -95,7 +107,7 @@ label {
 }
 
 .button:disabled {
-  background-color: #ccc;
+  background-color: #fffefe;
   cursor: not-allowed;
 }
 
@@ -114,10 +126,23 @@ label {
   max-height: 400px;
   overflow-y: auto;
 }
+.time-inputs {
+  display: flex;
+  align-items: center;
+  color: black; /* Set text color to black */
+}
+
+.time-inputs select {
+  color: black; /* Set select element text color to black */
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-right: 5px;
+}
+
 
 .session-box {
   display: flex;
-  border: 1px solid #ccc;
+  border: 1px solid #0e0101;
   margin-bottom: 10px;
   padding: 10px;
 }
@@ -130,9 +155,49 @@ label {
   flex: 1;
   text-align: right;
 }
+.form-group label {
+  color: black; /* Set label text color to black */
+}
+
+.form-group input {
+  color: black; /* Set input text color to black */
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.form-group .invalid-feedback {
+  color: black; /* Set error message text color to black */
+}
+.session-list h2, 
+.session-list p, 
+.session-list a, 
+.session-list .delete-button {
+  color: black; /* Set text color to black */
+}
+
+.session-list .session-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.session-list .session-link a {
+  color: black; /* Ensure link text is black */
+  text-decoration: underline; /* Optional: make it clear that it's a link */
+}
+
+.session-list .delete-button {
+  background-color: transparent;
+  border: none;
+  color: black; /* Set icon color to black */
+  cursor: pointer;
+}
+
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
+  color: black;
+  font-weight: bold;
 }
