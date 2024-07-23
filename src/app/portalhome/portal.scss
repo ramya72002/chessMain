@@ -82,12 +82,20 @@
 
 /* Adding a fun connector line style */
 .connector line {
-  stroke: #5b9c66; /* Bright color for the line */
-  // stroke-width: 8;
-  gap: 1px;
-  stroke-dasharray: 10, 2; /* Dashed line for a playful effect */
+  stroke: #5b9c66;
+  stroke-width: 8;
+  stroke-dasharray: 8, 4;
+  animation: dash 2s linear infinite;
 }
 
+@keyframes dash {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
 .levelWrapper {
   position: relative;
