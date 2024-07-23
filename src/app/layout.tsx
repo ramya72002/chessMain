@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Sidebar from "./sidebar"; // Assuming sidebar is in the same directory
 import PortalHeader from "./portalheader";
+import AdminHeader from "./admin_header/adminHeader";
 import "./globals.css";
 import Hero from "./hero/page";
 
@@ -25,7 +26,8 @@ export default function RootLayout({
             ||pathname=="/levels/level4test"
           ) && <Sidebar />}
            <div className="content-container">
-            {pathname !== "/" && pathname !== "/signin"&& pathname !== "/tornuments" && <PortalHeader />}
+            {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&& pathname !== "/admin"&& pathname !== "/tornuments" && <PortalHeader />}
+            {pathname === "/admin" && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>
