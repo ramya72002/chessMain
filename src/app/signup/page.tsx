@@ -35,6 +35,7 @@ const Signup = () => {
               className="signup-input"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              style={{ borderRadius: '10px', color: 'black' }}
             />
           </div>
 
@@ -45,6 +46,7 @@ const Signup = () => {
               className="signup-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              style={{ borderRadius: '10px', color: 'black' }}
             />
           </div>
 
@@ -54,6 +56,7 @@ const Signup = () => {
               className="signup-select"
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
+              style={{ borderRadius: '10px', color: 'black' }}
             >
               <option value="level1">Level 1</option>
               <option value="level2">Level 2</option>

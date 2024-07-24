@@ -5,7 +5,6 @@
     display: flex;
     overflow: hidden;
 }
-
 .image-wrapper {
     position: relative;
     width: 30%;
@@ -153,6 +152,7 @@
 .arrow {
     margin-left: 5px;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .zoom-in {

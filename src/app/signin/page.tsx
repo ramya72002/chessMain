@@ -55,7 +55,7 @@ const SignIn = () => {
             className="w-full p-2 border border-gray-300 rounded"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={{ borderRadius: '10px' }}
+            style={{ borderRadius: '10px', color: 'black' }}
           />
         </div>
         <button
