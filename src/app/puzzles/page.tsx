@@ -7,7 +7,7 @@ const Puzzles = () => {
   const router = useRouter();
 
   const handleLevelClick = (level: number) => {
-    router.push('/ChessPuzzle');
+    router.push('/chessPuzzle');
   };
 
   return (
