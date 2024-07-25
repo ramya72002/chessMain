@@ -24,5 +24,12 @@ export interface Session {
     roundsTiming: RoundsTiming;
     sections: Section[];
   }
+  export interface Student {
+    email: string;
+    name: string;
+    image: string;
+    level: string; 
+    puzzle_score:string;
+  }
   
   

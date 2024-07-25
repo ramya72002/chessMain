@@ -32,6 +32,11 @@ const AdminHeader= () => {
                             <p>News</p>
                         </a>
                     </li>
+                    <li className="menuItem">
+                        <a href="/StudentDetails">
+                            <p>Student Details</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </header>
