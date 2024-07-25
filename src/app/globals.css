@@ -50,6 +50,7 @@ body {
 .content-container {
   flex: 1;
   padding: 20px;
+  background-color: white;
   /* background-color: #0e0e0e; */
 }
 

@@ -34,11 +34,11 @@ const AdminTournaments: React.FC = () => {
       .filter(tournament => tournament.type === type)
       .map((tournament, index) => (
         <div key={index} className="tournamentCard">
-          <h3>{tournament.name}</h3>
-          <h3><strong>Type</strong> {tournament.type}</h3>
-          <h3><strong>Name:</strong> {tournament.name}</h3>
+          <h1><strong>Name:</strong>{tournament.name}</h1>
+          <h3><strong>Type</strong> {tournament.type}</h3> 
+          {/* <h3><strong>Name:</strong> {tournament.name}</h3> */}
           <p><strong>Location:</strong> {tournament.location}</p>
-          <p><strong>Time Control:</strong> {tournament.timeControl}</p>
+          <p><strong>Time Control:</strong> {tournament.timeControl}</p><hr />
           <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(' | ')}</p>
           <div>
             <h4>Rounds Timing:</h4>
