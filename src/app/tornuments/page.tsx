@@ -1,12 +1,14 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import './Tornaments.scss';
 import { Tournament } from '../types/types';
 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [activeTab, setActiveTab] = useState<string>('casual');
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTournaments = async () => {
@@ -21,21 +23,26 @@ const AdminTournaments: React.FC = () => {
     fetchTournaments();
   }, []);
 
+  const handleRegisterClick = (tournament: Tournament) => {
+    // const router = useRouter();
+    router.push(`/tournamentRegistration?name=${encodeURIComponent(tournament.name)}&location=${encodeURIComponent(tournament.location)}`);
+  };
+  
+
   const renderTournaments = (type: string) => {
     return tournaments
       .filter(tournament => tournament.type === type)
       .map((tournament, index) => (
         <div key={index} className="tournamentCard">
           <h3>{tournament.name}</h3>
-          <h3><strong>Type</strong>{tournament.type}</h3>
-          <h3><strong>Name:</strong>{tournament.name}</h3>
+          <h3><strong>Type</strong> {tournament.type}</h3>
+          <h3><strong>Name:</strong> {tournament.name}</h3>
           <p><strong>Location:</strong> {tournament.location}</p>
           <p><strong>Time Control:</strong> {tournament.timeControl}</p>
           <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(', ')}</p>
           <div>
             <h4>Rounds Timing:</h4>
-            <p><strong>description</strong> {tournament.roundsTiming.description}</p>
-
+            <p><strong>Description</strong> {tournament.roundsTiming.description}</p>
           </div>
           <div>
             <h4>Sections:</h4>
@@ -45,13 +52,19 @@ const AdminTournaments: React.FC = () => {
               </p>
             ))}
           </div>
+          <button
+            className="register-button"
+            onClick={() => handleRegisterClick(tournament)}
+          >
+            Register
+          </button>
         </div>
       ));
   };
 
   return (
     <div className="container">
-       <div className="tabs">
+      <div className="tabs">
         <button
           className={activeTab === 'casual' ? 'activeTab' : ''}
           onClick={() => setActiveTab('casual')}
