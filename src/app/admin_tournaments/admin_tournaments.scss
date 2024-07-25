@@ -1,87 +1,124 @@
 .container {
-  display: flex; /* Use flexbox to create a two-column layout */
+  display: flex;
+  flex-direction: column;
   padding: 20px;
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: #f8f9fa;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .tabs {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
-}
 
-button {
-  background: none;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #f0f0f0;
-}
+  button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s, border-bottom 0.3s;
 
-button:hover {
-  background: #1f1f1f;
-}
+    &.activeTab {
+      border-bottom: 2px solid #007bff;
+      color: #007bff;
+    }
 
-.activeTab {
-  border-bottom: 2px solid #0070f3;
-  color: #0070f3;
+    &:hover {
+      color: #007bff;
+    }
+  }
 }
 
 .tournamentsList {
-  flex: 1; /* Takes up the remaining space in the container */
-  margin-right: 20px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  color: #f0f0f0;
 }
 
 .tournamentCard {
   padding: 20px;
-  border: 1px solid #333;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #1e1e1e;
-  color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #007bff;
+  }
+
+  p {
+    margin: 5px 0;
+    color: #555;
+  }
+
+  h4 {
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: #007bff;
+  }
+
+  .button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+  }
 }
 
 .editForm {
-  flex: 1; /* Takes up the remaining space in the container */
-  background-color: #1e1e1e;
+  flex: 1;
+  background-color: #ffffff;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  color: #f0f0f0;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
 
   h2 {
     margin-bottom: 20px;
+    font-size: 20px;
+    color: #007bff;
   }
 
   label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 500;
 
     input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border: 1px solid #333;
-      border-radius: 5px;
-      background-color: #121212;
-      color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #f8f9fa;
+      color: #333;
     }
-  }
-  .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
 
   button {
@@ -89,13 +126,14 @@ button:hover {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    background-color: #0070f3;
+    background-color: #007bff;
     color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
 
     &:hover {
-      background-color: #005bb5;
+      background-color: #0056b3;
+      transform: scale(1.05);
     }
 
     &:not(:last-child) {
