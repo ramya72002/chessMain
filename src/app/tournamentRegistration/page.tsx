@@ -1,15 +1,14 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import './TournamentRegistration.scss';
 
 const TournamentRegistration = () => {
-    const router = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const name = searchParams.get('name') || 'Default Tournament Name';
-  const location = searchParams.get('location') || 'Default Location';
+  const name = searchParams.get('name') || 'Tournament Name';
+  const location = searchParams.get('location') || 'Location';
 
   const [formData, setFormData] = useState({
     uscfId: '',
@@ -41,7 +40,7 @@ const TournamentRegistration = () => {
       <p>Location: {location}</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="uscfId">USCF ID *</label>
+          <label htmlFor="uscfId">USCF ID</label>
           <input
             type="text"
             id="uscfId"
@@ -49,10 +48,11 @@ const TournamentRegistration = () => {
             value={formData.uscfId}
             onChange={handleChange}
             placeholder="USCF ID"
+            required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="firstName">First Name *</label>
+          <label htmlFor="firstName">First Name</label>
           <input
             type="text"
             id="firstName"
@@ -60,10 +60,11 @@ const TournamentRegistration = () => {
             value={formData.firstName}
             onChange={handleChange}
             placeholder="First name"
+            required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="lastName">Last Name *</label>
+          <label htmlFor="lastName">Last Name</label>
           <input
             type="text"
             id="lastName"
@@ -71,10 +72,11 @@ const TournamentRegistration = () => {
             value={formData.lastName}
             onChange={handleChange}
             placeholder="Last name"
+            required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Email ID *</label>
+          <label htmlFor="email">Email ID</label>
           <input
             type="email"
             id="email"
@@ -82,10 +84,11 @@ const TournamentRegistration = () => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
+            required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="mobileNumber">Mobile Number *</label>
+          <label htmlFor="mobileNumber">Mobile Number</label>
           <input
             type="tel"
             id="mobileNumber"
@@ -93,6 +96,7 @@ const TournamentRegistration = () => {
             value={formData.mobileNumber}
             onChange={handleChange}
             placeholder="Mobile number"
+            required
           />
         </div>
         <div className="form-group">
@@ -102,6 +106,7 @@ const TournamentRegistration = () => {
             name="schedule"
             value={formData.schedule}
             onChange={handleChange}
+            required
           >
             <option value="">Select Schedule</option>
             {/* Add schedule options here */}
@@ -114,6 +119,7 @@ const TournamentRegistration = () => {
             name="section"
             value={formData.section}
             onChange={handleChange}
+            required
           >
             <option value="">Select Section</option>
             {/* Add section options here */}

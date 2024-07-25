@@ -39,7 +39,7 @@ const AdminTournaments: React.FC = () => {
           <h3><strong>Name:</strong> {tournament.name}</h3>
           <p><strong>Location:</strong> {tournament.location}</p>
           <p><strong>Time Control:</strong> {tournament.timeControl}</p>
-          <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(', ')}</p>
+          <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(' | ')}</p>
           <div>
             <h4>Rounds Timing:</h4>
             <p><strong>Description</strong> {tournament.roundsTiming.description}</p>
