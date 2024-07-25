@@ -40,17 +40,17 @@ body {
 
 .layout-container {
   display: flex;
+  background-color: rgb(235, 231, 231);;
 }
 
 .sidebar {
   width: 350px; /* Adjust the width as needed */
-  background-color: #f4f4f4; /* Adjust the background color as needed */
+  background-color: rgb(235, 231, 231); /* Adjust the background color as needed */
 }
 
 .content-container {
   flex: 1;
   padding: 20px;
-  background-color: white;
+  background-color: rgb(235, 231, 231);
   /* background-color: #0e0e0e; */
 }
-

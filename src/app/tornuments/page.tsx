@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import './Tornaments.scss';
 import { Tournament } from '../types/types';
+import Image from 'next/image';
 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -34,7 +35,7 @@ const AdminTournaments: React.FC = () => {
       .filter(tournament => tournament.type === type)
       .map((tournament, index) => (
         <div key={index} className="tournamentCard">
-          <h1><strong>Name:</strong>{tournament.name}</h1>
+          <h1>{tournament.name}</h1>
           <h3><strong>Type</strong> {tournament.type}</h3> 
           {/* <h3><strong>Name:</strong> {tournament.name}</h3> */}
           <p><strong>Location:</strong> {tournament.location}</p>
@@ -54,10 +55,12 @@ const AdminTournaments: React.FC = () => {
           </div>
           <button
             className="register-button"
-            onClick={() => handleRegisterClick(tournament)}
-          >
+            onClick={() => handleRegisterClick(tournament)}>
             Register
           </button>
+          <div className="tournamentImage">
+            <img src="images/tournament1.png" alt={`${tournament.name} logo`} />
+          </div>
         </div>
       ));
   };
