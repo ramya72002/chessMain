@@ -1,0 +1,81 @@
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f28715bc; /* Dark background for better contrast */
+    color: #cac8c8; /* Light text color for readability */
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: large;
+  }
+  
+  button {
+    background-color: #2968dd;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #f9f7f7; /* Light text color for readability */
+  }
+  
+  button:hover {
+    background: #032971;
+  }
+  
+  .activeTab {
+    border-bottom: 2px solid #edf0f4;
+    color: #f6f9fc; /* Highlight active tab */
+  }
+  
+  .tournamentsList {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+    gap: 20px;
+    color: #f0f0f0; /* Ensure text color is light */
+  }
+  
+  .tournamentCard {
+    display: flex;
+    padding: 20px;
+    border: 1px solid #cfcd37; /* Dark border for better contrast */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #de6317; /* Dark background for card */
+    color: #f0f0f0; /* Ensure text color is light */
+  }
+  
+  .tournamentContent {
+    flex: 7; /* 70% width */
+  }
+  
+  .tournamentImage {
+    flex: 4; /* 30% width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 5px;
+   }
+  
+  .tournamentImage img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  h1 {
+    font-size: 40px;
+  }
+  
+  h3, h4, p {
+    margin: 0 0 10px;
+    color: #f0f0f0; /* Ensure headings and paragraphs have light text color */
+  }
+  

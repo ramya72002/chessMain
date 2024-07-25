@@ -1,0 +1,82 @@
+.tournament-registration {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  p {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input,
+    select {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-left: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      font-size: 14px;
+      color: #333;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #007bff;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+
+    .proceed-button,
+    .cancel-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .proceed-button {
+      background-color: #007bff;
+    }
+
+    .cancel-button {
+      background-color: #6c757d;
+    }
+
+    .proceed-button:hover {
+      background-color: #0056b3;
+    }
+
+    .cancel-button:hover {
+      background-color: #5a6268;
+    }
+  }
+}

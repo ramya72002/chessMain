@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import './Tornaments.scss';
+import './homeTornament.scss';
 import { Tournament } from '../types/types';
-import Image from 'next/image';
-
+ 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [activeTab, setActiveTab] = useState<string>('casual');
@@ -25,7 +24,8 @@ const AdminTournaments: React.FC = () => {
   }, []);
 
   const handleRegisterClick = (tournament: Tournament) => {
-     router.push(`/tournamentRegistration?name=${encodeURIComponent(tournament.name)}&location=${encodeURIComponent(tournament.location)}`);
+    // const router = useRouter();
+    router.push(`/homeTornRegister?name=${encodeURIComponent(tournament.name)}&location=${encodeURIComponent(tournament.location)}`);
   };
   
 
