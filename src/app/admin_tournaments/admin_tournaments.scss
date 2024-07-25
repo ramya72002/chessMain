@@ -1,51 +1,105 @@
 .container {
-    padding: 20px;
-    background-color: #121212; /* Dark background for better contrast */
-    color: #f0f0f0; /* Light text color for readability */
-  }
-  
-  .tabs {
-    display: flex;
-    justify-content: center;
+  display: flex; /* Use flexbox to create a two-column layout */
+  padding: 20px;
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #f0f0f0;
+}
+
+button:hover {
+  background: #1f1f1f;
+}
+
+.activeTab {
+  border-bottom: 2px solid #0070f3;
+  color: #0070f3;
+}
+
+.tournamentsList {
+  flex: 1; /* Takes up the remaining space in the container */
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: #f0f0f0;
+}
+
+.tournamentCard {
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.editForm {
+  flex: 1; /* Takes up the remaining space in the container */
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  color: #f0f0f0;
+
+  h2 {
     margin-bottom: 20px;
   }
-  
-  button {
-    background: none;
-    border: none;
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+  }
+  .button {
     padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
-    color: #f0f0f0; /* Light text color for readability */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
-  
-  button:hover {
-    background: #1f1f1f; /* Slightly lighter dark background for hover effect */
-  }
-  
-  .activeTab {
-    border-bottom: 2px solid #0070f3;
-    color: #0070f3; /* Highlight active tab */
-  }
-  
-  .tournamentsList {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    color: #f0f0f0; /* Ensure text color is light */
-  }
-  
-  .tournamentCard {
-    padding: 20px;
-    border: 1px solid #333; /* Dark border for better contrast */
+
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #0070f3;
+    color: white;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #1e1e1e; /* Dark background for card */
-    color: #f0f0f0; /* Ensure text color is light */
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #005bb5;
+    }
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
   }
-  
-  h1, h3, h4, p {
-    margin: 0 0 10px;
-    color: #f0f0f0; /* Ensure headings and paragraphs have light text color */
-  }
-  
+}
