@@ -1,10 +1,10 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import './TournamentRegistration.scss';
 
-const TournamentRegistration = () => {
+const TournamentRegistrationContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const name = searchParams.get('name') || 'Tournament Name';
@@ -143,6 +143,14 @@ const TournamentRegistration = () => {
         </div>
       </form>
     </div>
+  );
+};
+
+const TournamentRegistration = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TournamentRegistrationContent />
+    </Suspense>
   );
 };
 
