@@ -29,7 +29,7 @@ const AdminTournaments: React.FC = () => {
   const handleSave = async () => {
     if (editingTournament) {
       try {
-        await axios.put('http://127.0.0.1:80/update-tournament', {
+        await axios.put('https://backend-chess-tau.vercel.app/update-tournament', {
           type: editingTournament.type,
           tournament: editingTournament,
         });
