@@ -7,11 +7,7 @@ export interface Session {
     session_link: string;
   }
   export interface RoundsTiming {
-    start: string;
-    arrivalTime: string;
-    latePlayerNotice: string;
-    under600End: string;
-    under1200End: string;
+    description: string; 
   }
   
   export interface Section {

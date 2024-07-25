@@ -32,11 +32,8 @@ const AdminTournaments: React.FC = () => {
           <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(', ')}</p>
           <div>
             <h4>Rounds Timing:</h4>
-            <p><strong>Start:</strong> {tournament.roundsTiming.start}</p>
-            <p><strong>Arrival Time:</strong> {tournament.roundsTiming.arrivalTime}</p>
-            <p><strong>Late Player Notice:</strong> {tournament.roundsTiming.latePlayerNotice}</p>
-            <p><strong>Under 600 End:</strong> {tournament.roundsTiming.under600End}</p>
-            <p><strong>Under 1200 End:</strong> {tournament.roundsTiming.under1200End}</p>
+            <p><strong>description</strong> {tournament.roundsTiming.description}</p>
+
           </div>
           <div>
             <h4>Sections:</h4>
