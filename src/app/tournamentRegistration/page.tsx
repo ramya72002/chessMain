@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import React, { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
@@ -18,15 +19,11 @@ const TournamentRegistrationContent = () => {
     mobileNumber: '',
     schedule: '',
     section: '',
-    byes: ''
   });
 
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -125,20 +122,8 @@ const TournamentRegistrationContent = () => {
             {/* Add section options here */}
           </select>
         </div>
-        <div className="form-group">
-          <label htmlFor="byes">Select No Of Byes (Optional)</label>
-          <select
-            id="byes"
-            name="byes"
-            value={formData.byes}
-            onChange={handleChange}
-          >
-            <option value="">Not selected</option>
-            {/* Add bye options here */}
-          </select>
-        </div>
         <div className="form-actions">
-          <button type="submit" className="proceed-button">PROCEED TO PAYMENT</button>
+          <button type="submit" className="proceed-button">Proceed to Payment</button>
           <button type="button" className="cancel-button" onClick={() => router.back()}>Cancel</button>
         </div>
       </form>
