@@ -52,8 +52,7 @@ const AdminTournaments: React.FC = () => {
 
   return (
     <div className="container">
-      <h1>Admin Tournaments</h1>
-      <div className="tabs">
+       <div className="tabs">
         <button
           className={activeTab === 'casual' ? 'activeTab' : ''}
           onClick={() => setActiveTab('casual')}
