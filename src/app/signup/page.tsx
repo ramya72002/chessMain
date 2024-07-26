@@ -31,7 +31,7 @@ const Signup = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       {loading ? (
         <div className="loading-container">
-          <img src="/loading.gif" alt="Loading..." className="loading-gif" />
+          <img src="/images/loading.gif" alt="Loading..." className="loading-gif" />
         </div>
       ) : (
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
