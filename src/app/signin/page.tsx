@@ -7,9 +7,11 @@ import './Signin.scss'; // Import the SCSS file
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state
   const router = useRouter();
 
   const signIn = async (emailToSignIn: string) => {
+    setLoading(true); // Start loading
     try {
       const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', { email: emailToSignIn });
       console.log('SignIn response:', loginResponse.data);
@@ -30,6 +32,8 @@ const SignIn = () => {
       }
     } catch (error) {
       console.error('Error during SignIn:', error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -46,26 +50,32 @@ const SignIn = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
-      <div className={`bg-white p-8 rounded shadow-md w-full max-w-md email-box ${showPopup ? 'slide-from-left' : ''}`} style={{ borderRadius: '10px' }}>
-        <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
-        <div className="signup-field mb-4">
-          <label className="block text-gray-700 mb-2">Email</label>
-          <input
-            type="email"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ borderRadius: '10px', color: 'black' }}
-          />
+      {loading ? (
+        <div className="loading-container">
+          <img src="/images/loading.gif" alt="Loading..." className="loading-gif" />
         </div>
-        <button
-          className="signup-field  bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
-          onClick={handleManualSignIn}
-          style={{ borderRadius: '10px' }}
-        >
-          Sign In
-        </button>
-      </div>
+      ) : (
+        <div className={`bg-white p-8 rounded shadow-md w-full max-w-md email-box ${showPopup ? 'slide-from-left' : ''}`} style={{ borderRadius: '10px' }}>
+          <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
+          <div className="signup-field mb-4">
+            <label className="block text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ borderRadius: '10px', color: 'black' }}
+            />
+          </div>
+          <button
+            className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
+            onClick={handleManualSignIn}
+            style={{ borderRadius: '10px' }}
+          >
+            Sign In
+          </button>
+        </div>
+      )}
 
       {showPopup && (
         <div className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 signin-box slide-from-right`}>

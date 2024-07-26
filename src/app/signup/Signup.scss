@@ -97,4 +97,15 @@
   .mb-4 {
     margin-bottom: 1rem;
   }
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .loading-gif {
+    width: 100px;
+    height: 100px;
+  }
   
