@@ -1,0 +1,125 @@
+.puzzle-arena-container {
+    background-color: #276089;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    
+    p:first-child {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+  
+    p:last-child {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .score-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  
+    .score-item {
+      background-color: #FF9933;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 5px;
+      border-radius: 5px;
+    }
+  
+    .score-total {
+      background-color: #FF9933;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      border-radius: 5px;
+      
+      p {
+        margin: 0;
+      }
+  
+      p:last-child {
+        font-size: 2rem;
+      }
+    }
+  }
+  
+  .live-arena {
+    background-color: #8A2BE2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  
+    p {
+      margin: 5px 0;
+    }
+  
+    .join-button {
+      background-color: #FFA500;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+  
+  .theme-practice {
+    background-color: #8A2BE2;
+    padding: 10px;
+    border-radius: 5px;
+  
+    p:first-child {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+  
+    .practice-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #32CD32;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+  
+      p {
+        margin: 0;
+      }
+  
+      .start-button, .return-button, .completed-button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+  
+      .start-button {
+        background-color: #FFA500;
+        color: white;
+      }
+  
+      .return-button {
+        background-color: #FFA500;
+        color: white;
+      }
+  
+      .completed-button {
+        background-color: #FFA500;
+        color: white;
+      }
+    }
+  }
+
+  
+  
