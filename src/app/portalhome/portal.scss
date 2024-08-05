@@ -1,160 +1,127 @@
-.container {
+.hero {
   padding: 20px;
-  font-family: 'Comic Neue', cursive;
-  background: linear-gradient(135deg, #ffcc80 0%, #ff7043 100%);
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
+  background-color: #2b87e2;
 
-.header {
-  color: #fff;
-  font-size: 30px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px #000;
-  margin-bottom: 20px;
-}
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
 
-.statsContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 50px;
-  height: 150px;
-}
+    h2 {
+      margin: 0;
+      color: #1d3557;
+    }
 
-.statBox {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  flex: 1;
-  margin: 0 10px;
-  color: #0e0e0e;
-  animation: float 2s ease-in-out infinite;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.statTitle {
-  color: #ff7043;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.statValue {
-  color: #ff7043;
-  font-size: 20px;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+    p {
+      margin: 0;
+      color: #457b9d;
+    }
   }
-  50% {
-    transform: translateY(-10px);
+
+  .journey {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .level {
+      flex: 1;
+      margin: 0 10px;
+
+      h3 {
+        color: #e63946;
+        text-align: center;
+      }
+
+      .steps {
+        .step {
+          display: flex;
+          align-items: center;
+          margin: 10px 0;
+          padding: 10px;
+          background-color: #a8dadc;
+          border-radius: 5px;
+
+          .icon {
+            font-size: 24px;
+            margin-right: 10px;
+          }
+
+          h4 {
+            margin: 0 0 5px 0;
+            color: #1d3557;
+          }
+
+          p {
+            margin: 0;
+            color: #457b9d;
+          }
+        }
+      }
+    }
   }
-  100% {
-    transform: translateY(0px);
+
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+
+    .stat {
+      background-color: #ffbe0b;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+      height: 120px;
+
+      .number {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .label {
+        margin-top: 5px;
+      }
+    }
   }
-}
 
-.levelsContainer {
-  display: flex;
-  height: 300px;
-  justify-content: center;
-  font-size: 80px;
-  margin-top: 10px;
-  position: relative;
-}
+  .activities {
+    background-color: #8338ec;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
 
-/* Updated styles for the kids' learning path connector */
-.connector {
-  width: 120px;
-  height: 60px;
-  overflow: visible;
-  // background: linear-gradient(to right, #ff9a9e, #fad0c4); /* Gradient background */
-  border-radius: 5px; /* Rounded corners */
-  gap: 0px;
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    h3 {
+      color: #ffffff;
+      font-size:25px;
+      font-weight: bold;
+    }
 
-/* Adding a fun connector line style */
-.connector line {
-  stroke: #5b9c66;
-  stroke-width: 8;
-  stroke-dasharray: 8, 4;
-  animation: dash 2s linear infinite;
-}
+    .activity {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #38b000;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
 
-@keyframes dash {
-  from {
-    stroke-dashoffset: 20;
+      .details {
+        color: #ffffff;
+      }
+
+      .details-button {
+        display: flex;
+        background-color: #ff006e;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #ffffff;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #d00057;
+        }
+      }
+    }
   }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.levelWrapper {
-  position: relative;
-}
-
-.levelButton, .levelButtonDisabled {
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 140px;
-  height: 140px;
-  font-size: 30px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  transition: transform 0.2s;
-  z-index: 2;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.levelButton img {
-  width: 100px;
-  height: 100px;
-}
-
-.levelButtonDisabled {
-  background-color: #be2d2d;
-  cursor: not-allowed;
-}
-
-.levelButton:hover {
-  transform: scale(1.1);
-  animation: bounce 0.5s;
-}
-
-.tooltip {
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #29b6f6;
-  color: #fff;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 14px;
-  white-space: nowrap;
-  z-index: 3;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.levelLabel {
-  position: absolute;
-  bottom: -30px;
-  width: 100%;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
 }

@@ -1,0 +1,40 @@
+.image-puzzle {
+    text-align: center;
+  
+    .upload-section {
+      margin-bottom: 20px;
+  
+      input[type="file"] {
+        margin-right: 10px;
+      }
+  
+      button {
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    }
+  
+    .images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+  
+      .image-container {
+        border: 1px solid #ddd;
+        padding: 8px;
+        border-radius: 4px;
+  
+        img {
+          max-width: 100%;
+          height: auto;
+          display: block;
+        }
+  
+        p {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+  

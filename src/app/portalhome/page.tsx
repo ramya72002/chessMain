@@ -1,123 +1,124 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import './portal.scss'; // Import the styles
+import React from 'react';
+import './portal.scss';
 
-const PortalHome = () => {
-  const router = useRouter();
-  const [userDetails, setUserDetails] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedLevel, setSelectedLevel] = useState<number>(1);
-  const [hoveredLevel, setHoveredLevel] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        const email = localStorage.getItem('email');
-        if (email) {
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
-          setUserDetails(response.data.data);
-          const level = response.data.data.level.replace('level', '');
-          setSelectedLevel(parseInt(level, 10));
-          localStorage.setItem('userDetails', JSON.stringify(response.data.data));
-        }
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserDetails();
-  }, []);
-
-  const handleLevelClick = (level: string) => {
-    if (parseInt(level) <= selectedLevel) {
-      router.push(`/levels/level${level}`);
-    }
-  };
-
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
+const Hero = () => {
   return (
-    <div className="container">
-      <div className="header">Quick Start</div>
-      <div className="statsContainer">
-        <div className="statBox">
-          <div className="statTitle">You collected:</div>
-          <div className="statValue">{userDetails?.collected || 0}</div>
+    <div className="hero">
+      <div className="header">
+        <h2>Hi Sumit</h2>
+        <p>Your chess journey so far.....</p>
+      </div>
+      <div className="journey">
+        <div className="level">
+          <h3>BEGINNER</h3>
+          <div className="steps">
+            <div className="step">
+              <div className="icon">🧭</div>
+              <div>
+                <h4>1. Explorer</h4>
+                <p>For absolute beginners who are just starting out and need to learn the basics of chess.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">💡</div>
+              <div>
+                <h4>2. Enthusiasts</h4>
+                <p>Players who have grasped the basics and are ready to learn fundamental strategies and opening principles.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">📈</div>
+              <div>
+                <h4>3. Advanced</h4>
+                <p>Players who have a solid understanding of basic strategies and are ready to learn basic endgames and improve their tactical skills.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="statBox">
-          <div className="statTitle">Puzzle Score</div>
-          <div className="statValue">{userDetails?.puzzle_score || 0}</div>
-        </div>
-        <div className="statBox">
-          <div className="statTitle">Time spent reading:</div>
-          <div className="statValue">{userDetails?.timeSpent || '0 h 0 m'}</div>
+        <div className="level">
+          <h3>INTERMEDIATE</h3>
+          <div className="steps">
+            <div className="step">
+              <div className="icon">♟️</div>
+              <div>
+                <h4>4. Pawn</h4>
+                <p>Players who are preparing for casual tournaments and need to refine their middlegame tactics and overall strategy.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">♞</div>
+              <div>
+                <h4>5. Knight</h4>
+                <p>Players who are competing in club-rated tournaments and need to focus on game analysis and improving their overall play.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">♝</div>
+              <div>
+                <h4>6. Bishop</h4>
+                <p>Players who have some tournament experience and need to learn advanced endgames, opening responses, and notation.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">♜</div>
+              <div>
+                <h4>7. Rook</h4>
+                <p>Players who are preparing for regional tournaments and need to work on tournament preparation and advanced strategies.</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="icon">♛</div>
+              <div>
+                <h4>8. Queen</h4>
+                <p>Players who are ready for professional tournaments and need to refine advanced strategies and compete at a higher level.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="levelsContainer">
-        {['1', '2', '3', '4'].map((level, index) => (
-          <React.Fragment key={level}>
-            {index > 0 && (
-              <svg className="connector">
-                <line x1="0" y1="60" x2="100" y2="60" stroke="green" strokeWidth="10" />
-              </svg>
-            )}
-            <div className="levelWrapper">
-              <button
-                className={parseInt(level) <= selectedLevel ? "levelButton" : "levelButtonDisabled"}
-                onClick={() => handleLevelClick(level)}
-                onMouseOver={() => setHoveredLevel(level)}
-                onMouseOut={() => setHoveredLevel(null)}
-                onTouchStart={() => setHoveredLevel(level)}
-                onTouchEnd={() => setHoveredLevel(null)}
-                disabled={parseInt(level) > selectedLevel}
-              >
-                {parseInt(level) <= selectedLevel ? (
-                  <>
-                    <img src={`/images/chess_piece_${level}.png`} alt={`Level ${level} icon`} />
-                    <div className="levelLabel">{getLevelLabel(level)}</div>
-                  </>
-                ) : (
-                  <FontAwesomeIcon icon={faLock} />
-                )}
-              </button>
-              {parseInt(level) > selectedLevel && hoveredLevel === level && (
-                <div className="tooltip">Complete previous levels to unlock this</div>
-              )}
-            </div>
-          </React.Fragment>
-        ))}
+      <div className="stats">
+        <div className="stat">
+          <div className="number">276</div>
+          <div className="label">Puzzle Arena</div>
+        </div>
+        <div className="stat">
+          <div className="number">16</div>
+          <div className="label">Puzzle Racer</div>
+        </div>
+        <div className="stat">
+          <div className="number">16</div>
+          <div className="label">Puzzle Racer</div>
+        </div>
+      </div>
+      <div className="activities">
+        <h3>Upcoming Activities</h3>
+        <div className="activity">
+          <div className="details">
+            <div>Casual Tournament</div>
+            <div>05-Aug-2024</div>
+            <div>10:00 A.M</div>
+          </div>
+          <button className="details-button">Details</button>
+        </div>
+        <div className="activity">
+          <div className="details">
+            <div>Casual Tournament</div>
+            <div>05-Aug-2024</div>
+            <div>10:00 A.M</div>
+          </div>
+          <button className="details-button">Details</button>
+        </div>
+        <div className="activity">
+          <div className="details">
+            <div>Casual Tournament</div>
+            <div>05-Aug-2024</div>
+            <div>10:00 A.M</div>
+          </div>
+          <button className="details-button">Details</button>
+        </div>
       </div>
     </div>
   );
-};  
+}
 
-const getColor = (level: string) => {
-  switch (level) {
-    case '1': return '#ff7043'; // Bright orange
-    case '2': return '#ffeb3b'; // Bright yellow
-    case '3': return '#8bc34a'; // Bright green
-    case '4': return '#29b6f6'; // Bright blue
-    default: return '#4caf50'; // Default green
-  }
-};
-
-const getLevelLabel = (level: string) => {
-  switch (level) {
-    case '1': return 'Never Played';
-    case '2': return 'Beginner';
-    case '3': return 'Intermediate';
-    case '4': return 'Expert';
-    default: return '';
-  }
-};
-
-export default PortalHome;
+export default Hero;
