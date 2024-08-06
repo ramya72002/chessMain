@@ -1,7 +1,41 @@
-import React from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
 import './insidepuzzlearena.scss';
 
 const PuzzlePage: React.FC = () => {
+  const [timer, setTimer] = useState<number>(0); // Timer in seconds
+  const [isRunning, setIsRunning] = useState<boolean>(false); // Timer running status
+
+  useEffect(() => {
+    let interval: number | undefined;
+
+    if (isRunning) {
+      interval = window.setInterval(() => {
+        setTimer(prev => prev + 1);
+      }, 1000);
+    } else if (!isRunning && timer !== 0) {
+      if (interval) {
+        window.clearInterval(interval);
+      }
+    }
+
+    return () => {
+      if (interval) {
+        window.clearInterval(interval);
+      }
+    };
+  }, [isRunning, timer]);
+
+  const handleStartTimer = () => {
+    setIsRunning(true);
+  };
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div className="puzzle-container">
       <h1>Endgame: Advanced Checkmates</h1>
@@ -12,15 +46,21 @@ const PuzzlePage: React.FC = () => {
         </div>
         <div className="puzzle-info">
           <h2>Puzzle - 1</h2>
-          <button className="timer-btn">
-          <img src="/images/starttimer.png" alt="Ask SID" />
-          Start Timer</button>
+          <button className="timer-btn" onClick={handleStartTimer}>
+            <img src="/images/starttimer.png" alt="Start Timer" />
+            Start Timer
+            <div className="timer-display">
+            <h3>: {formatTime(timer)}</h3>
+          </div>
+          </button>
           <button className="solution-btn">
-          <img src="/images/solution.png" alt="Ask SID" />Solution</button>
+            <img src="/images/solution.png" alt="Solution" />Solution
+          </button>
           <button className="ask-sid-btn">
             <img src="/images/sid.png" alt="Ask SID" />
             Ask SID
           </button>
+          
         </div>
       </div>
       <div className="response-buttons">
