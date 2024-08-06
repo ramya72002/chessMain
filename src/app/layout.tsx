@@ -26,8 +26,8 @@ export default function RootLayout({
             ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
             ||pathname=="/levels/level4test"||pathname=="/tornuments"||pathname=="/tournamentRegistration") && <Sidebar />}
            <div className="content-container">
-            {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&& pathname !== "/admin"&&pathname !== "/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTornament"&& pathname !== "/homeTornRegister"  && <PortalHeader />}
-            {(pathname === "/admin" ||  pathname === "/admin_tournaments"||pathname === "/StudentDetails") && <AdminHeader />}
+            {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&& pathname !== "/admin" && pathname !== "/admin_image_puzzles" && pathname !== "/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTornament"&& pathname !== "/homeTornRegister"  && <PortalHeader />}
+            {(pathname === "/admin" ||  pathname === "/admin_tournaments"||pathname === "/admin_image_puzzles"||pathname === "/StudentDetails") && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>

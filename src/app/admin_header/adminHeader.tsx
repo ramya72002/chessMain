@@ -18,8 +18,8 @@ const AdminHeader= () => {
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin_score">
-                            <p>Score</p>
+                        <a href="/admin_image_puzzles">
+                            <p>Image Puzzle</p>
                         </a>
                     </li>
                     <li className="menuItem">

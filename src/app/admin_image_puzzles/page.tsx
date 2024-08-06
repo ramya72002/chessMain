@@ -1,7 +1,7 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './imagepuzzle.scss';
+import './admin_image_puzzles.scss';
 
 interface Image {
   id: string;
@@ -9,21 +9,27 @@ interface Image {
   url: string;
 }
 
-const ImagePuzzle: React.FC = () => {
-  const [images, setImages] = useState<Image[]>([]);
+interface ImageSet {
+  title: string;
+  file_ids: string[];
+}
+
+const AdminImagePuzzles: React.FC = () => {
+  const [imageSets, setImageSets] = useState<ImageSet[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchImages();
+    fetchImageSets();
   }, []);
 
-  const fetchImages = () => {
+  const fetchImageSets = () => {
     setLoading(true);
     axios.get('http://127.0.0.1:80/get')
       .then(response => {
-        setImages(response.data.images);
+        setImageSets(response.data.image_sets);
         setLoading(false);
       })
       .catch(error => {
@@ -37,9 +43,14 @@ const ImagePuzzle: React.FC = () => {
     setSelectedFiles(e.target.files);
   };
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
   const handleUpload = () => {
-    if (selectedFiles) {
+    if (selectedFiles && title) {
       const formData = new FormData();
+      formData.append('title', title);
       Array.from(selectedFiles).forEach(file => {
         formData.append('images', file);
       });
@@ -47,12 +58,14 @@ const ImagePuzzle: React.FC = () => {
       axios.post('http://127.0.0.1:80/upload', formData)
         .then(response => {
           console.log(response.data.message);
-          fetchImages();
+          fetchImageSets();
         })
         .catch(error => {
           setErrorMessage('Error uploading images.');
           console.error('Error uploading images:', error);
         });
+    } else {
+      setErrorMessage('Please select files and enter a title.');
     }
   };
 
@@ -60,6 +73,7 @@ const ImagePuzzle: React.FC = () => {
     <div className="image-puzzle">
       <h1>Image Puzzle</h1>
       <div className="upload-section">
+        <input type="text" placeholder="Enter title" value={title} onChange={handleTitleChange} />
         <input type="file" multiple onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
       </div>
@@ -68,11 +82,17 @@ const ImagePuzzle: React.FC = () => {
       ) : errorMessage ? (
         <p className="error">{errorMessage}</p>
       ) : (
-        <div className="images-grid">
-          {images.map(image => (
-            <div key={image.id} className="image-container">
-              <img src={`http://127.0.0.1:80${image.url}`} alt={image.filename} />
-              <p>{image.filename}</p>
+        <div className="image-sets">
+          {imageSets.map(set => (
+            <div key={set.title} className="image-set">
+              <h2>{set.title}</h2>
+              <div className="images-grid">
+                {set.file_ids.map(fileId => (
+                  <div key={fileId} className="image-container">
+                    <img src={`http://127.0.0.1:80/image/${fileId}`} alt="Puzzle" />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -81,4 +101,4 @@ const ImagePuzzle: React.FC = () => {
   );
 };
 
-export default ImagePuzzle;
+export default AdminImagePuzzles;
