@@ -3,12 +3,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './admin_image_puzzles.scss';
 
-interface Image {
-  id: string;
-  filename: string;
-  url: string;
-}
-
 interface ImageSet {
   title: string;
   file_ids: string[];
@@ -20,6 +14,7 @@ const AdminImagePuzzles: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     fetchImageSets();
@@ -31,11 +26,31 @@ const AdminImagePuzzles: React.FC = () => {
       .then(response => {
         setImageSets(response.data.image_sets);
         setLoading(false);
+        fetchAllImages(response.data.image_sets);
       })
       .catch(error => {
         setErrorMessage('Error fetching images.');
         setLoading(false);
         console.error('Error fetching images:', error);
+      });
+  };
+
+  const fetchAllImages = (imageSets: ImageSet[]) => {
+    imageSets.forEach(set => {
+      set.file_ids.forEach(fileId => {
+        fetchImageFile(fileId);
+      });
+    });
+  };
+
+  const fetchImageFile = (fileId: string) => {
+    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: fileId }, { responseType: 'blob' })
+      .then(response => {
+        const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+        setImageUrls(prevState => ({ ...prevState, [fileId]: url }));
+      })
+      .catch(error => {
+        console.error(`Error fetching image with file ID ${fileId}:`, error);
       });
   };
 
@@ -89,7 +104,11 @@ const AdminImagePuzzles: React.FC = () => {
               <div className="images-grid">
                 {set.file_ids.map(fileId => (
                   <div key={fileId} className="image-container">
-                    <img src={`https://backend-chess-tau.vercel.app/image/${fileId}`} alt="Puzzle" />
+                    {imageUrls[fileId] ? (
+                      <img src={imageUrls[fileId]} alt="Puzzle" />
+                    ) : (
+                      <p>Loading image...</p>
+                    )}
                   </div>
                 ))}
               </div>

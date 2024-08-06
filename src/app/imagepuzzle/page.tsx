@@ -71,7 +71,7 @@ const ImagePuzzle: React.FC = () => {
         <div className="images-grid">
           {images.map(image => (
             <div key={image.id} className="image-container">
-              <img src={`https://backend-chess-tau.vercel.app${image.url}`} alt={image.filename} />
+              <img src={`https://backend-chess-tau.vercel.app/${image.url}`} alt={image.filename} />
               <p>{image.filename}</p>
             </div>
           ))}
