@@ -1,89 +1,94 @@
 .puzzle-arena-container {
-    background-color: #276089;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-family: Arial, sans-serif;
+  background-color: #276089;
+  border-radius: 10px;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+}
+
+.left-section {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 5px solid white;
   }
-  
+}
+
+.right-section {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   .header {
-    text-align: center;
     margin-bottom: 20px;
-    
+
     p:first-child {
       font-size: 1.5rem;
       margin-bottom: 5px;
     }
-  
     p:last-child {
       font-size: 1.2rem;
+      margin-bottom: 20px;
     }
   }
-  
-  .score-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  
+
+  .arena-scores {
     .score-item {
-      background-color: #FF9933;
-      padding: 10px;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 5px;
-      border-radius: 5px;
-    }
-  
-    .score-total {
-      background-color: #FF9933;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      border-radius: 5px;
-      
-      p {
-        margin: 0;
-      }
-  
-      p:last-child {
-        font-size: 2rem;
-      }
-    }
-  }
-  
-  .live-arena {
-    background-color: #8A2BE2;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-  
-    p {
-      margin: 5px 0;
-    }
-  
-    .join-button {
       background-color: #FFA500;
-      color: white;
-      padding: 5px 10px;
-      border: none;
+      padding: 10px;
       border-radius: 5px;
-      cursor: pointer;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: white;
+      text-align: center;
+    }
+
+    .total-score {
+      background-color: #FF8C00;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      text-align: center;
+
+      span {
+        font-size: 2rem;
+        font-weight: bold;
+      }
     }
   }
-  
+}
+
+.bottom-section {
+  width: 100%;
+  padding: 20px;
+
   .theme-practice {
     background-color: #8A2BE2;
     padding: 10px;
     border-radius: 5px;
-  
+    margin-bottom: 20px;
+
     p:first-child {
       font-size: 1.2rem;
       margin-bottom: 10px;
+      color: white;
     }
-  
+
     .practice-item {
       display: flex;
       justify-content: space-between;
@@ -92,34 +97,28 @@
       padding: 10px;
       border-radius: 5px;
       margin-bottom: 10px;
-  
+
       p {
         margin: 0;
+        color: white;
       }
-  
+
       .start-button, .return-button, .completed-button {
         padding: 5px 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-      }
-  
-      .start-button {
-        background-color: #FFA500;
-        color: white;
-      }
-  
-      .return-button {
-        background-color: #FFA500;
-        color: white;
-      }
-  
-      .completed-button {
         background-color: #FFA500;
         color: white;
       }
     }
   }
 
-  
-  
+  .live-arena {
+    background-color: #32CD32;
+    p:first-child {
+      font-size: 1.2rem;
+      color: #8A2BE2;
+    }
+  }
+}
