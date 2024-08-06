@@ -78,16 +78,21 @@ const Hero = () => {
       </div>
       <div className="stats">
         <div className="stat">
-          <div className="number">276</div>
           <div className="label">Puzzle Arena</div>
+          <div className="number">276</div>
+          
+          <img src="/images/puzzlearena1.png" alt="Puzzle Arena Icon" className="stat-icon" />
         </div>
         <div className="stat">
-          <div className="number">16</div>
-          <div className="label">Puzzle Racer</div>
+        <div className="label">Puzzle Racer</div>
+        <div className="number">16</div>
+          
+          <img src="/images/puzzleracer.png" alt="Puzzle Racer Icon" className="stat-icon" />
         </div>
         <div className="stat">
-          <div className="number">16</div>
           <div className="label">Puzzle Racer</div>
+          <div className="number">16</div>
+          
         </div>
       </div>
       <div className="activities">
