@@ -12,8 +12,11 @@ const PuzzlePage: React.FC = () => {
         </div>
         <div className="puzzle-info">
           <h2>Puzzle - 1</h2>
-          <button className="timer-btn">Start Timer</button>
-          <button className="solution-btn">Solution</button>
+          <button className="timer-btn">
+          <img src="/images/starttimer.png" alt="Ask SID" />
+          Start Timer</button>
+          <button className="solution-btn">
+          <img src="/images/solution.png" alt="Ask SID" />Solution</button>
           <button className="ask-sid-btn">
             <img src="/images/sid.png" alt="Ask SID" />
             Ask SID
