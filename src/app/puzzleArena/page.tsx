@@ -1,7 +1,6 @@
 import React from 'react';
-import './PuzzleArena.scss';
-import PuzzleArenaImage from '/mnt/data/image.png';
-
+import './puzzleArena.scss';
+ 
 const PuzzleArena = () => {
   return (
     <div className="puzzle-arena-container">

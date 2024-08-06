@@ -18,7 +18,7 @@ const AdminGetPuzzleImages: React.FC = () => {
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`http://127.0.0.1:80/images/${title}`);
+      const response = await axios.get(`https://backend-chess-tau.vercel.app/images/${title}`);
       setImages(response.data.images);
       setError('');
     } catch (err) {
@@ -48,7 +48,7 @@ const AdminGetPuzzleImages: React.FC = () => {
         {images.map((image) => (
           <div key={image.id}>
             <p>{image.filename}</p>
-            <img src={`http://127.0.0.1:80/image/${image.id}`} alt={image.filename} />
+            <img src={`https://backend-chess-tau.vercel.app/image/${image.id}`} alt={image.filename} />
           </div>
         ))}
       </div>

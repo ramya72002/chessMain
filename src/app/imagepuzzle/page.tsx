@@ -21,7 +21,7 @@ const ImagePuzzle: React.FC = () => {
 
   const fetchImages = () => {
     setLoading(true);
-    axios.get('http://127.0.0.1:80/get')
+    axios.get('https://backend-chess-tau.vercel.app/get')
       .then(response => {
         setImages(response.data.images);
         setLoading(false);
@@ -44,7 +44,7 @@ const ImagePuzzle: React.FC = () => {
         formData.append('images', file);
       });
 
-      axios.post('http://127.0.0.1:80/upload', formData)
+      axios.post('https://backend-chess-tau.vercel.app/upload', formData)
         .then(response => {
           console.log(response.data.message);
           fetchImages();
@@ -71,7 +71,7 @@ const ImagePuzzle: React.FC = () => {
         <div className="images-grid">
           {images.map(image => (
             <div key={image.id} className="image-container">
-              <img src={`http://127.0.0.1:80${image.url}`} alt={image.filename} />
+              <img src={`https://backend-chess-tau.vercel.app${image.url}`} alt={image.filename} />
               <p>{image.filename}</p>
             </div>
           ))}
