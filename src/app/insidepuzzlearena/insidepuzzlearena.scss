@@ -1,0 +1,113 @@
+.puzzle-container {
+    background-color: #60a3d9;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+  }
+  
+  .puzzle-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .chessboard {
+    position: relative;
+    width: 600px;
+    img {
+      width: 100%;
+      border: 3px solid #4b494a;
+
+      border-radius: 5px;
+    }
+    .move-indicator {
+      position: absolute;
+      width: 400px;
+      height: 50px;
+      bottom: -70px;
+      left: 50%;
+      text-align: center;
+      transform: translateX(-50%);
+      background-color: #ff8c00;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  }
+  
+  .puzzle-info {
+    width: 400px;
+    height: 600px;
+    border-radius: 10px;
+    text-align: center;
+    background-color:#ff8c00; ;
+    h2 {
+      color: #ffffff;
+      padding: 5px;
+    }
+    button {
+      width: 100%;
+      align-items: center;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 75px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .timer-btn {
+      background-color: #00a86b;
+      color: white;
+    }
+    .solution-btn {
+      background-color: #00bfff;
+      color: white;
+    }
+    .ask-sid-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffa500;
+      color: white;
+      img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+      }
+    }
+  }
+  
+  .response-buttons {
+    margin-top: 100px;
+    button {
+      width: 300px;
+      height: 80px;
+      padding: 15px 30px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .correct-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .incorrect-btn {
+      background-color: #FF6347;
+      color: white;
+    }
+  }
+  
+  .explanation {
+    margin-top: 20px;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+  }
+  

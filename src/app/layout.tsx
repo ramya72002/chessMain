@@ -24,7 +24,7 @@ export default function RootLayout({
           {(pathname === "/portalhome" || 
           pathname === "/imagepuzzle"||pathname === "/puzzleArena"|| pathname === "/learnclass"||pathname=="/puzzles"||pathname=="/levels/level1"||pathname=="/levels/level2"
             ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
-            ||pathname=="/levels/level4test"||pathname=="/tornuments"||pathname=="/tournamentRegistration") && <Sidebar />}
+            ||pathname=="/levels/level4test"||pathname=="/tornuments"||pathname=="/tournamentRegistration"||pathname=="/insidepuzzlearena") && <Sidebar />}
            <div className="content-container">
             {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&& pathname !== "/admin" && pathname !== "/admin_image_puzzles" && pathname !== "/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTornament"&& pathname !== "/homeTornRegister"  && <PortalHeader />}
             {(pathname === "/admin" ||  pathname === "/admin_tournaments"||pathname === "/admin_image_puzzles"||pathname === "/StudentDetails") && <AdminHeader />}
