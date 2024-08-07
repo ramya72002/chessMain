@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import './Tournaments.scss';
 import { Tournament } from '../types/types';
- 
+
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [activeTab, setActiveTab] = useState<string>('casual');
@@ -13,8 +13,11 @@ const AdminTournaments: React.FC = () => {
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get<Tournament[]>('https://backend-chess-tau.vercel.app/tournaments');
-        setTournaments(response.data);
+        const response = await axios.get<{ tournaments: Tournament[] }[]>('http://127.0.0.1:80/tournaments');
+        console.log("Response data:", response.data);
+        if (response.data.length > 0) {
+          setTournaments(response.data[0].tournaments);
+        }
       } catch (error) {
         console.error('Error fetching tournaments:', error);
       }
@@ -24,9 +27,8 @@ const AdminTournaments: React.FC = () => {
   }, []);
 
   const handleRegisterClick = (tournament: Tournament) => {
-     router.push(`/tournamentRegistration?name=${encodeURIComponent(tournament.name)}&location=${encodeURIComponent(tournament.location)}`);
+    router.push(`/tournamentRegistration?name=${encodeURIComponent(tournament.name)}&location=${encodeURIComponent(tournament.location)}`);
   };
-  
 
   const renderTournaments = (type: string) => {
     return tournaments
@@ -35,14 +37,14 @@ const AdminTournaments: React.FC = () => {
         <div key={index} className="tournamentCard">
           <div className="tournamentContent">
             <h1>{tournament.name}</h1>
-            <h3><strong>Type</strong> {tournament.type}</h3> 
+            <h3><strong>Type:</strong> {tournament.type}</h3>
             <p><strong>Location:</strong> {tournament.location}</p>
             <p><strong>Time Control:</strong> {tournament.timeControl}</p>
             <hr />
             <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(' | ')}</p>
             <div>
               <h4>Rounds Timing:</h4>
-              <p><strong>Description</strong> {tournament.roundsTiming.description}</p>
+              <p><strong>Description:</strong> {tournament.roundsTiming.description}</p>
             </div>
             <div>
               <h4>Sections:</h4>
@@ -63,8 +65,7 @@ const AdminTournaments: React.FC = () => {
           </div>
         </div>
       ));
-};
-
+  };
 
   return (
     <div className="container">
