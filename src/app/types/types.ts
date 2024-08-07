@@ -16,6 +16,7 @@ export interface Session {
   }
   
   export interface Tournament {
+    [x: string]: any;
     type: string;
     name: string;
     location: string;
