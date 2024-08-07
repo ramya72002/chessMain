@@ -22,7 +22,7 @@ const [messages, setMessages] = useState<{ [key: string]: string }>({});
     const fetchSessions = async () => {
       try {
         const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
-        setSessions(response.data);
+        setSessions(response.data[0].sessions);
       } catch (error) {
         console.error('Error fetching sessions:', error);
       } finally {
