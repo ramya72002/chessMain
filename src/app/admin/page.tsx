@@ -45,7 +45,7 @@ const Admin: React.FC = () => {
       setLoading(true);
       try {
         const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
-        setSessions(response.data);
+        setSessions(response.data[0].sessions);
       } catch (error) {
         console.error('Error fetching sessions:', error);
       } finally {
