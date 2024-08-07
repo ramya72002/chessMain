@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import './Tornaments.scss';
+import './Tournaments.scss';
 import { Tournament } from '../types/types';
-import Image from 'next/image';
-
+ 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [activeTab, setActiveTab] = useState<string>('casual');
@@ -14,7 +13,7 @@ const AdminTournaments: React.FC = () => {
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get<Tournament[]>('https://backend-chess-tau.vercel.app/tornaments');
+        const response = await axios.get<Tournament[]>('https://backend-chess-tau.vercel.app/tournaments');
         setTournaments(response.data);
       } catch (error) {
         console.error('Error fetching tournaments:', error);
