@@ -13,7 +13,7 @@
 
     p {
       margin: 0;
-      color: #457b9d;
+      color: #030303;
     }
   }
 
@@ -32,30 +32,34 @@
       }
 
       .steps {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two columns */
+        gap: 10px; /* Space between items */
+        
         .step {
           display: flex;
           align-items: center;
-          margin: 10px 0;
           padding: 10px;
           background-color: #a8dadc;
           border-radius: 5px;
-
+      
           .icon {
             font-size: 24px;
             margin-right: 10px;
           }
-
+      
           h4 {
             margin: 0 0 5px 0;
             color: #1d3557;
           }
-
+      
           p {
             margin: 0;
             color: #457b9d;
           }
         }
       }
+      
     }
   }
 
@@ -107,13 +111,13 @@
     border-radius: 10px;
     text-align: center;
     margin-top: 20px;
-
+  
     h3 {
       color: #ffffff;
       font-size: 25px;
       font-weight: bold;
     }
-
+  
     .activity {
       display: flex;
       justify-content: space-between;
@@ -122,11 +126,18 @@
       margin: 5px 0;
       padding: 10px;
       border-radius: 5px;
-
+  
       .details {
+        display: flex;          // Makes details horizontal
+        flex-direction: row;    // Ensures children are in a row
         color: #ffffff;
+        gap:250px;              // Adds spacing between details
+  
+        div {
+          margin-right: 10px;   // Space between each detail
+        }
       }
-
+  
       .details-button {
         display: flex;
         background-color: #ff006e;
@@ -135,11 +146,79 @@
         border-radius: 5px;
         color: #ffffff;
         cursor: pointer;
-
+  
         &:hover {
           background-color: #d00057;
         }
       }
     }
   }
+  
 }
+.chess-journey {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 10px;
+
+  .level {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2b87e2;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 30px; /* Adjust gap as needed */
+    position: relative;
+    z-index: 1;
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      background-color: #2b87e2;
+      border-radius: 50%;
+      padding: 10px; /* Add padding to increase the overlap effect */
+      overflow: hidden;
+  
+      .icon {
+        width: 100px;
+        height: 100px;
+        border: 3px solid #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 80px;
+        margin-bottom: 10px;
+        background-color: #2b87e2;
+        z-index: 2; /* Ensure the icon is above the line */
+      }
+  
+      p {
+        color: #fff;
+        font-size: 10px;
+      }
+  
+      &.active {
+        .icon {
+          background-color: #f26722;
+        }
+      }
+    }
+  }
+
+  .connector {
+    position: absolute;
+    top: 10;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    z-index: 1;
+    transform: translateY(-100%);
+  }
+}
+
