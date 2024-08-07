@@ -103,7 +103,7 @@ const Admin: React.FC = () => {
         time
       };
 
-      const response = await axios.delete('https://backend-chess-tau.vercel.app/del-session', { data });
+      const response = await axios.delete('https://backend-chess-tau.vercel.app/del-sessions', { data });
       console.log('Session deleted successfully:', response.data);
 
       setSessions(prevSessions => prevSessions.filter(session => session.date !== date || session.time !== time));
