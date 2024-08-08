@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
-const PuzzlePage: React.FC = () => {
+const PuzzlePage = () => {
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id')|| ''; // Extract file_id from query parameters
 
