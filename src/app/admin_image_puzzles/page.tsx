@@ -11,7 +11,7 @@ interface ImageSet {
 const AdminImagePuzzles: React.FC = () => {
   const [imageSets, setImageSets] = useState<ImageSet[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [title, setTitle] = useState<string>('');
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
@@ -58,14 +58,14 @@ const AdminImagePuzzles: React.FC = () => {
     setSelectedFiles(e.target.files);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTitle(e.target.value);
   };
 
   const handleUpload = () => {
-    if (selectedFiles && title) {
+    if (selectedFiles && selectedTitle) {
       const formData = new FormData();
-      formData.append('title', title);
+      formData.append('title', selectedTitle);
       Array.from(selectedFiles).forEach(file => {
         formData.append('images', file);
       });
@@ -80,7 +80,7 @@ const AdminImagePuzzles: React.FC = () => {
           console.error('Error uploading images:', error);
         });
     } else {
-      setErrorMessage('Please select files and enter a title.');
+      setErrorMessage('Please select files and choose a title.');
     }
   };
 
@@ -88,7 +88,14 @@ const AdminImagePuzzles: React.FC = () => {
     <div className="image-puzzle">
       <h1>Image Puzzle</h1>
       <div className="upload-section">
-        <input type="text" placeholder="Enter title" value={title} onChange={handleTitleChange} />
+        <select value={selectedTitle} onChange={handleTitleChange}>
+          <option value="">Select a title</option>
+          {imageSets.map(set => (
+            <option key={set.title} value={set.title}>
+              {set.title}
+            </option>
+          ))}
+        </select>
         <input type="file" multiple onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
       </div>

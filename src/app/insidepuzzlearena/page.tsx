@@ -1,37 +1,23 @@
-'use client'
+// PuzzlePageClient.tsx
+'use client';
+
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
-const PuzzlePage: React.FC = () => {
+const PuzzlePageClient = () => {
   const searchParams = useSearchParams();
-  const fileId = searchParams.get('file_id'); // Extract file_id from query parameters
+  const fileId = searchParams.get('file_id') || '';
 
-  const [timer, setTimer] = useState<number>(0); // Timer in seconds
-  const [isRunning, setIsRunning] = useState<boolean>(false); // Timer running status
-  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined); // For the image URL
-
-  const fetchImageFile = (id: string) => {
-    console.log(`Sending request with file_id: ${id}`);
-
-    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: id }, { responseType: 'blob' })
-      .then(response => {
-        console.log('Response headers:', response.headers);
-        console.log('Response data type:', response.headers['content-type']);
-        console.log('Response data blob size:', response.data.size);
-
-        const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
-        setImageSrc(url);
-      })
-      .catch(error => {
-        console.error(`Error fetching image with file ID ${id}:`, error);
-      });
-  };
+  const [timer, setTimer] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (fileId) {
-      fetchImageFile(fileId); // fileId is guaranteed to be a string here
+      fetchImageFile(fileId);
     } else {
       console.error('file_id is undefined');
     }
@@ -63,6 +49,17 @@ const PuzzlePage: React.FC = () => {
     };
   }, [isRunning, timer]);
 
+  const fetchImageFile = (id: string) => {
+    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: id }, { responseType: 'blob' })
+      .then(response => {
+        const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+        setImageSrc(url);
+      })
+      .catch(error => {
+        console.error(`Error fetching image with file ID ${id}:`, error);
+      });
+  };
+
   const handleStartTimer = () => {
     setIsRunning(true);
   };
@@ -88,19 +85,18 @@ const PuzzlePage: React.FC = () => {
         <div className="puzzle-info">
           <h2>Puzzle - 1</h2>
           <button className="timer-btn" onClick={handleStartTimer}>
-            <img src="/images/starttimer.png" alt="Start Timer" />
             Start Timer
             <div className="timer-display">
               <h3>: {formatTime(timer)}</h3>
             </div>
           </button>
-          <button className="solution-btn">
-            <img src="/images/solution.png" alt="Solution" />Solution
-          </button>
-          <button className="ask-sid-btn">
-            <img src="/images/sid.png" alt="Ask SID" />
-            Ask SID
-          </button>
+<button className="solution-btn">
+              <img src="/images/solution.png" alt="Solution" />Solution
+            </button>
+            <button className="ask-sid-btn">
+              <img src="/images/sid.png" alt="Ask SID" />
+              Ask SID
+            </button>
         </div>
       </div>
       <div className="response-buttons">
@@ -111,6 +107,14 @@ const PuzzlePage: React.FC = () => {
         * You ‘Got it Right’ because you were able to correctly identify the first two moves as mentioned in the ‘Solution’ tab above, else you would have marked as ‘Missed it’, correct?
       </p>
     </div>
+  );
+};
+
+const PuzzlePage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PuzzlePageClient />
+    </Suspense> 
   );
 };
 
