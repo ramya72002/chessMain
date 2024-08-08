@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="layout-container">
           {(pathname === "/portalhome" || 
-          pathname === "/imagepuzzle"||pathname === "/puzzleArena"|| pathname === "/learnclass"||pathname=="/puzzles"||pathname=="/levels/level1"||pathname=="/levels/level2"
+          pathname === "/imagepuzzle"||pathname === "/puzzleArena"|| pathname === "/learnclass"|| pathname === "/startArena"||pathname=="/puzzles"||pathname=="/levels/level1"||pathname=="/levels/level2"
             ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
             ||pathname=="/levels/level4test"||pathname=="/tournaments"||pathname=="/tournamentRegistration"||pathname=="/insidepuzzlearena") && <Sidebar />}
            <div className="content-container">
