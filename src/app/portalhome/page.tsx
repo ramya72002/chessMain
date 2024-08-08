@@ -41,8 +41,21 @@ const Hero = () => {
 
   const getActiveClass = (level: string) => {
     if (!userDetails) return '';
-    return userDetails.level === level ? 'active' : '';
+    
+    const levelMap: { [key: string]: number } = {
+      level1: 1,
+      level2: 2,
+      level3: 3,
+      level4: 4,
+      level5: 5,
+    };
+  
+    const userLevel = levelMap[userDetails.level];
+    const currentLevel = levelMap[level];
+  
+    return currentLevel <= userLevel ? 'active' : 'inactive';
   };
+  
 
   return (
     <div className="hero">
