@@ -114,7 +114,7 @@ const PuzzlePage = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <PuzzlePageClient />
-    </Suspense>
+    </Suspense> 
   );
 };
 
