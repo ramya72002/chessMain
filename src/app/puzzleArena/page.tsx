@@ -41,7 +41,7 @@ const PuzzleArena = () => {
             <p>Upcoming Live Arena</p>
             <p>05-Aug-2024</p>
             <p>10:00 A.M</p>
-            <button className="start-button" onClick={() => handleButtonClick('group')}>Join</button>
+            <button className="start-button" onClick={() => handleButtonClick('UpcomingLiveArena')}>Join</button>
           </div>
         </div>
         
@@ -51,19 +51,19 @@ const PuzzleArena = () => {
             <p>Endgame: Advanced Checkmates</p>
             <p>Not Started</p>
             <p>0/10</p>
-            <button className="start-button" onClick={() => handleButtonClick('Endgame: Advanced Checkmates')}>Start</button>
+            <button className="start-button" onClick={() => handleButtonClick('EndgameAdvancedCheckmates')}>Start</button>
           </div>
           <div className="practice-item">
             <p>Middlegame: Tactical Motifs</p>
             <p>Started</p>
             <p>2/10</p>
-            <button className="return-button" onClick={() => handleButtonClick('Middlegame: Tactical Motifs')}>Return</button>
+            <button className="return-button" onClick={() => handleButtonClick('MiddlegameTacticalMotifs')}>Return</button>
           </div>
           <div className="practice-item">
             <p>Opening: Puzzles</p>
             <p>Completed</p>
             <p>8/10</p>
-            <button className="completed-button" onClick={() => handleButtonClick('Opening: Puzzles')}>View</button>
+            <button className="completed-button" onClick={() => handleButtonClick('OpeningPuzzles')}>View</button>
           </div>
         </div>
       </div>
