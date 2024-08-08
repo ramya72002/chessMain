@@ -2,12 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import './puzzleArena.scss';
 import { useRouter } from 'next/navigation';
-interface UserDetails {
-  name: string;
-  email: string;
-  image: string;
-  level: string;
-}
+import { UserDetails } from '../types/types';
+
 const PuzzleArena = () => {
   const router = useRouter();
   const handleButtonClick = (title:string) => {

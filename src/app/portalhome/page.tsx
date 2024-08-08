@@ -2,13 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './portal.scss';
-
-interface UserDetails {
-  name: string;
-  email: string;
-  image: string;
-  level: string;
-}
+import { UserDetails } from '../types/types';
 
 const Hero = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);

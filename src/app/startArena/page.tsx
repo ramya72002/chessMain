@@ -4,11 +4,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-interface ImageData {
-  id: string;
-  filename: string;
-  url: string;
-}
+import { ImageData } from '../types/types';
+
 
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');

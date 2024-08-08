@@ -1,4 +1,3 @@
-// src/types/types.ts
 export interface Session {
     _id: string;
     date: string;
@@ -13,6 +12,14 @@ export interface Session {
   export interface Section {
     name: string;
     registrationFee: string;
+  }
+  export interface FormData {
+    date: Date | null;
+    hour: string;
+    minute: string;
+    period: string;
+    coach_name: string;
+    session_link: string;
   }
   
   export interface Tournament {
@@ -31,6 +38,18 @@ export interface Session {
     image: string;
     level: string; 
     puzzle_score:string;
+  }
+  export interface UserDetails {
+    name: string;
+    email: string;
+    image: string;
+    level: string;
+  }
+
+  export interface ImageData {
+    id: string;
+    filename: string;
+    url: string;
   }
   
   

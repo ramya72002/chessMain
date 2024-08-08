@@ -3,16 +3,12 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import './admin_get_puzzle_images.scss'; // Import SCSS directly
+import { ImageData } from '../types/types';
 
-interface Image {
-  id: string;
-  filename: string;
-  url: string;
-}
 
 const AdminGetPuzzleImages: React.FC = () => {
   const [title, setTitle] = useState<string>('');
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [error, setError] = useState<string>('');
 
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {

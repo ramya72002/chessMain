@@ -6,22 +6,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './Admin.scss'; // Import the optimized SCSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Session } from '../types/types';
+import { FormData } from '../types/types';
 
-interface FormData {
-  date: Date | null;
-  hour: string;
-  minute: string;
-  period: string;
-  coach_name: string;
-  session_link: string;
-}
-
-interface Session {
-  date: string;
-  time: string;
-  coach_name: string;
-  session_link: string;
-}
 
 const Admin: React.FC = () => {
   const initialFormData: FormData = {

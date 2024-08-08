@@ -3,14 +3,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './imagepuzzle.scss';
 
-interface Image {
-  id: string;
-  filename: string;
-  url: string;
-}
+import { ImageData } from '../types/types';
 
 const ImagePuzzle: React.FC = () => {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

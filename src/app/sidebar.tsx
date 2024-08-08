@@ -4,15 +4,8 @@ import Image from 'next/image';
 import { FaHome, FaQuestionCircle, FaGraduationCap, FaChalkboardTeacher, FaCalendarAlt, FaNewspaper } from 'react-icons/fa';
 import axios from 'axios';
 import './side.scss';
+import { UserDetails } from './types/types';
 
-interface UserDetails {
-  name: string;
-  email: string;
-  image: string;
-  level:string;
-
-  // Add other properties if needed
-}
 
 const Sidebar = () => {
   const [profilePic, setProfilePic] = useState('/images/portal/b4.png'); // Default profile picture
