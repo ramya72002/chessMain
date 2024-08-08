@@ -82,7 +82,7 @@ const StartArena = () => {
             <img src={imageUrls[image.id] || ''} alt={image.filename} />
           </div>
         ))}
-      </div>
+      </div >
     </div>
   );
 };
