@@ -1,7 +1,13 @@
-'use client'
-import React from 'react'; 
+'use client';
+import React, { useEffect, useState } from 'react';
 import './puzzleArena.scss';
 import { useRouter } from 'next/navigation';
+interface UserDetails {
+  name: string;
+  email: string;
+  image: string;
+  level: string;
+}
 const PuzzleArena = () => {
   const router = useRouter();
   const handleButtonClick = (title:string) => {
@@ -10,7 +16,22 @@ const PuzzleArena = () => {
        // Assuming the route for /startArena accepts query parameters
       router.push(`/startArena?title=${encodeURIComponent(title)}`);
     };
- 
+    const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+
+    useEffect(() => {
+      const fetchUserDetails = async () => {
+        if (typeof window !== 'undefined') {
+          const userDetailsString = localStorage.getItem('userDetails');
+          const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+
+          setUserDetails(storedUserDetails);
+          // You can add logic to handle userDetailsString here
+        }
+      };
+    
+      fetchUserDetails();
+    }, []);
+    
 
   return (
     <div className="puzzle-arena-container">
@@ -21,7 +42,7 @@ const PuzzleArena = () => {
         
         <div className="right-section">
           <div className="header">
-            <p>Hi Sumit</p>
+            <p>Hi {userDetails ? userDetails.name : 'Student'}</p>
             <p>Your Puzzle Arena Score is .....</p>
           </div>
           
