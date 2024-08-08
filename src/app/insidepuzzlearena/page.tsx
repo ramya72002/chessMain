@@ -7,7 +7,7 @@ import './insidepuzzlearena.scss';
 
 const PuzzlePage: React.FC = () => {
   const searchParams = useSearchParams();
-  const fileId = searchParams.get('file_id'); // Extract file_id from query parameters
+  const fileId = searchParams.get('file_id')|| ''; // Extract file_id from query parameters
 
   const [timer, setTimer] = useState<number>(0); // Timer in seconds
   const [isRunning, setIsRunning] = useState<boolean>(false); // Timer running status
