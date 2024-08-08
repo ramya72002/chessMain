@@ -86,7 +86,7 @@ const AdminImagePuzzles: React.FC = () => {
 
   const handleDelete = (title: string) => {
     if (window.confirm(`Are you sure you want to delete the image set titled "${title}"?`)) {
-      axios.delete('http://127.0.0.1:80/delete-arena-title', {
+      axios.delete('https://backend-chess-tau.vercel.app/delete-arena-title', {
         data: { title }
       })
         .then(response => {
