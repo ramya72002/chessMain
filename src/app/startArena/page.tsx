@@ -2,6 +2,7 @@
 import './startArena.scss'; // Import globally
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface ImageData {
   id: string;
@@ -15,6 +16,8 @@ const StartArena = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
+
+  const router = useRouter();
 
   useEffect(() => {
     const queryTitle = new URLSearchParams(window.location.search).get('title');
@@ -61,6 +64,12 @@ const StartArena = () => {
       });
   };
 
+  const handleImageClick = (image: ImageData) => {
+    console.log("id",image)
+    const url = `/insidepuzzlearena?file_id=${image.id}`;
+    router.push(url);
+  };
+
   if (loading) return <p className="loading">Loading...</p>;
   if (error) return <p className="error">{error}</p>;
 
@@ -69,7 +78,7 @@ const StartArena = () => {
       <h1 className="title">{title}</h1>
       <div className="imageGallery">
         {images.map((image) => (
-          <div key={image.id}>
+          <div key={image.id} onClick={() => handleImageClick(image)} style={{ cursor: 'pointer' }}>
             <img src={imageUrls[image.id] || ''} alt={image.filename} />
           </div>
         ))}
