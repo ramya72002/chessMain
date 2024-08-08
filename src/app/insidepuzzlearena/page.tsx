@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -12,23 +13,7 @@ const PuzzlePage: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false); // Timer running status
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined); // For the image URL
 
-  const fetchImageFile = (id: string) => {
-    console.log(`Sending request with file_id: ${id}`);
-
-    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: id }, { responseType: 'blob' })
-      .then(response => {
-        console.log('Response headers:', response.headers);
-        console.log('Response data type:', response.headers['content-type']);
-        console.log('Response data blob size:', response.data.size);
-
-        const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
-        setImageSrc(url);
-      })
-      .catch(error => {
-        console.error(`Error fetching image with file ID ${id}:`, error);
-      });
-  };
-
+  // Use a useEffect hook to ensure this runs only on the client side
   useEffect(() => {
     if (fileId) {
       fetchImageFile(fileId); // fileId is guaranteed to be a string here
@@ -62,6 +47,23 @@ const PuzzlePage: React.FC = () => {
       }
     };
   }, [isRunning, timer]);
+
+  const fetchImageFile = (id: string) => {
+    console.log(`Sending request with file_id: ${id}`);
+
+    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: id }, { responseType: 'blob' })
+      .then(response => {
+        console.log('Response headers:', response.headers);
+        console.log('Response data type:', response.headers['content-type']);
+        console.log('Response data blob size:', response.data.size);
+
+        const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
+        setImageSrc(url);
+      })
+      .catch(error => {
+        console.error(`Error fetching image with file ID ${id}:`, error);
+      });
+  };
 
   const handleStartTimer = () => {
     setIsRunning(true);
