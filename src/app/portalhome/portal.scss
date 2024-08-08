@@ -1,6 +1,7 @@
 .hero {
   padding: 20px;
   background-color: #2b87e2;
+  border-radius: 5px;
 
   .header {
     text-align: center;
@@ -27,7 +28,9 @@
       margin: 0 10px;
 
       h3 {
-        color: #e63946;
+        color: #ffffff;
+        font-size: 20px;
+        margin-bottom: 10px;
         text-align: center;
       }
 
@@ -40,6 +43,7 @@
           display: flex;
           align-items: center;
           padding: 10px;
+          border: 1px solid rgb(53, 52, 52);
           background-color: #a8dadc;
           border-radius: 5px;
       
@@ -70,6 +74,7 @@
 
     .stat {
       background-color: #ffbe0b;
+      border: 1px solid rgb(56, 55, 55);
       padding: 10px;
       border-radius: 10px;
       text-align: center;
@@ -108,6 +113,7 @@
   .activities {
     background-color: #8338ec;
     padding: 10px;
+    border: 1px solid rgb(65, 64, 64);
     border-radius: 10px;
     text-align: center;
     margin-top: 20px;
@@ -122,7 +128,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #38b000;
+      background-color: #1faa12;
+      border: 1px solid rgb(66, 66, 66);
       margin: 5px 0;
       padding: 10px;
       border-radius: 5px;
@@ -141,7 +148,7 @@
       .details-button {
         display: flex;
         background-color: #ff006e;
-        border: none;
+        border: 1px solid rgb(49, 49, 49);
         padding: 5px 10px;
         border-radius: 5px;
         color: #ffffff;

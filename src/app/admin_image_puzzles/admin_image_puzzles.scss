@@ -1,8 +1,26 @@
+.image-container {
+  display: flex;
+  align-items: stretch;
+  margin: 0; /* Ensure no margin around the container */
+  padding: 0; /* Ensure no padding around the container */
+
+  img {
+    width: 100%;
+    max-width: 200px;
+    height: 27%; /* Set height to 27% */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0; /* Ensure no margin around the image */
+    padding: 0; /* Ensure no padding around the image */
+  }
+}
+
 .image-puzzle {
   padding: 20px;
 
   h1 {
     text-align: center;
+    color: #000;
     margin-bottom: 20px;
   }
 
@@ -16,6 +34,7 @@
     input[type="file"] {
       margin-bottom: 10px;
       padding: 10px;
+      color: #000;
       border: 1px solid #ccc;
       border-radius: 4px;
       width: 300px;
@@ -48,22 +67,34 @@
 
     h2 {
       text-align: center;
+      color: #000;
       margin-bottom: 10px;
     }
 
     .images-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-      gap: 1px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ensure images fit nicely */
+      gap: 10px; /* Space between images */
       justify-items: center;
 
       .image-container {
+        display: flex;
+        align-items: stretch;
+        margin: 0; /* Ensure no margin around the container */
+        padding: 0; /* Ensure no padding around the container */
+
         img {
           width: 100%;
           max-width: 200px;
-          height: 50%; /* Adjust height to auto to maintain aspect ratio */
+          height: 27%; /* Set height to 27% */
           border-radius: 8px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          margin: 0; /* Ensure no margin around the image */
+          padding: 0; /* Ensure no padding around the image */
+        }
+
+        p {
+          color: #000;
         }
       }
     }
