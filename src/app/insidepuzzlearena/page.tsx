@@ -1,11 +1,13 @@
+// PuzzlePageClient.tsx
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
-const PuzzlePage = () => {
+const PuzzlePageClient = () => {
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id') || '';
 
@@ -88,6 +90,13 @@ const PuzzlePage = () => {
               <h3>: {formatTime(timer)}</h3>
             </div>
           </button>
+<button className="solution-btn">
+              <img src="/images/solution.png" alt="Solution" />Solution
+            </button>
+            <button className="ask-sid-btn">
+              <img src="/images/sid.png" alt="Ask SID" />
+              Ask SID
+            </button>
         </div>
       </div>
       <div className="response-buttons">
@@ -98,6 +107,14 @@ const PuzzlePage = () => {
         * You ‘Got it Right’ because you were able to correctly identify the first two moves as mentioned in the ‘Solution’ tab above, else you would have marked as ‘Missed it’, correct?
       </p>
     </div>
+  );
+};
+
+const PuzzlePage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PuzzlePageClient />
+    </Suspense>
   );
 };
 
