@@ -1,43 +1,85 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './portal.scss';
 
+interface UserDetails {
+  name: string;
+  email: string;
+  image: string;
+  level: string;
+}
+
 const Hero = () => {
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (typeof window !== 'undefined') {
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        
+        if (storedUserDetails && storedUserDetails.image) {
+          setUserDetails(storedUserDetails);
+        }
+
+        const email = storedUserDetails?.email;
+
+        try {
+          if (email) {
+            const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
+            setUserDetails(response.data.data);
+          }
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+        }
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
+
+  const getActiveClass = (level: string) => {
+    if (!userDetails) return '';
+    return userDetails.level === level ? 'active' : '';
+  };
+
   return (
     <div className="hero">
       <div className="header">
-        <h2>Hi Sumit</h2>
-        <p>Your chess journey so far.....</p>
+        <h2>Hi {userDetails ? userDetails.name : 'Sumit'}</h2>
+        <p>Your chess journey so far...</p>
       </div>
 
       <div className="chess-journey">
-  <div className="level">
-  <svg className="connector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 10" preserveAspectRatio="none">
-      <line x1="0" y1="5" x2="1000" y2="5" stroke="white" stroke-width="5"/>
-    </svg>
-    <div className="step">
-      <div className="icon pawn">♙</div>
-      <p>Pawn</p>
-      <p>(Beginner)</p>
-    </div>
-    <div className="step active">
-      <div className="icon knight">♞</div>
-      <p>Knight</p>
-      <p>(Intermediate)</p>
-    </div>
-    <div className="step">
-      <div className="icon bishop">♝</div>
-      <p>Bishop</p>
-      <p>(Proficient)</p>
-    </div>
-    <div className="step">
-      <div className="icon rook">♜</div>
-      <p>Rook</p>
-      <p>(Advanced)</p>
-    </div>
-    <div className="step">
-      <div className="icon queen">♛</div>
-      <p>Queen</p>
-      <p>(Expert)</p>
+        <div className="level">
+          <svg className="connector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 10" preserveAspectRatio="none">
+            <line x1="0" y1="5" x2="1000" y2="5" stroke="white" strokeWidth="5"/>
+          </svg>
+          <div className={`step ${getActiveClass('level1')}`}>
+            <div className="icon pawn">♙</div>
+            <p>Pawn</p>
+            <p>(Beginner)</p>
+          </div>
+          <div className={`step ${getActiveClass('level2')}`}>
+            <div className="icon knight">♞</div>
+            <p>Knight</p>
+            <p>(Intermediate)</p>
+          </div>
+          <div className={`step ${getActiveClass('level3')}`}>
+            <div className="icon bishop">♝</div>
+            <p>Bishop</p>
+            <p>(Proficient)</p>
+          </div>
+          <div className={`step ${getActiveClass('level4')}`}>
+            <div className="icon rook">♜</div>
+            <p>Rook</p>
+            <p>(Advanced)</p>
+          </div>
+          <div className={`step ${getActiveClass('level5')}`}>
+            <div className="icon queen">♛</div>
+            <p>Queen</p>
+            <p>(Expert)</p>
     </div>
   </div>
   
