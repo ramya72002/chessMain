@@ -8,16 +8,15 @@ import './insidepuzzlearena.scss';
 
 const PuzzlePage = () => {
   const searchParams = useSearchParams();
-  const fileId = searchParams.get('file_id') || ''; // Extract file_id from query parameters
+  const fileId = searchParams.get('file_id') || '';
 
-  const [timer, setTimer] = useState<number>(0); // Timer in seconds
-  const [isRunning, setIsRunning] = useState<boolean>(false); // Timer running status
-  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined); // For the image URL
+  const [timer, setTimer] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
 
-  // Use a useEffect hook to ensure this runs only on the client side
   useEffect(() => {
     if (fileId) {
-      fetchImageFile(fileId); // fileId is guaranteed to be a string here
+      fetchImageFile(fileId);
     } else {
       console.error('file_id is undefined');
     }
@@ -83,7 +82,7 @@ const PuzzlePage = () => {
         <div className="puzzle-content">
           <div className="chessboard">
             {imageSrc ? (
-            <img src={imageSrc} alt="Chessboard" />
+              <img src={imageSrc} alt="Chessboard" />
             ) : (
               <p>Loading image...</p>
             )}
@@ -92,17 +91,17 @@ const PuzzlePage = () => {
           <div className="puzzle-info">
             <h2>Puzzle - 1</h2>
             <button className="timer-btn" onClick={handleStartTimer}>
-            <img src="/images/starttimer.png" alt="Start Timer" />
+              <img src="/images/starttimer.png" alt="Start Timer" />
               Start Timer
               <div className="timer-display">
                 <h3>: {formatTime(timer)}</h3>
               </div>
             </button>
             <button className="solution-btn">
-            <img src="/images/solution.png" alt="Solution" />Solution
+              <img src="/images/solution.png" alt="Solution" />Solution
             </button>
             <button className="ask-sid-btn">
-            <img src="/images/sid.png" alt="Ask SID" />
+              <img src="/images/sid.png" alt="Ask SID" />
               Ask SID
             </button>
           </div>
