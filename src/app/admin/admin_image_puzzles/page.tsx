@@ -84,6 +84,22 @@ const AdminImagePuzzles: React.FC = () => {
     }
   };
 
+  const handleDelete = (title: string) => {
+    if (window.confirm(`Are you sure you want to delete the image set titled "${title}"?`)) {
+      axios.delete('http://127.0.0.1:80/delete-arena-title', {
+        data: { title }
+      })
+        .then(response => {
+          console.log(response.data.message);
+          fetchImageSets();
+        })
+        .catch(error => {
+          setErrorMessage(`Error deleting image set titled "${title}".`);
+          console.error('Error deleting image set:', error);
+        });
+    }
+  };
+  
   return (
     <div className="image-puzzle">
       <h1>Image Puzzle</h1>
@@ -108,6 +124,7 @@ const AdminImagePuzzles: React.FC = () => {
           {imageSets.map(set => (
             <div key={set.title} className="image-set">
               <h2>{set.title}</h2>
+              <button onClick={() => handleDelete(set.title)} className="delete-button">Delete</button>
               <div className="images-grid">
                 {set.file_ids.map(fileId => (
                   <div key={fileId} className="image-container">
