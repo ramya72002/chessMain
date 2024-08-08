@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
- import './AdminHeader.scss'; // Import SCSS directly
+import './AdminHeader.scss'; // Import SCSS directly
 
 const AdminHeader= () => {
     return (
@@ -18,22 +18,22 @@ const AdminHeader= () => {
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin_image_puzzles">
+                        <a href="/admin/admin_image_puzzles">
                             <p>Image Puzzle</p>
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin_tournaments">
+                        <a href="/admin/admin_tournaments">
                             <p>Tournaments</p>
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin_news">
+                        <a href="/admin/admin_news">
                             <p>News</p>
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/StudentDetails">
+                        <a href="/admin/StudentDetails">
                             <p>Student Details</p>
                         </a>
                     </li>

@@ -3,7 +3,7 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 import './admin_get_puzzle_images.scss'; // Import SCSS directly
-import { ImageData } from '../types/types';
+import { ImageData } from '../../types/types';
 
 
 const AdminGetPuzzleImages: React.FC = () => {

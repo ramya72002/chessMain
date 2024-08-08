@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './admin_tournaments.scss';
-import { Tournament } from '../types/types';
+import { Tournament } from '../../types/types';
 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);

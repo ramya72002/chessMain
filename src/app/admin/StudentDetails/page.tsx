@@ -1,13 +1,13 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './StudentDetails.scss'; // Import your CSS file for styling
-import { Student } from '../types/types';
-import { FaTrash } from 'react-icons/fa'; // Import trash icon from react-icons
+import './StudentDetails.scss';  
+import { Student } from '../../types/types';
+import { FaTrash } from 'react-icons/fa';  
 
 const StudentDetails = () => {
   const [students, setStudents] = useState<Student[]>([]);
-  const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // Track the email to confirm deletion
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null);  
 
   useEffect(() => {
     fetchStudents();
