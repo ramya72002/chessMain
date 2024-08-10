@@ -21,7 +21,7 @@ const AdminImagePuzzles: React.FC = () => {
   const fetchImageSets = async (level: string) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://127.0.0.1:80/get_level?level=${level}`);
+      const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${level}`);
       console.log('Fetched image sets:', response.data.image_sets); // Log fetched image sets
       setImageSets(response.data.image_sets);
       setLoading(false);
@@ -45,7 +45,7 @@ const AdminImagePuzzles: React.FC = () => {
 
   const fetchImageFile = async (fileId: string) => {
     try {
-      const response = await axios.post('http://127.0.0.1:80/image_get_fileid', { file_id: fileId }, { responseType: 'blob' });
+      const response = await axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: fileId }, { responseType: 'blob' });
       const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
       setImageUrls(prevState => ({ ...prevState, [fileId]: url }));
     } catch (error) {
@@ -85,7 +85,7 @@ const AdminImagePuzzles: React.FC = () => {
       });
 
       try {
-        const response = await axios.post('http://127.0.0.1:80/upload', formData);
+        const response = await axios.post('https://backend-chess-tau.vercel.app/upload', formData);
         console.log(response.data.message);
         fetchImageSets(selectedLevel);
       } catch (error) {
@@ -106,7 +106,7 @@ const AdminImagePuzzles: React.FC = () => {
   
     if (window.confirm(`Are you sure you want to delete the image set with level "${level}" and title "${title}"?`)) {
       try {
-        const response = await axios.delete('http://127.0.0.1:80/delete-arena-title', {
+        const response = await axios.delete('https://backend-chess-tau.vercel.app/delete-arena-title', {
           data: { title, level }
         });
         console.log(response.data.message);
