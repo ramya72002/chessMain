@@ -171,9 +171,6 @@ const Sidebar = () => {
         <a href="/tournaments" className="navItem events">
           <FaCalendarAlt /> Tournaments
         </a>
-        <a href="/news" className="navItem news">
-          <FaNewspaper /> News
-        </a>
       </nav>
     </div>
   );
