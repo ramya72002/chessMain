@@ -112,7 +112,7 @@ const AdminImagePuzzles: React.FC = () => {
         console.log(response.data.message);
         fetchImageSets(selectedLevel);
       } catch (error) {
-        const errorMessage = error.response?.data?.message || 'Error deleting image set.';
+        const errorMessage = 'Error deleting image set.';
         setErrorMessage(`Error deleting image set with level "${level}" and title "${title}": ${errorMessage}`);
         console.error('Error deleting image set:', error);
       }
