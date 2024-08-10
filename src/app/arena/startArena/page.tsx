@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-import { ImageData } from '../types/types';
+import { ImageData } from '../../types/types';
 
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
@@ -65,7 +65,7 @@ const StartArena = () => {
   };
 
   const handleImageClick = (image: ImageData) => {
-    const url = `/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}`;
+    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}`;
     router.push(url);
   };
 

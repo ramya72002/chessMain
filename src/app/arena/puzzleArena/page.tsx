@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './puzzleArena.scss';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { UserDetails } from '../types/types';
+import { UserDetails } from '../../types/types';
 
 const PuzzleArena = () => {
   const router = useRouter();
@@ -33,7 +33,7 @@ const PuzzleArena = () => {
 
   const handleButtonClick = (title: string) => {
     if (userDetails?.level) {
-      router.push(`/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(userDetails.level)}`);
+      router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(userDetails.level)}`);
     }
   };
 
@@ -41,7 +41,7 @@ const PuzzleArena = () => {
     <div className="puzzle-arena-container">
       <div className="top-section">
         <div className="left-section">
-          <img src="/images/puzzlearena.png" alt="Puzzle Arena" />
+          <img src="/images/puzzleArena.png" alt="Puzzle Arena" />
         </div>
         
         <div className="right-section">
