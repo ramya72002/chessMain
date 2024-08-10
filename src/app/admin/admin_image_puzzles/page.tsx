@@ -135,7 +135,7 @@ const AdminImagePuzzles: React.FC = () => {
           type="text"
           value={selectedTitle}
           onChange={handleTitleChange}
-          placeholder="Enter a title"
+          placeholder="Enter a title without any spaces"
         />
         <input type="file" multiple onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
