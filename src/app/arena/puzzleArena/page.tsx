@@ -8,7 +8,7 @@ import { UserDetails } from '../../types/types';
 const PuzzleArena = () => {
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const [levelData, setLevelData] = useState(null);
+  const [titles, setTitles] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -20,7 +20,19 @@ const PuzzleArena = () => {
           setUserDetails(storedUserDetails);
           try {
             const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${storedUserDetails.level}`);
-            setLevelData(response.data);  // Assuming the response has relevant data
+            const data = response.data;
+
+            // Log the data to check its structure
+            console.log('API response data:', data);
+
+            // Adjust based on the actual structure of data
+            if (data.image_sets && Array.isArray(data.image_sets)) {
+              // Extract titles from the image_sets array
+              const titlesList = data.image_sets.map((item: { title: string }) => item.title);
+              setTitles(titlesList);
+            } else {
+              console.error('Unexpected data structure:', data);
+            }
           } catch (error) {
             console.error('Error fetching level data:', error);
           }
@@ -72,24 +84,14 @@ const PuzzleArena = () => {
         
         <div className="theme-practice">
           <p>Theme Based Practice</p>
-          <div className="practice-item">
-            <p>Endgame: Advanced Checkmates</p>
-            <p>Not Started</p>
-            <p>0/10</p>
-            <button className="start-button" onClick={() => handleButtonClick('EndgameAdvancedCheckmates')}>Start</button>
-          </div>
-          <div className="practice-item">
-            <p>Middlegame: Tactical Motifs</p>
-            <p>Started</p>
-            <p>2/10</p>
-            <button className="return-button" onClick={() => handleButtonClick('MiddlegameTacticalMotifs')}>Return</button>
-          </div>
-          <div className="practice-item">
-            <p>Opening: Puzzles</p>
-            <p>Completed</p>
-            <p>8/10</p>
-            <button className="completed-button" onClick={() => handleButtonClick('OpeningPuzzles')}>View</button>
-          </div>
+          {titles.map((title, index) => (
+            <div className="practice-item" key={index}>
+              <p>{title}</p>
+              <p>Status</p>
+              <p>0/10</p>
+              <button className="start-button" onClick={() => handleButtonClick(title)}>Start</button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
