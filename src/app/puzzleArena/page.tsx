@@ -66,7 +66,7 @@ const PuzzleArena = () => {
             <p>Upcoming Live Arena</p>
             <p>05-Aug-2024</p>
             <p>10:00 A.M</p>
-            <button className="start-button" onClick={() => handleButtonClick('Upcoming Live Arena')}>Join</button>
+            <button className="start-button" onClick={() => handleButtonClick('UpcomingLiveArena')}>Join</button>
           </div>
         </div>
         
