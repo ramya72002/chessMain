@@ -13,8 +13,8 @@ const AdminHeader= () => {
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin_assignments">
-                            <p>Assignments</p>
+                        <a href="/admin/admin_upcoming_activities">
+                            <p>Upcoming Activities</p>
                         </a>
                     </li>
                     <li className="menuItem">

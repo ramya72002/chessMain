@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './portal.scss';
-import { UserDetails } from '../types/types';
+import { UserDetails, UpcomingActivity } from '../types/types';
 
 const Hero = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [upcomingActivities, setUpcomingActivities] = useState<UpcomingActivity[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -30,7 +32,21 @@ const Hero = () => {
       }
     };
 
+    const fetchUpcomingActivities = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
+        const data = response.data[0].upcoming_activities;
+        setUpcomingActivities(data);
+      } catch (error) {
+        console.error('Error fetching Upcoming Activities:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUserDetails();
+    fetchUpcomingActivities();
   }, []);
 
   const getActiveClass = (level: string) => {
@@ -50,7 +66,6 @@ const Hero = () => {
     return currentLevel <= userLevel ? 'active' : 'inactive';
   };
   
-
   return (
     <div className="hero">
       <div className="header">
@@ -155,30 +170,20 @@ const Hero = () => {
 
       <div className="activities">
         <h3>Upcoming Activities</h3>
-        <div className="activity">
-          <div className="details">
-            <div>Casual Tournament</div>
-            <div>05-Aug-2024</div>
-            <div>10:00 A.M</div>
-          </div>
-          <button className="details-button">Details</button>
-        </div>
-        <div className="activity">
-          <div className="details">
-            <div>Casual Tournament</div>
-            <div>05-Aug-2024</div>
-            <div>10:00 A.M</div>
-          </div>
-          <button className="details-button">Details</button>
-        </div>
-        <div className="activity">
-          <div className="details">
-            <div>Casual Tournament</div>
-            <div>05-Aug-2024</div>
-            <div>10:00 A.M</div>
-          </div>
-          <button className="details-button">Details</button>
-        </div>
+        {loading ? (
+          <p>Loading activities...</p>
+        ) : (
+          upcomingActivities.map((activity, index) => (
+            <div className="activity" key={index}>
+              <div className="details">
+                <div>{activity.title}</div>
+                <div>{activity.date}</div>
+                <div>{activity.time}</div>
+              </div>
+              <button className="details-button">Details</button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

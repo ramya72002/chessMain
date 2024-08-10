@@ -52,4 +52,9 @@ export interface Session {
     url: string;
   }
   
-  
+export interface UpcomingActivity {
+  session_link: string;
+  title: string;
+  date: string;
+  time: string;
+}
