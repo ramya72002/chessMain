@@ -79,28 +79,7 @@ const AdminUpcomingActivities = () => {
         <p className="loadingText">Loading...</p>
       ) : (
         <div>
-          <h2 className="heading">Upcoming Activities</h2>
-          <ul className="activityList">
-            {upcomingActivities.length > 0 ? (
-              upcomingActivities.map((activity, index) => (
-                <li key={index} className="activityItem">
-                  <div className="activityDetails">
-                    <span>{activity.title}</span>
-                    <span>{activity.date}</span>
-                    <span>{activity.time}</span>
-                  </div>
-                  <button
-                    className="deleteButton"
-                    onClick={() => handleDeleteActivity(activity)}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))
-            ) : (
-              <p className="noActivities">No upcoming activities available.</p>
-            )}
-          </ul>
+          
           <div className="addActivityForm">
             <h3>Add Upcoming Activity</h3>
             <input
@@ -125,6 +104,28 @@ const AdminUpcomingActivities = () => {
               Add Upcoming Event
             </button>
           </div>
+          <h2 className="heading">Upcoming Activities</h2>
+          <ul className="activityList">
+            {upcomingActivities.length > 0 ? (
+              upcomingActivities.map((activity, index) => (
+                <li key={index} className="activityItem">
+                  <div className="activityDetails">
+                    <span>{activity.title}</span>
+                    <span>{activity.date}</span>
+                    <span>{activity.time}</span>
+                  </div>
+                  <button
+                    className="deleteButton"
+                    onClick={() => handleDeleteActivity(activity)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))
+            ) : (
+              <p className="noActivities">No upcoming activities available.</p>
+            )}
+          </ul>
         </div>
       )}
     </div>
