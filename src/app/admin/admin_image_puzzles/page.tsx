@@ -58,7 +58,7 @@ const AdminImagePuzzles: React.FC = () => {
     setSelectedFiles(e.target.files);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedTitle(e.target.value);
   };
 
@@ -80,7 +80,7 @@ const AdminImagePuzzles: React.FC = () => {
           console.error('Error uploading images:', error);
         });
     } else {
-      setErrorMessage('Please select files and choose a title.');
+      setErrorMessage('Please select files and enter a title.');
     }
   };
 
@@ -99,19 +99,17 @@ const AdminImagePuzzles: React.FC = () => {
         });
     }
   };
-  
+
   return (
     <div className="image-puzzle">
       <h1>Image Puzzle</h1>
       <div className="upload-section">
-        <select value={selectedTitle} onChange={handleTitleChange}>
-          <option value="">Select a title</option>
-          {imageSets.map(set => (
-            <option key={set.title} value={set.title}>
-              {set.title}
-            </option>
-          ))}
-        </select>
+        <input
+          type="text"
+          value={selectedTitle}
+          onChange={handleTitleChange}
+          placeholder="Enter a title"
+        />
         <input type="file" multiple onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
       </div>
