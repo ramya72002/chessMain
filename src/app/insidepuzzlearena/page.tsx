@@ -1,4 +1,3 @@
-// PuzzlePageClient.tsx
 'use client';
 
 import { Suspense } from 'react';
@@ -10,6 +9,7 @@ import './insidepuzzlearena.scss';
 const PuzzlePageClient = () => {
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id') || '';
+  const title =searchParams.get('title') || "Title";
 
   const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const PuzzlePageClient = () => {
 
   return (
     <div className="puzzle-container">
-      <h1>Endgame: Advanced Checkmates</h1>
+      <h1>{title}</h1>
       <div className="puzzle-content">
         <div className="chessboard">
           {imageSrc ? (

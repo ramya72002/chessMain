@@ -2,32 +2,40 @@
 import React, { useEffect, useState } from 'react';
 import './puzzleArena.scss';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import { UserDetails } from '../types/types';
 
 const PuzzleArena = () => {
   const router = useRouter();
-  const handleButtonClick = (title:string) => {
-    
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [levelData, setLevelData] = useState(null);
 
-       // Assuming the route for /startArena accepts query parameters
-      router.push(`/startArena?title=${encodeURIComponent(title)}`);
-    };
-    const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-
-    useEffect(() => {
-      const fetchUserDetails = async () => {
-        if (typeof window !== 'undefined') {
-          const userDetailsString = localStorage.getItem('userDetails');
-          const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (typeof window !== 'undefined') {
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        
+        if (storedUserDetails) {
           setUserDetails(storedUserDetails);
-          // You can add logic to handle userDetailsString here
+          try {
+            const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${storedUserDetails.level}`);
+            setLevelData(response.data);  // Assuming the response has relevant data
+          } catch (error) {
+            console.error('Error fetching level data:', error);
+          }
         }
-      };
+      }
+    };
     
-      fetchUserDetails();
-    }, []);
-    
+    fetchUserDetails();
+  }, []);
+
+  const handleButtonClick = (title: string) => {
+    if (userDetails?.level) {
+      router.push(`/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(userDetails.level)}`);
+    }
+  };
 
   return (
     <div className="puzzle-arena-container">
@@ -58,7 +66,7 @@ const PuzzleArena = () => {
             <p>Upcoming Live Arena</p>
             <p>05-Aug-2024</p>
             <p>10:00 A.M</p>
-            <button className="start-button" onClick={() => handleButtonClick('UpcomingLiveArena')}>Join</button>
+            <button className="start-button" onClick={() => handleButtonClick('Upcoming Live Arena')}>Join</button>
           </div>
         </div>
         

@@ -22,7 +22,6 @@ const AdminImagePuzzles: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${level}`);
-      console.log('Fetched image sets:', response.data.image_sets); // Log fetched image sets
       setImageSets(response.data.image_sets);
       setLoading(false);
       fetchAllImages(response.data.image_sets);
@@ -63,7 +62,6 @@ const AdminImagePuzzles: React.FC = () => {
 
   const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const level = e.target.value;
-    console.log('Selected level:', level); // Log the selected level
     setSelectedLevel(level);
   };
 
@@ -77,6 +75,8 @@ const AdminImagePuzzles: React.FC = () => {
 
   const handleUpload = async () => {
     if (selectedFiles && selectedTitle && selectedLevel) {
+      setLoading(true);  // Start loading
+
       const formData = new FormData();
       formData.append('level', selectedLevel);
       formData.append('title', selectedTitle);
@@ -91,6 +91,8 @@ const AdminImagePuzzles: React.FC = () => {
       } catch (error) {
         setErrorMessage('Error uploading images.');
         console.error('Error uploading images:', error);
+      } finally {
+        setLoading(false);  // End loading
       }
     } else {
       setErrorMessage('Please select files, level, and enter a title.');
@@ -98,7 +100,6 @@ const AdminImagePuzzles: React.FC = () => {
   };
 
   const handleDelete = async (title: string, level: string) => {
-    console.log('Deleting:', { title, level }); // Log values
     if (!title || !level) {
       setErrorMessage('Title and level must be defined.');
       return;
@@ -112,8 +113,7 @@ const AdminImagePuzzles: React.FC = () => {
         console.log(response.data.message);
         fetchImageSets(selectedLevel);
       } catch (error) {
-        const errorMessage = 'Error deleting image set.';
-        setErrorMessage(`Error deleting image set with level "${level}" and title "${title}": ${errorMessage}`);
+        setErrorMessage(`Error deleting image set with level "${level}" and title "${title}": ${error}`);
         console.error('Error deleting image set:', error);
       }
     }
@@ -141,7 +141,7 @@ const AdminImagePuzzles: React.FC = () => {
         <button onClick={handleUpload}>Upload</button>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading... Please wait, updating...</p>
       ) : errorMessage ? (
         <p className="error">{errorMessage}</p>
       ) : (

@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 
 import { ImageData } from '../types/types';
 
-
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
+  const [level, setLevel] = useState<string>('');
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,17 +17,19 @@ const StartArena = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const queryTitle = new URLSearchParams(window.location.search).get('title');
-    if (queryTitle) {
-      setTitle(queryTitle);
-    }
+    const queryParams = new URLSearchParams(window.location.search);
+    const queryTitle = queryParams.get('title');
+    const queryLevel = queryParams.get('level');
+
+    if (queryTitle) setTitle(queryTitle);
+    if (queryLevel) setLevel(queryLevel);
   }, []);
 
   useEffect(() => {
-    if (title) {
+    if (title && level) {
       const fetchImages = async () => {
         try {
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/images/${title}`);
+          const response = await axios.get(`https://backend-chess-tau.vercel.app/images/${title}?level=${level}`);
           const imagesData: ImageData[] = response.data.images;
 
           setImages(imagesData);
@@ -42,7 +44,7 @@ const StartArena = () => {
 
       fetchImages();
     }
-  }, [title]);
+  }, [title, level]);
 
   const fetchAllImages = (imageSets: ImageData[]) => {
     imageSets.forEach(image => {
@@ -62,8 +64,7 @@ const StartArena = () => {
   };
 
   const handleImageClick = (image: ImageData) => {
-    console.log("id",image)
-    const url = `/insidepuzzlearena?file_id=${image.id}`;
+    const url = `/insidepuzzlearena?file_id=${image.id}&title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}`;
     router.push(url);
   };
 
