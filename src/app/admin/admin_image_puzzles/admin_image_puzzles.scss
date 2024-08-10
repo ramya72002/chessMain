@@ -1,27 +1,35 @@
 .image-container {
   display: flex;
-  align-items: stretch;
-  margin: 0; /* Ensure no margin around the container */
-  padding: 0; /* Ensure no padding around the container */
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  margin: 0;
+  padding: 0;
 
   img {
     width: 100%;
     max-width: 200px;
-    height: 27%; /* Set height to 27% */
+    height: 27%;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0; /* Ensure no margin around the image */
-    padding: 0; /* Ensure no padding around the image */
+    margin: 0;
+    padding: 0;
   }
 }
 
 .image-puzzle {
   padding: 20px;
+  border: 1px solid black;
+  width: 600px;
+  border-radius: 5px;
+  background-color: #f3cb74;
+  margin: 20px auto; /* Center the entire puzzle on the page */
 
   h1 {
     text-align: center;
     color: #000;
-    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom:15px;
   }
 
   .upload-section {
@@ -30,12 +38,25 @@
     align-items: center;
     margin-bottom: 20px;
 
+    select {
+      margin-bottom: 10px;
+      border: 1px solid black;
+      color: black;
+      width: 300px;
+      height: 40px;
+      border-radius: 5px;
+      text-align: center;
+      font-size: 15px;
+    }
+
     input[type="text"],
     input[type="file"] {
       margin-bottom: 10px;
+      margin-top: 10px;
       padding: 10px;
       color: #000;
-      border: 1px solid #ccc;
+      background-color: #ffffff;
+      border: 1px solid #000000;
       border-radius: 4px;
       width: 300px;
     }
@@ -44,7 +65,7 @@
       padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
-      border: none;
+      border: 1px solid #000000;
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s;
@@ -58,12 +79,12 @@
   .image-sets {
     display: flex;
     flex-direction: column;
-    gap: 0; /* Remove any gap between image sets */
-    margin: 0; /* Ensure no extra margin around image sets */
+    gap: 0;
+    margin: 0;
   }
 
   .image-set {
-    margin-bottom: 10px; /* Adjust space between image sets */
+    margin-bottom: 10px;
 
     h2 {
       text-align: center;
@@ -73,24 +94,25 @@
 
     .images-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ensure images fit nicely */
-      gap: 10px; /* Space between images */
-      justify-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      justify-items: center; /* Center images in each grid cell */
 
       .image-container {
         display: flex;
-        align-items: stretch;
-        margin: 0; /* Ensure no margin around the container */
-        padding: 0; /* Ensure no padding around the container */
+        justify-content: center; /* Center the image within the container */
+        align-items: center;
+        margin: 0;
+        padding: 0;
 
         img {
           width: 100%;
           max-width: 200px;
-          height: 27%; /* Set height to 27% */
+          height: 27%;
           border-radius: 8px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          margin: 0; /* Ensure no margin around the image */
-          padding: 0; /* Ensure no padding around the image */
+          margin: 0;
+          padding: 0;
         }
 
         p {

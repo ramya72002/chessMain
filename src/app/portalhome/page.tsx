@@ -155,7 +155,7 @@ const Hero = () => {
         <div className="stat">
           <div className="label">Puzzle Arena</div>
           <div className="number">276</div>
-          <img src="/images/arena/puzzleArena1.png" alt="Puzzle Arena Icon" className="stat-icon" />
+          <img src="/images/puzzleArena1.png" alt="Puzzle Arena Icon" className="stat-icon" />
         </div>
         <div className="stat">
           <div className="label">Puzzle Racer</div>
