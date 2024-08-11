@@ -149,7 +149,9 @@ const AdminImagePuzzles: React.FC = () => {
           {imageSets.map(set => (
             <div key={`${set.title}-${set.level}`} className="image-set">
                <h2>{set.title} - {set.level || 'No Level'}</h2>
+               <div className="center-button-container">
               <button onClick={() => handleDelete(set.title, set.level || '')} className="delete-button">Delete</button>
+              </div>
               <div className="images-grid">
                 {set.file_ids.map(fileId => (
                   <div key={fileId} className="image-container">

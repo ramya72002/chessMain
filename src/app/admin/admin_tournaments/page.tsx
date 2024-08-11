@@ -57,7 +57,7 @@ const AdminTournaments: React.FC = () => {
       <div className="editForm">
         <h2>Edit Tournament</h2>
         <label>
-          Type:
+          Type :
           <input
             type="text"
             value={editingTournament.type}
@@ -65,7 +65,7 @@ const AdminTournaments: React.FC = () => {
           />
         </label>
         <label>
-          Name:
+          Name :
           <input
             type="text"
             value={editingTournament.name}
@@ -157,20 +157,20 @@ const AdminTournaments: React.FC = () => {
       <div className="tournamentsList">
         {tournaments.filter(tournament => tournament.type === activeTab).map((tournament, index) => (
           <div key={index} className="tournamentCard">
-            <h3><strong>Type:</strong> {tournament.type}</h3>
-            <h3><strong>Name:</strong> {tournament.name}</h3>
-            <p><strong>Location:</strong> {tournament.location}</p>
-            <p><strong>Time Control:</strong> {tournament.timeControl}</p>
-            <p><strong>Upcoming Dates:</strong> {tournament.upcomingDates.join(', ')}</p>
+            <h3><strong>Type :</strong> {tournament.type}</h3>
+            <h3><strong>Name :</strong> {tournament.name}</h3>
+            <p><strong>Location :</strong> {tournament.location}</p>
+            <p><strong>Time Control :</strong> {tournament.timeControl}</p>
+            <p><strong>Upcoming Dates :</strong> {tournament.upcomingDates.join(', ')}</p>
             <div>
-              <h4>Rounds Timing:</h4>
-              <p><strong>Description:</strong> {tournament.roundsTiming.description}</p>
+              <h4>Rounds Timing :</h4>
+              <p><strong>Description :</strong> {tournament.roundsTiming.description}</p>
             </div>
             <div>
-              <h4>Sections:</h4>
+              <h4>Sections :</h4>
               {tournament.sections.map((section, index) => (
                 <p key={index}>
-                  <strong>{section.name}:</strong> {section.registrationFee}
+                  <strong>{section.name} :</strong> {section.registrationFee}
                 </p>
               ))}
             </div>

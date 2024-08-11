@@ -19,9 +19,9 @@
 .image-puzzle {
   padding: 20px;
   border: 1px solid black;
-  width: 600px;
+  width: 1300px;
   border-radius: 5px;
-  background-color: #f3cb74;
+  background-color: #ebcdac;
   margin: 20px auto; /* Center the entire puzzle on the page */
 
   h1 {
@@ -86,9 +86,31 @@
   .image-set {
     margin-bottom: 10px;
 
+    .center-button-container {
+      display: flex;
+      justify-content: center; /* Center the button horizontally */
+    }
+  
+    button {
+      width: 150px; /* Set the button width as needed */
+      height: 40px; /* Set the button height as needed */
+      border: 1px solid black;
+      background-color: #007bff; /* Button background color */
+      color: #fff; /* Button text color */
+      border-radius: 4px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor on hover */
+      transition: background-color 0.3s;
+  
+      &:hover {
+        background-color: #0056b3; /* Darker color on hover */
+      }
+    }
+
     h2 {
       text-align: center;
-      color: #000;
+      color: #414040;
+      font-size: 17px;
+      font-weight: bold;
       margin-bottom: 10px;
     }
 
@@ -99,6 +121,7 @@
       justify-items: center; /* Center images in each grid cell */
 
       .image-container {
+        height: 300px;
         display: flex;
         justify-content: center; /* Center the image within the container */
         align-items: center;
@@ -108,8 +131,7 @@
         img {
           width: 100%;
           max-width: 200px;
-          height: 27%;
-          border-radius: 8px;
+          height: 65%;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           margin: 0;
           padding: 0;
