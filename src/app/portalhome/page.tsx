@@ -68,98 +68,95 @@ const Hero = () => {
   
   return (
     <div className="hero">
-
       <div className="header">
-        <h2>Chess Journey of <span>{userDetails ? userDetails.name : 'Student'}</span> </h2>
-       </div>
+        <h2>Chess Journey of <span>{userDetails ? userDetails.name : 'Student'}</span></h2>
+      </div>
 
-      <div className="chess-journey">
-        <div className="level">
-          <svg className="connector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 10" preserveAspectRatio="none">
-            <line x1="0" y1="5" x2="1000" y2="5" stroke="white" strokeWidth="5"/>
-          </svg>
-          <div className={`step ${getActiveClass('level1')}`}>
-            <div className="icon pawn">♙</div>
-            <p>Pawn</p>
-            <p>(Beginner)</p>
-          </div>
-          <div className={`step ${getActiveClass('level2')}`}>
-            <div className="icon knight">♞</div>
-            <p>Knight</p>
-            <p>(Intermediate)</p>
-          </div>
-          <div className={`step ${getActiveClass('level3')}`}>
-            <div className="icon bishop">♝</div>
-            <p>Bishop</p>
-            <p>(Proficient)</p>
-          </div>
-          <div className={`step ${getActiveClass('level4')}`}>
-            <div className="icon rook">♜</div>
-            <p>Rook</p>
-            <p>(Advanced)</p>
-          </div>
-          <div className={`step ${getActiveClass('level5')}`}>
-            <div className="icon queen">♛</div>
-            <p>Queen</p>
-            <p>(Expert)</p>
-          </div>
-          <div className={`step ${getActiveClass('level5')}`}>
+      <div className="journey-container">
+        <div className="chess-journey">
+          <div className="level">
+            <svg className="connector" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 10" preserveAspectRatio="none">
+              <line x1="0" y1="5" x2="1000" y2="5" stroke="white" strokeWidth="5"/>
+            </svg>
+            <div className={`step ${getActiveClass('level1')}`}>
+            <div className="icon pawn">♟</div>              <p>Pawn</p>
+              <p>(Beginner)</p>
+            </div>
+            <div className={`step ${getActiveClass('level2')}`}>
+              <div className="icon knight">♞</div>
+              <p>Knight</p>
+              <p>(Intermediate)</p>
+            </div>
+            <div className={`step ${getActiveClass('level3')}`}>
+              <div className="icon bishop">♝</div>
+              <p>Bishop</p>
+              <p>(Proficient)</p>
+            </div>
+            <div className={`step ${getActiveClass('level4')}`}>
+              <div className="icon rook">♜</div>
+              <p>Rook</p>
+              <p>(Advanced)</p>
+            </div>
+            <div className={`step ${getActiveClass('level5')}`}>
+              <div className="icon queen">♛</div>
+              <p>Queen</p>
+              <p>(Expert)</p>
+            </div>
+            <div className={`step ${getActiveClass('level5')}`}>
               <div className="icon king">♔</div>
               <p>King</p>
               <p>(Master)</p>
+            </div>
           </div>
-  </div>
-  
-</div>
+        </div>
 
-
-      <div className="journey">
-        <div className="level">
-          <h3>Level Details</h3>
-          <div className="steps">
-            <div className="step">
-              <div className="icon">♟️</div>
-              <div>
-                <h4>4. Pawn</h4>
-                <p>Players who are preparing for casual tournaments and need to refine their middlegame tactics and overall strategy.</p>
+        <div className="journey">
+          <div className="level">
+            <h3>Level Details</h3>
+            <div className="steps">
+              <div className="step">
+                <div className="icon">♟</div>
+                <div>
+                  <h4>1. Pawn</h4>
+                  <p>Players who are preparing for casual tournaments and need to refine their middlegame tactics and overall strategy.</p>
+                </div>
+              </div>
+              <div className="step">
+                <div className="icon">♞</div>
+                <div>
+                  <h4>2. Knight</h4>
+                  <p>Players who are competing in club-rated tournaments and need to focus on game analysis and improving their overall play.</p>
+                </div>
+              </div>
+              <div className="step">
+                <div className="icon">♝</div>
+                <div>
+                  <h4>3. Bishop</h4>
+                  <p>Players who have some tournament experience and need to learn advanced endgames, opening responses, and notation.</p>
+                </div>
+              </div>
+              <div className="step">
+                <div className="icon">♜</div>
+                <div>
+                  <h4>4. Rook</h4>
+                  <p>Players who are preparing for regional tournaments and need to work on tournament preparation and advanced strategies.</p>
+                </div>
+              </div>
+              <div className="step">
+                <div className="icon">♛</div>
+                <div>
+                  <h4>5. Queen</h4>
+                  <p>Players who are ready for professional tournaments and need to refine advanced strategies and compete at a higher level.</p>
+                </div>
+              </div>
+              <div className="step">
+                <div className="icon">♔</div>
+                <div>
+                  <h4>6. King</h4>
+                  <p>Players who need professional training from titled coaches like International Masters (IM) and Grand Masters (GM).</p>
+                </div>
               </div>
             </div>
-            <div className="step">
-              <div className="icon">♞</div>
-              <div>
-                <h4>5. Knight</h4>
-                <p>Players who are competing in club-rated tournaments and need to focus on game analysis and improving their overall play.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="icon">♝</div>
-              <div>
-                <h4>6. Bishop</h4>
-                <p>Players who have some tournament experience and need to learn advanced endgames, opening responses, and notation.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="icon">♜</div>
-              <div>
-                <h4>7. Rook</h4>
-                <p>Players who are preparing for regional tournaments and need to work on tournament preparation and advanced strategies.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="icon">♛</div>
-              <div>
-                <h4>8. Queen</h4>
-                <p>Players who are ready for professional tournaments and need to refine advanced strategies and compete at a higher level.</p>
-              </div>
-            </div>
-            <div className="step">
-              <div className="icon">♔</div>
-              <div>
-                <h4>9. King</h4>
-                <p>Players who need professional training from titled coaches like International Masters (IM) and Grand Masters (GM).</p>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
@@ -200,6 +197,6 @@ const Hero = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Hero;
