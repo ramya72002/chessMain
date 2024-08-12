@@ -71,8 +71,8 @@ const Signup = () => {
                 <option value="level2">Level 2</option>
                 <option value="level3">Level 3</option>
                 <option value="level4">Level 4</option>
-                <option value="level4">Level 5</option>
-                <option value="level4">Level 6</option>
+                <option value="level5">Level 5</option>
+                <option value="level6">Level 6</option>
               </select>
             </div>
 
