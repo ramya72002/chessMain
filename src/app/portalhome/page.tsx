@@ -177,6 +177,23 @@ const Hero = () => {
           <div className="number">16</div>
         </div>
       </div>
+      <div className="learnings">
+        <h3>My Learning</h3>
+        {loading ? (
+          <p>Loading Learning...</p>
+        ) : (
+          upcomingActivities.map((activity, index) => (
+            <div className="learn" key={index}>
+              <div className="details">
+                <div>{activity.title}</div>
+                <div>{activity.date}</div>
+                <div>{activity.time}</div>
+              </div>
+              <button className="start-button">Start</button>
+            </div>
+          ))
+        )}
+      </div>
 
       <div className="activities">
         <h3>Upcoming Activities</h3>

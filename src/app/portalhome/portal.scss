@@ -182,7 +182,58 @@
       }
     }
   }
-  
+  .learnings {
+    background-color: #fb9907; /* Bright yellow background */
+    padding: 15px;
+    border: 1px solid #ff9900; /* Orange border for contrast */
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 25px;
+
+    h3 {
+      color: #ffffff; /* White text color */
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .learn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00bfff; /* Bright sky blue background */
+      border: 1px solid #1e90ff; /* Slightly darker blue border */
+      margin: 8px 0;
+      padding: 12px;
+      border-radius: 8px;
+
+      .details {
+        display: flex;
+        flex-direction: row;
+        color: #ffffff;
+        gap: 150px;
+
+        div {
+          margin-right: 15px;
+        }
+      }
+
+      .start-button {
+        display: flex;
+        background-color: #ff4500; /* Bright orange-red button color */
+        border: 1px solid #ff6347; /* Slightly lighter red border */
+        padding: 6px 12px;
+        border-radius: 8px;
+        color: #ffffff;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #ff0000; /* Bright red hover color */
+        }
+      }
+    }
+}
+
+
 }
 .chess-journey {
   display: flex;
