@@ -1,0 +1,163 @@
+.account-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  
+    .account-header {
+      text-align: center;
+      padding: 20px;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #FF0075, #8C52FF);
+      color: white;
+  
+      h1 {
+        margin-bottom: 5px;
+        font-size: 36px;
+      }
+  
+      p {
+        font-size: 18px;
+      }
+    }
+  
+    .account-summary {
+      text-align: center;
+      margin: 40px 0;
+  
+      .profile-picture img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+      }
+  
+      h2 {
+        color: black;
+        font-size: 24px;
+        margin: 10px 0 5px;
+      }
+  
+      p {
+        font-size: 14px;
+        color: gray;
+      }
+  
+      .stats {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+  
+        .stat-item {
+          margin: 0 15px;
+          text-align: center;
+  
+          span {
+            color: black;
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+          }
+  
+          p {
+            margin-top: 5px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  
+    .courses-section {
+      .courses-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+  
+        h3 {
+          color: black;
+          font-size: 20px;
+        }
+  
+        .expand-all {
+          background-color: #8C52FF;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: #731EFC;
+          }
+        }
+      }
+  
+      .course-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+  
+        .course-status {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+  
+          h4 {
+            color: black;
+            font-size: 18px;
+            margin: 0;
+          }
+  
+          .progress {
+            background-color: #FF0075;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+          }
+        }
+  
+        .progress-bar {
+          background-color: #e0e0e0;
+          height: 8px;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-bottom: 10px;
+  
+          .progress-completed {
+            height: 100%;
+            background-color: #FF0075;
+          }
+        }
+  
+        .completed-steps {
+          font-size: 14px;
+          color: #777;
+          margin-bottom: 20px;
+        }
+  
+        .course-table {
+          width: 100%;
+          border-collapse: collapse;
+  
+          th, td {
+            color: black;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+          }
+  
+          th {
+            background-color: #FF0075;
+            color: white;
+          }
+  
+          tr:last-child td {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+  }
+  
