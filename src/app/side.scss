@@ -198,6 +198,14 @@
           background-color: #8a2be2;
         }
       }
+      &.logout {
+        background-color: #ee2e08; /* BlueViolet */
+        color: white;
+
+        &:hover {
+          background-color: #d3340c;
+        }
+      }
 
     }
   }

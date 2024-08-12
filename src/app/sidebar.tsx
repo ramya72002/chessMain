@@ -1,13 +1,20 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { FaHome, FaQuestionCircle, FaGraduationCap, FaChalkboardTeacher, FaCalendarAlt, FaNewspaper } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { FaHome,FaSignOutAlt, FaQuestionCircle, FaGraduationCap, FaChalkboardTeacher, FaCalendarAlt, FaNewspaper } from 'react-icons/fa';
 import axios from 'axios';
 import './side.scss';
 import { UserDetails } from './types/types';
 
 
 const Sidebar = () => {
+  const router = useRouter();
+  const handleSignOut = () => {
+   
+    localStorage.clear(); // Clear all items from local storage
+    router.push('/'); // Redirect to the home page
+  };
   const [profilePic, setProfilePic] = useState('/images/portal/b4.png'); // Default profile picture
   const [showAvatarOptions, setShowAvatarOptions] = useState(false); // Toggle state for avatar options visibility
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null); // State to store user details
@@ -159,8 +166,8 @@ const Sidebar = () => {
         <a href="/portalhome" className="navItem home">
           <FaHome /> Dashboard
         </a>
-        <a href="/tests" className="navItem tests">
-          <FaQuestionCircle /> Assignments
+        <a href="/learning" className="navItem tests">
+          <FaQuestionCircle /> Learning
         </a>
         <a href="/learnclass" className="navItem classes">
           <FaGraduationCap /> Learning Classes
@@ -170,6 +177,9 @@ const Sidebar = () => {
         </a>
         <a href="/tournaments" className="navItem events">
           <FaCalendarAlt /> Tournaments
+        </a>
+        <a onClick={handleSignOut} className="navItem logout">
+          <FaSignOutAlt /> Logout
         </a>
       </nav>
     </div>

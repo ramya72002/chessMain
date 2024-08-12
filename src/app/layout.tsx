@@ -26,7 +26,7 @@ export default function RootLayout({
             ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/ChessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
             ||pathname=="/levels/level4test"||pathname=="/tournaments"||pathname=="/tournamentRegistration"||pathname=="/arena/insidepuzzlearena") && <Sidebar />}
            <div className="content-container">
-            {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&&pathname !== "/admin/admin_upcoming_activities" && pathname !== "/admin" && pathname !== "/admin/admin_image_puzzles"&&pathname !== "/admin/StudentDetails" && pathname !== "/admin/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTournament"&& pathname !== "/homeTornRegister"  && <PortalHeader />}
+            {/* {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&&pathname !== "/admin/admin_upcoming_activities" && pathname !== "/admin" && pathname !== "/admin/admin_image_puzzles"&&pathname !== "/admin/StudentDetails" && pathname !== "/admin/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTournament"&& pathname !== "/homeTornRegister"  && <PortalHeader />} */}
             {(pathname === "/admin" || pathname === "/admin/admin_upcoming_activities" ||   pathname === "/admin/admin_tournaments"||pathname === "/admin/admin_image_puzzles"||pathname === "/admin/StudentDetails") && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
