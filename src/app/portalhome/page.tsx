@@ -58,6 +58,7 @@ const Hero = () => {
       level3: 3,
       level4: 4,
       level5: 5,
+      level6: 6,
     };
   
     const userLevel = levelMap[userDetails.level];
@@ -102,7 +103,7 @@ const Hero = () => {
               <p>Queen</p>
               <p>(Expert)</p>
             </div>
-            <div className={`step ${getActiveClass('level5')}`}>
+            <div className={`step ${getActiveClass('level6')}`}>
               <div className="icon king">♔</div>
               <p>King</p>
               <p>(Master)</p>

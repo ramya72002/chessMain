@@ -126,7 +126,7 @@ const AdminImagePuzzles: React.FC = () => {
       <div className="upload-section">
         <select value={selectedLevel} onChange={handleLevelChange}>
           <option value="">Select Level</option>
-          {Array.from({ length: 5 }, (_, i) => (
+          {Array.from({ length: 6 }, (_, i) => (
             <option key={i} value={`level${i + 1}`}>{`level${i + 1}`}</option>
           ))}
         </select>
