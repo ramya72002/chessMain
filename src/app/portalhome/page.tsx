@@ -69,9 +69,8 @@ const Hero = () => {
   return (
     <div className="hero">
       <div className="header">
-        <h2>Hi {userDetails ? userDetails.name : 'Sumit'}</h2>
-        <p>Your chess journey so far...</p>
-      </div>
+        <h2>Chess Journey of {userDetails ? userDetails.name : 'Sumit'}</h2>
+       </div>
 
       <div className="chess-journey">
         <div className="level">
@@ -102,7 +101,12 @@ const Hero = () => {
             <div className="icon queen">♛</div>
             <p>Queen</p>
             <p>(Expert)</p>
-    </div>
+          </div>
+          <div className={`step ${getActiveClass('level5')}`}>
+              <div className="icon king">♔</div>
+              <p>King</p>
+              <p>(Master)</p>
+          </div>
   </div>
   
 </div>
@@ -147,6 +151,14 @@ const Hero = () => {
                 <p>Players who are ready for professional tournaments and need to refine advanced strategies and compete at a higher level.</p>
               </div>
             </div>
+            <div className="step">
+              <div className="icon">♔</div>
+              <div>
+                <h4>9. King</h4>
+                <p>Players who need professional training from titled coaches like International Masters (IM) and Grand Masters (GM).</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
