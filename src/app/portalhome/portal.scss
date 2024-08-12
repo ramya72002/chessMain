@@ -6,17 +6,30 @@
   .header {
     text-align: center;
     margin-bottom: 20px;
-
+  
     h2 {
       margin: 0;
-      color: #1d3557;
-    }
-
-    p {
-      margin: 0;
-      color: #030303;
+      font-size: 48px; /* Larger font size */
+      font-weight: bold; /* Bold text */
+      font-family: 'Comic Sans MS', cursive, sans-serif; /* Kid-friendly font */
+      background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff); /* Gradient background */
+      -webkit-background-clip: text; /* Clipping the background to text */
+      -webkit-text-fill-color: transparent; /* Text color becomes transparent to show gradient */
+      text-shadow: 4px 4px #ffbe0b; /* Bright, fun shadow */
+      letter-spacing: 3px; /* More spacing between letters */
+      animation: textGlow 1.5s ease-in-out infinite alternate; /* Glow animation */
+      
+      span {
+        color: #06d6a0; /* Bright, contrasting color for dynamic text */
+        font-size: 52px; /* Slightly larger for emphasis */
+        text-shadow: 5px 5px #eca90e, 0 0 10px #d65206; /* Glow and shadow for dynamic text */
+        animation: textGlow 1.5s ease-in-out infinite alternate; /* Same glow animation */
+      }
     }
   }
+  
+  
+  
 
   .journey {
     display: flex;

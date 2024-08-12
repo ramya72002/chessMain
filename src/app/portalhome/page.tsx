@@ -68,8 +68,9 @@ const Hero = () => {
   
   return (
     <div className="hero">
+
       <div className="header">
-        <h2>Chess Journey of {userDetails ? userDetails.name : 'Sumit'}</h2>
+        <h2>Chess Journey of <span>{userDetails ? userDetails.name : 'Student'}</span> </h2>
        </div>
 
       <div className="chess-journey">
