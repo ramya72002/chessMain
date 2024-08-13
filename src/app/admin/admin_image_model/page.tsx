@@ -15,7 +15,7 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
  
 
   const handleSubmit = async () => {
-    if (!puzzleData || !columnName) return;
+  if (!isOpen || !puzzleData) return null;
 
     try {
       const response = await axios.put('https://backend-chess-tau.vercel.app/get_puzzle_sol', {
