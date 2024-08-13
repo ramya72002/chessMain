@@ -10,6 +10,9 @@ import { UserDetails } from './types/types';
 
 const Sidebar = () => {
   const router = useRouter();
+  const handleViewProfile = () => {
+    router.push('/portalhome');
+  };
   const handleSignOut = () => {
    
     localStorage.clear(); // Clear all items from local storage
@@ -160,12 +163,10 @@ const Sidebar = () => {
 </div>
         <div className="name">{userDetails ? userDetails.name : 'Student'}</div>
         <div className="role">Student</div>
-        <button className="viewProfile">View Profile</button>
-      </div>
+        <button onClick={handleViewProfile} className="viewProfile">
+      Home
+    </button>      </div>
       <nav className="nav">
-        <a href="/portalhome" className="navItem home">
-          <FaHome /> Dashboard
-        </a>
         <a href="/learning" className="navItem tests">
           <FaQuestionCircle /> Learning
         </a>

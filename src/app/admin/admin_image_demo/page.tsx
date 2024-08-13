@@ -1,7 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
-// import Admin_image_model from '../admin_image_model/page'; // Adjust the path as needed
 import Model from '@/app/Model';
 
 interface FileData {
@@ -41,7 +40,6 @@ const Admin_image_demo: React.FC = () => {
           throw new Error('Failed to fetch puzzle data');
         }
         const data = await response.json();
-        console.log('Fetched puzzle data:', data); // Log data to check structure
         setPuzzleData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -143,11 +141,10 @@ const Admin_image_demo: React.FC = () => {
         }
   
         alert('Image uploaded successfully!');
-        // Refresh puzzle data or update UI as needed
         setPuzzleData(prevData => {
           const newData = [...prevData];
           newData[puzzleIndex].file_ids[puzzleKey] = {
-            id: fileList[0].name, // Use appropriate ID if available
+            id: fileList[0].name,
             solution: '',
             sid_link: '',
           };
@@ -164,6 +161,9 @@ const Admin_image_demo: React.FC = () => {
     fileInput.click();
   };
   
+  
+
+
 
   const handleViewEdit = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
@@ -188,6 +188,39 @@ const Admin_image_demo: React.FC = () => {
     } catch (error) {
       console.error('Error fetching puzzle data:', error);
       alert('An error occurred while fetching the puzzle data.');
+    }
+  };
+
+  const handleDelete = async (puzzle: PuzzleData) => {
+    if (window.confirm('Are you sure you want to delete this puzzle?')) {
+      try {
+        const response = await fetch('https://backend-chess-tau.vercel.app/delete-arena-title', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            level: puzzle.level,
+            category: puzzle.category,
+            title: puzzle.title,
+            live: puzzle.live,
+          }),
+        });
+
+        if (!response.ok) {
+          const result = await response.json();
+          throw new Error(result.error || 'Delete failed');
+        }
+
+        alert('Puzzle deleted successfully!');
+        // Refresh the puzzle data
+        const updatedResponse = await fetch('https://backend-chess-tau.vercel.app/imagesets');
+        const updatedData = await updatedResponse.json();
+        setPuzzleData(updatedData);
+      } catch (error) {
+        console.error('Error deleting puzzle:', error);
+        alert('An error occurred while deleting the puzzle.');
+      }
     }
   };
   
@@ -253,9 +286,10 @@ const Admin_image_demo: React.FC = () => {
             <th>Category</th>
             <th>Title</th>
             <th>Live</th>
-            {Array.from({ length: 10 }, (_, i) => (
+            {Array.from({ length: 9 }, (_, i) => (
               <th key={i}>Puzzle {i + 1}</th>
             ))}
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -266,7 +300,7 @@ const Admin_image_demo: React.FC = () => {
               <td>{puzzle.category}</td>
               <td>{puzzle.title}</td>
               <td>{puzzle.live}</td>
-              {Array.from({ length: 10 }, (_, i) => (
+              {Array.from({ length: 9 }, (_, i) => (
                 <td key={i}>
                   {puzzle.file_ids[`puzzle${i + 1}`] ? (
                     <button onClick={() => handleViewEdit(puzzleIndex, `puzzle${i + 1}`)}>View/Edit</button>
@@ -275,6 +309,9 @@ const Admin_image_demo: React.FC = () => {
                   )}
                 </td>
               ))}
+              <td>
+                <button className="delete-button" onClick={() => handleDelete(puzzle)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
