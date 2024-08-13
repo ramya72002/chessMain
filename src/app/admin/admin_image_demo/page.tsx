@@ -1,7 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
-import Admin_image_model from '../admin_image_model/page'; // Adjust the path as needed
+// import Admin_image_model from '../admin_image_model/page'; // Adjust the path as needed
+import Model from '@/app/Model';
 
 interface FileData {
   id: string;
@@ -279,7 +280,7 @@ const Admin_image_demo: React.FC = () => {
         </tbody>
       </table>
 
-      <Admin_image_model
+      <Model
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         puzzleData={selectedPuzzle.puzzle || null}
