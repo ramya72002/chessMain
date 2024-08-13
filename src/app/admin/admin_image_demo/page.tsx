@@ -35,7 +35,7 @@ const Admin_image_demo: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://backend-chess-tau.vercel.app/imagesets');
+        const response = await fetch('https://backend-chess-tau.vercel.app/imagesets'); 
         if (!response.ok) {
           throw new Error('Failed to fetch puzzle data');
         }
