@@ -1,6 +1,7 @@
 // pages/account.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link'; // Import Link from next/link
 import './learning.scss';
 import { UserDetails } from '../types/types'; // Import the type if you have it defined
 
@@ -18,21 +19,21 @@ const MyAccount = () => {
   return (
     <div className="account-page">
       <header className="account-header">
-        <h1>My Account</h1>
+        <h1>My Learning</h1>
         <p>Welcome to your account. Manage profile, courses, and orders here.</p>
       </header>
 
       <section className="account-summary">
-        <h2>{userDetails ? userDetails.name : 'Student'}</h2> {/* This is where the name will be displayed */}
+        <h2><strong>{userDetails ? userDetails.name : 'Student'}</strong></h2> {/* This is where the name will be displayed */}
 
         <div className="stats">
           <div className="stat-item">
             <span>0</span>
-            <p>Courses</p>
+            <p>Modules</p>
           </div>
           <div className="stat-item">
             <span>0</span>
-            <p>Completed</p>
+            <p>Sub Modules</p>
           </div>
           <div className="stat-item">
             <span>0</span>
@@ -48,13 +49,14 @@ const MyAccount = () => {
       <section className="courses-section">
         <div className="courses-header">
           <h3>Your Courses</h3>
-          <button className="expand-all">Expand All</button>
         </div>
 
         <div className="course-card">
           <div className="course-status">
             <h4>Certified Ethereum Developer Program</h4>
-            <span className="progress">In Progress</span>
+            <Link href="/inprogress">
+              <span className="progress">In Progress</span>
+            </Link>
           </div>
           <div className="progress-bar">
             <div className="progress-completed" style={{ width: '0%' }}></div>
