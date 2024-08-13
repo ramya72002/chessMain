@@ -1,14 +1,23 @@
-'use client';
+'use client'
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
+import Modal from '../admin_image_model/page';
+// import Modal from './Modal';  // Import the modal component
+
+interface FileData {
+  id: string;
+  solution: string;
+  sid_link: string;
+}
 
 interface PuzzleData {
+  _id: string;
   date_time: string;
   level: string;
   category: string;
   title: string;
   live: string;
-  file_ids: string[];
+  file_ids: { [key: string]: FileData };
 }
 
 const Admin_image_demo = () => {
@@ -16,11 +25,13 @@ const Admin_image_demo = () => {
   const [formData, setFormData] = useState({
     level: '',
     category: '',
-    title: '',  // Changed from 'name' to 'title'
+    title: '',
     live: '',
     date_time: '',
   });
   const [files, setFiles] = useState<FileList | null>(null);
+  const [selectedPuzzle, setSelectedPuzzle] = useState<FileData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,44 +60,82 @@ const Admin_image_demo = () => {
     }
   };
 
-  const handleAddImage = (puzzleIndex: number, puzzleNumber: number) => {
-    const formDataToSend = new FormData();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    // Append form data specific to the puzzle being edited
-    formDataToSend.append('level', puzzleData[puzzleIndex].level);
-    formDataToSend.append('category', puzzleData[puzzleIndex].category);
-    formDataToSend.append('title', puzzleData[puzzleIndex].title);
-    formDataToSend.append('live', puzzleData[puzzleIndex].live);
-    formDataToSend.append('date_time', puzzleData[puzzleIndex].date_time);
+    const formDataToSend = new FormData();
+    formDataToSend.append('level', formData.level);
+    formDataToSend.append('category', formData.category);
+    formDataToSend.append('title', formData.title);
+    formDataToSend.append('live', formData.live);
+    formDataToSend.append('date_time', formData.date_time);
 
     if (files) {
-      formDataToSend.append('images', files[0]); // Assuming single file upload
+      for (let i = 0; i < files.length; i++) {
+        formDataToSend.append('images', files[i]);
+      }
     }
 
-    fetch('http://127.0.0.1:80/upload', {
-      method: 'POST',
-      body: formDataToSend,
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.ok) {
-          alert('Image added successfully!');
-          const updatedPuzzleData = [...puzzleData];
-          updatedPuzzleData[puzzleIndex].file_ids[puzzleNumber - 1] = result.file_id; // Update the puzzle with the new file_id
-          setPuzzleData(updatedPuzzleData);
-        } else {
-          alert('Error: ' + result.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('An error occurred while uploading the image.');
+    try {
+      const response = await fetch('http://127.0.0.1:80/upload', {
+        method: 'POST',
+        body: formDataToSend,
       });
+
+      const result = await response.json();
+
+      if (result.ok) {
+        alert('Images uploaded successfully!');
+        // Update puzzleData or handle response as needed
+      } else {
+        alert('Error: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while uploading the images.');
+    }
+  };
+
+  const handleAddImage = (puzzleIndex: number, puzzleKey: string) => {
+    console.log(`Add new image to puzzle ${puzzleIndex} with key ${puzzleKey}`);
+  };
+
+  const handleViewEdit = async (puzzleIndex: number, puzzleKey: string) => {
+    const puzzle = puzzleData[puzzleIndex];
+    const puzzleFile = puzzle.file_ids[puzzleKey];
+  
+    if (!puzzleFile) {
+      console.log('Puzzle file does not exist.');
+      return;
+    }
+  
+    try {
+      const apiUrl = `http://127.0.0.1:80/getpuzzleid?level=${encodeURIComponent(puzzle.level)}&category=${encodeURIComponent(puzzle.category)}&title=${encodeURIComponent(puzzle.title)}&live=${encodeURIComponent(puzzle.live)}&puzzle_number=${puzzleKey.replace('puzzle', '')}`;
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+  
+      if (response.ok) {
+        setSelectedPuzzle(data);
+        setIsModalOpen(true);
+      } else {
+        console.error('Error fetching puzzle data:', data.error);
+        alert('Error: ' + data.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while fetching the puzzle data.');
+    }
+  };
+
+  const handleModalSubmit = (updatedPuzzle: FileData) => {
+    // Handle the update logic here
+    console.log('Updated Puzzle:', updatedPuzzle);
+    setIsModalOpen(false);
   };
 
   return (
     <>
-      <form className="admin-image-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="admin-image-form" onSubmit={handleSubmit}>
         <select name="level" value={formData.level} onChange={handleChange} required>
           <option value="">Select Level</option>
           <option value="Pawn">Pawn</option>
@@ -125,8 +174,6 @@ const Admin_image_demo = () => {
           name="date_time"
           value={formData.date_time}
           onChange={handleChange}
-          required={formData.live === 'Yes'}
-          disabled={formData.live !== 'Yes'}
         />
 
         <input
@@ -136,6 +183,8 @@ const Admin_image_demo = () => {
           onChange={handleChange}
           required
         />
+
+        <button type="submit">Submit</button>
       </form>
 
       <table className="puzzles-table">
@@ -152,19 +201,22 @@ const Admin_image_demo = () => {
           </tr>
         </thead>
         <tbody>
-          {puzzleData.map((puzzle, index) => (
-            <tr key={index}>
-              <td>{new Date(puzzle.date_time).toLocaleDateString()}</td>
+          {puzzleData.map((puzzle, puzzleIndex) => (
+            <tr key={puzzle._id}>
+              <td>{puzzle.date_time}</td>
               <td>{puzzle.level}</td>
               <td>{puzzle.category}</td>
               <td>{puzzle.title}</td>
               <td>{puzzle.live}</td>
               {Array.from({ length: 10 }, (_, i) => (
                 <td key={i}>
-                  {i < puzzle.file_ids.length ? (
-                    <button type="button">View/Edit</button>
+                  {puzzle.file_ids[`puzzle${i + 1}`] ? (
+                    <>
+                      <button onClick={() => handleAddImage(puzzleIndex, `puzzle${i + 1}`)}>Add Image</button>
+                      <button onClick={() => handleViewEdit(puzzleIndex, `puzzle${i + 1}`)}>View/Edit</button>
+                    </>
                   ) : (
-                    <button type="button" onClick={() => handleAddImage(index, i + 1)}>Add</button>
+                    <button onClick={() => handleAddImage(puzzleIndex, `puzzle${i + 1}`)}>Add Image</button>
                   )}
                 </td>
               ))}
@@ -172,6 +224,15 @@ const Admin_image_demo = () => {
           ))}
         </tbody>
       </table>
+
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          puzzleData={selectedPuzzle}
+          onSubmit={handleModalSubmit}
+        />
+      )}
     </>
   );
 };
