@@ -1,13 +1,13 @@
 import React from 'react';
 import './inprogress.scss';
 
-interface LessonStep {
+export interface LessonStep {
   title: string;
   completed: boolean;
   isQuiz?: boolean;
 }
 
-interface LessonContentProps {
+export interface LessonContentProps {
   steps: LessonStep[];
   progress: number;
   completedSteps: number;
