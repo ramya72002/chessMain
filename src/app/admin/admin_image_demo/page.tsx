@@ -35,7 +35,7 @@ const Admin_image_demo: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:80/imagesets');
+        const response = await fetch('https://backend-chess-tau.vercel.app/imagesets');
         if (!response.ok) {
           throw new Error('Failed to fetch puzzle data');
         }
@@ -79,7 +79,7 @@ const Admin_image_demo: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:80/upload', {
+      const response = await fetch('https://backend-chess-tau.vercel.app/upload', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -104,10 +104,65 @@ const Admin_image_demo: React.FC = () => {
     }
   };
 
-  const handleAddImage = (puzzleIndex: number, puzzleKey: string) => {
-    console.log(`Add new image to puzzle ${puzzleIndex} with key ${puzzleKey}`);
-    // Implement image addition logic here
+   const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
+    const puzzle = puzzleData[puzzleIndex];
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+  
+    document.body.appendChild(fileInput);
+  
+    fileInput.onchange = async (event) => {
+      const fileList = (event.target as HTMLInputElement).files;
+      
+      if (!fileList || fileList.length === 0) {
+        alert('No file selected.');
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('level', puzzle.level);
+      formData.append('category', puzzle.category);
+      formData.append('title', puzzle.title);
+      formData.append('live', puzzle.live);
+      formData.append('date_time', puzzle.date_time);
+      formData.append('puzzle_number', puzzleKey.replace('puzzle', ''));
+      formData.append('images', fileList[0]);
+  
+      try {
+        const response = await fetch('https://backend-chess-tau.vercel.app/upload', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          const result = await response.json();
+          throw new Error(result.error || 'Upload failed');
+        }
+  
+        alert('Image uploaded successfully!');
+        // Refresh puzzle data or update UI as needed
+        setPuzzleData(prevData => {
+          const newData = [...prevData];
+          newData[puzzleIndex].file_ids[puzzleKey] = {
+            id: fileList[0].name, // Use appropriate ID if available
+            solution: '',
+            sid_link: '',
+          };
+          return newData;
+        });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        alert('An error occurred while uploading the image.');
+      }
+  
+      document.body.removeChild(fileInput);
+    };
+  
+    fileInput.click();
   };
+  
 
   const handleViewEdit = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
@@ -119,7 +174,7 @@ const Admin_image_demo: React.FC = () => {
     }
 
     try {
-      const apiUrl = `http://127.0.0.1:80/getpuzzleid?level=${encodeURIComponent(puzzle.level)}&category=${encodeURIComponent(puzzle.category)}&title=${encodeURIComponent(puzzle.title)}&live=${encodeURIComponent(puzzle.live)}&puzzle_number=${puzzleKey.replace('puzzle', '')}`;
+      const apiUrl = `https://backend-chess-tau.vercel.app/getpuzzleid?level=${encodeURIComponent(puzzle.level)}&category=${encodeURIComponent(puzzle.category)}&title=${encodeURIComponent(puzzle.title)}&live=${encodeURIComponent(puzzle.live)}&puzzle_number=${puzzleKey.replace('puzzle', '')}`;
       const response = await fetch(apiUrl);
       if (!response.ok) {
         const data = await response.json();
