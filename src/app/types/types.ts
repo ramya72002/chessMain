@@ -26,7 +26,7 @@ export interface Session {
     isOpen: boolean;
     onClose: () => void;
     puzzleData: PuzzleData | null;
-    columnName: string | null;
+    columnName: string | "puzzle1";
   }
   export interface Section {
     name: string;

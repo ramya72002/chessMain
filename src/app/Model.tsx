@@ -2,16 +2,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './model.scss';
-import { ModelProps } from   './types/types';
+import { ModelProps } from './types/types';
 
-const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
+const Modal: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
   const [sidLink, setSidLink] = useState<string>('');
   const [solution, setSolution] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+console.log("ppppp",puzzleData)
   const handleSubmit = async () => {
     if (!puzzleData) return;
+
+    if (!sidLink || !solution) {
+      setError('SID Link and Solution fields cannot be empty.');
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const response = await axios.put('https://backend-chess-tau.vercel.app/get_puzzle_sol', {
@@ -25,12 +33,16 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
       });
       
       if (response.status === 200) {
-        setSuccess('Puzzle updated successfully');
+        setSuccess('Puzzle updated successfully u can close this window and reopen for changes');
         setError(null);
+        setSidLink('');  // Clear the input fields after successful submission
+        setSolution('');
       }
     } catch (error) {
       setSuccess(null);
       setError('Error updating puzzle');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,6 +59,9 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
         <p><strong>Title:</strong> {puzzleData?.title}</p>
         <p><strong>Live:</strong> {puzzleData?.live ? 'Yes' : 'No'}</p>
         <p><strong>Column Name:</strong> {columnName}</p>
+        <p><strong>Solution:</strong> {puzzleData.file_ids[columnName].solution}</p>
+        <p><strong>SID Link:</strong> {puzzleData.file_ids[columnName].sid_link}</p>
+        <p> if u want to update solution and sid link plz update below</p>
         
         <div className="form-group">
           <label>SID Link:</label>
@@ -54,6 +69,7 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
             type="text"
             value={sidLink}
             onChange={(e) => setSidLink(e.target.value)}
+            placeholder="Enter SID Link"
           />
         </div>
         
@@ -63,10 +79,13 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
             type="text"
             value={solution}
             onChange={(e) => setSolution(e.target.value)}
+            placeholder="Enter Solution"
           />
         </div>
 
-        <button className="submit-button" onClick={handleSubmit}>Submit</button>
+        <button className="submit-button" onClick={handleSubmit} disabled={isLoading}>
+          {isLoading ? 'Updating...' : 'Submit'}
+        </button>
 
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}
@@ -75,4 +94,4 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
   );
 };
 
-export default Model;
+export default Modal;

@@ -284,7 +284,7 @@ const Admin_image_demo: React.FC = () => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         puzzleData={selectedPuzzle.puzzle || null}
-        columnName={selectedPuzzle.column || null}
+        columnName={selectedPuzzle.column || "puzzle1"}
       />
     </>
   );

@@ -18,7 +18,7 @@ const AdminHeader= () => {
                         </a>
                     </li>
                     <li className="menuItem">
-                        <a href="/admin/admin_image_puzzles">
+                        <a href="/admin/admin_image_demo">
                             <p>Image Puzzle</p>
                         </a>
                     </li>
