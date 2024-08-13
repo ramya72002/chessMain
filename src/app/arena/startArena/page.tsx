@@ -8,6 +8,7 @@ import { ImageData } from '../../types/types';
 
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
   const [level, setLevel] = useState<string>('');
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,20 +18,23 @@ const StartArena = () => {
   const router = useRouter();
 
   useEffect(() => {
+    // Extract query parameters
     const queryParams = new URLSearchParams(window.location.search);
     const queryTitle = queryParams.get('title');
     const queryLevel = queryParams.get('level');
+    const queryCategory =queryParams.get('category');
 
     if (queryTitle) setTitle(decodeURIComponent(queryTitle));
+    if (queryCategory) setCategory(decodeURIComponent(queryCategory));
     if (queryLevel) setLevel(decodeURIComponent(queryLevel));
   }, []);
 
   useEffect(() => {
+    // Fetch images when title and level are available
     if (title && level) {
       const fetchImages = async () => {
         try {
-          console.log()
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/images/${encodeURIComponent(title)}?level=${encodeURIComponent(level)}`);
+          const response = await axios.get(`http://127.0.0.1:80/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
           const imagesData: ImageData[] = response.data.images;
 
           setImages(imagesData);
@@ -78,7 +82,7 @@ const StartArena = () => {
       <div className="imageGallery">
         {images.map((image) => (
           <div key={image.id} onClick={() => handleImageClick(image)} style={{ cursor: 'pointer' }}>
-            <img src={imageUrls[image.id] || ''} alt={image.filename} />
+            <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
           </div>
         ))}
       </div>
