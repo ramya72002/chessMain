@@ -4,7 +4,7 @@ import axios from 'axios';
 import './model.scss';
 import { ModelProps } from '../../types/types';
 
-const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
+const Admin_image_model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
   const [sidLink, setSidLink] = useState<string>('');
   const [solution, setSolution] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -75,4 +75,4 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
   );
 };
 
-export default Model;
+export default Admin_image_model;
