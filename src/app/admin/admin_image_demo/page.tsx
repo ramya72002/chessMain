@@ -1,7 +1,7 @@
-'use client';
+'use client'
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
-import Modal from '../admin_image_model/page'; // Ensure the path is correct
+import Model from '../admin_image_model/page'; // Adjust the path as needed
 
 interface FileData {
   id: string;
@@ -19,7 +19,7 @@ interface PuzzleData {
   file_ids: { [key: string]: FileData };
 }
 
-const Admin_image_demo = () => {
+const Admin_image_demo: React.FC = () => {
   const [puzzleData, setPuzzleData] = useState<PuzzleData[]>([]);
   const [formData, setFormData] = useState({
     level: '',
@@ -29,7 +29,7 @@ const Admin_image_demo = () => {
     date_time: '',
   });
   const [files, setFiles] = useState<FileList | null>(null);
-  const [selectedPuzzle, setSelectedPuzzle] = useState<PuzzleData | null>(null);
+  const [selectedPuzzle, setSelectedPuzzle] = useState<{ puzzle: PuzzleData | null; column: string | null }>({ puzzle: null, column: null });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const Admin_image_demo = () => {
           throw new Error('Failed to fetch puzzle data');
         }
         const data = await response.json();
+        console.log('Fetched puzzle data:', data); // Log data to check structure
         setPuzzleData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -126,14 +127,14 @@ const Admin_image_demo = () => {
       }
 
       const data = await response.json();
-      setSelectedPuzzle(data);
+      setSelectedPuzzle({ puzzle: data, column: puzzleKey });
       setIsModalOpen(true);
     } catch (error) {
       console.error('Error fetching puzzle data:', error);
       alert('An error occurred while fetching the puzzle data.');
     }
   };
-
+  
   return (
     <>
       <form className="admin-image-form" onSubmit={handleSubmit}>
@@ -212,10 +213,7 @@ const Admin_image_demo = () => {
               {Array.from({ length: 10 }, (_, i) => (
                 <td key={i}>
                   {puzzle.file_ids[`puzzle${i + 1}`] ? (
-                    <>
-                      <button onClick={() => handleAddImage(puzzleIndex, `puzzle${i + 1}`)}>Add Image</button>
-                      <button onClick={() => handleViewEdit(puzzleIndex, `puzzle${i + 1}`)}>View/Edit</button>
-                    </>
+                    <button onClick={() => handleViewEdit(puzzleIndex, `puzzle${i + 1}`)}>View/Edit</button>
                   ) : (
                     <button onClick={() => handleAddImage(puzzleIndex, `puzzle${i + 1}`)}>Add Image</button>
                   )}
@@ -226,13 +224,12 @@ const Admin_image_demo = () => {
         </tbody>
       </table>
 
-      {isModalOpen && selectedPuzzle && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          puzzleData={selectedPuzzle}
-        />
-      )}
+      <Model
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        puzzleData={selectedPuzzle.puzzle || null}
+        columnName={selectedPuzzle.column || null}
+      />
     </>
   );
 };
