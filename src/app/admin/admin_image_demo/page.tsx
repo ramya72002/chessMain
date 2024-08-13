@@ -10,7 +10,7 @@ interface FileData {
 }
 
 interface PuzzleData {
-  _id: string;
+  _id: string; 
   date_time: string;
   level: string;
   category: string;
