@@ -1,13 +1,5 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-
-import './model.scss';
-interface FileData {
-  id: string;
-  solution: string;
-  sid_link: string;
-}
-
+import React from 'react';
+import './model.scss'
 interface PuzzleData {
   _id: string;
   date_time: string;
@@ -15,55 +7,34 @@ interface PuzzleData {
   category: string;
   title: string;
   live: string;
-  file_ids: { [key: string]: FileData };
+  file_ids: { [key: string]: any };
 }
-interface ModalProps {
+
+interface ModelProps {
   isOpen: boolean;
   onClose: () => void;
-  puzzleData: FileData | null;
-  onSubmit: (data: FileData) => void;
+  puzzleData: PuzzleData | null;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, puzzleData, onSubmit }) => {
-  const [solution, setSolution] = useState(puzzleData?.solution || '');
-  const [sidLink, setSidLink] = useState(puzzleData?.sid_link || '');
-
+const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData }) => {
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({ ...puzzleData!, solution, sid_link: sidLink });
-  };
-
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="modal-backdrop">
+      <div className="modal-container">
         <button className="modal-close" onClick={onClose}>X</button>
-        <h3>Edit Puzzle</h3>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Solution</label>
-            <input
-              type="text"
-              value={solution}
-              onChange={(e) => setSolution(e.target.value)}
-              required
-            />
+        <h2>Edit Puzzle</h2>
+        {puzzleData && (
+          <div className="puzzle-info">
+            <p><strong>Level:</strong> {puzzleData.level}</p>
+            <p><strong>Category:</strong> {puzzleData.category}</p>
+            <p><strong>Title:</strong> {puzzleData.title}</p>
+            <p><strong>Live:</strong> {puzzleData.live}</p>
           </div>
-          <div>
-            <label>AskSid Link</label>
-            <input
-              type="text"
-              value={sidLink}
-              onChange={(e) => setSidLink(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+        )}
       </div>
     </div>
   );
 };
 
-export default Modal;
+export default Model;

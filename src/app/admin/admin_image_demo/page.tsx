@@ -1,8 +1,7 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
-import Modal from '../admin_image_model/page';
-// import Modal from './Modal';  // Import the modal component
+import Modal from '../admin_image_model/page'; // Ensure the path is correct
 
 interface FileData {
   id: string;
@@ -30,17 +29,21 @@ const Admin_image_demo = () => {
     date_time: '',
   });
   const [files, setFiles] = useState<FileList | null>(null);
-  const [selectedPuzzle, setSelectedPuzzle] = useState<FileData | null>(null);
+  const [selectedPuzzle, setSelectedPuzzle] = useState<PuzzleData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('http://127.0.0.1:80/imagesets');
+        if (!response.ok) {
+          throw new Error('Failed to fetch puzzle data');
+        }
         const data = await response.json();
         setPuzzleData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
+        alert('An error occurred while fetching data.');
       }
     };
 
@@ -53,10 +56,10 @@ const Admin_image_demo = () => {
     if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
       setFiles(e.target.files);
     } else {
-      setFormData({
-        ...formData,
+      setFormData(prevFormData => ({
+        ...prevFormData,
         [name]: value,
-      });
+      }));
     }
   };
 
@@ -71,9 +74,7 @@ const Admin_image_demo = () => {
     formDataToSend.append('date_time', formData.date_time);
 
     if (files) {
-      for (let i = 0; i < files.length; i++) {
-        formDataToSend.append('images', files[i]);
-      }
+      Array.from(files).forEach(file => formDataToSend.append('images', file));
     }
 
     try {
@@ -82,55 +83,55 @@ const Admin_image_demo = () => {
         body: formDataToSend,
       });
 
-      const result = await response.json();
-
-      if (result.ok) {
-        alert('Images uploaded successfully!');
-        // Update puzzleData or handle response as needed
-      } else {
-        alert('Error: ' + result.error);
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || 'Upload failed');
       }
+
+      alert('Images uploaded successfully!');
+      setFormData({
+        level: '',
+        category: '',
+        title: '',
+        live: '',
+        date_time: '',
+      });
+      setFiles(null);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error uploading images:', error);
       alert('An error occurred while uploading the images.');
     }
   };
 
   const handleAddImage = (puzzleIndex: number, puzzleKey: string) => {
     console.log(`Add new image to puzzle ${puzzleIndex} with key ${puzzleKey}`);
+    // Implement image addition logic here
   };
 
   const handleViewEdit = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
     const puzzleFile = puzzle.file_ids[puzzleKey];
-  
+
     if (!puzzleFile) {
       console.log('Puzzle file does not exist.');
       return;
     }
-  
+
     try {
       const apiUrl = `http://127.0.0.1:80/getpuzzleid?level=${encodeURIComponent(puzzle.level)}&category=${encodeURIComponent(puzzle.category)}&title=${encodeURIComponent(puzzle.title)}&live=${encodeURIComponent(puzzle.live)}&puzzle_number=${puzzleKey.replace('puzzle', '')}`;
       const response = await fetch(apiUrl);
-      const data = await response.json();
-  
-      if (response.ok) {
-        setSelectedPuzzle(data);
-        setIsModalOpen(true);
-      } else {
-        console.error('Error fetching puzzle data:', data.error);
-        alert('Error: ' + data.error);
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Error fetching puzzle data');
       }
+
+      const data = await response.json();
+      setSelectedPuzzle(data);
+      setIsModalOpen(true);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error fetching puzzle data:', error);
       alert('An error occurred while fetching the puzzle data.');
     }
-  };
-
-  const handleModalSubmit = (updatedPuzzle: FileData) => {
-    // Handle the update logic here
-    console.log('Updated Puzzle:', updatedPuzzle);
-    setIsModalOpen(false);
   };
 
   return (
@@ -225,12 +226,11 @@ const Admin_image_demo = () => {
         </tbody>
       </table>
 
-      {isModalOpen && (
+      {isModalOpen && selectedPuzzle && (
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           puzzleData={selectedPuzzle}
-          onSubmit={handleModalSubmit}
         />
       )}
     </>
