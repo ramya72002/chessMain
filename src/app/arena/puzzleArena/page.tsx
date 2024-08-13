@@ -53,7 +53,7 @@ const PuzzleArena = () => {
     <div className="puzzle-arena-container">
       <div className="top-section">
         <div className="left-section">
-          <img src="/images/puzzleArena.png" alt="Puzzle Arena" />
+          <img src="/images/puzzlearena.png" alt="Puzzle Arena" />
         </div>
         
         <div className="right-section">
