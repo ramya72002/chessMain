@@ -8,7 +8,26 @@ export interface Session {
   export interface RoundsTiming {
     description: string; 
   }
-  
+  export interface FileData {
+    id: string;
+    solution: string;
+    sid_link: string;
+  }
+  export interface PuzzleData {
+    _id: string;
+    date_time: string;
+    level: string;
+    category: string;
+    title: string;
+    live: string;
+    file_ids: { [columnName: string]: FileData };
+  }
+  export interface ModelProps {
+    isOpen: boolean;
+    onClose: () => void;
+    puzzleData: PuzzleData | null;
+    columnName: string | null;
+  }
   export interface Section {
     name: string;
     registrationFee: string;

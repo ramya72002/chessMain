@@ -3,28 +3,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './model.scss';
 
-interface FileData {
-  id: string;
-  solution: string;
-  sid_link: string;
-}
+import { ModelProps } from '../../types/types';
 
-interface PuzzleData {
-  _id: string;
-  date_time: string;
-  level: string;
-  category: string;
-  title: string;
-  live: string;
-  file_ids: { [columnName: string]: FileData };
-}
-
-interface ModelProps {
-  isOpen: boolean;
-  onClose: () => void;
-  puzzleData: PuzzleData | null;
-  columnName: string | null;
-}
 
 const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
   const [sidLink, setSidLink] = useState<string>('');
