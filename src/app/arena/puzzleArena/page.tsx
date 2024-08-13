@@ -7,39 +7,61 @@ import { UserDetails } from '../../types/types';
 
 const PuzzleArena = () => {
   const router = useRouter();
+  const levelMapping: Record<string, string> = {
+    'level1': "Pawn",
+    'level2': "Knight",
+    'level3': "Bishop",
+    'level4': "Rook",
+    'level5': "Queen",
+    'level6': "King"
+  };
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const [titles, setTitles] = useState<string[]>([]);
+  const [livePuzzles, setLivePuzzles] = useState<{ title: string; category: string; date_time: string }[]>([]);
+  const [practicePuzzles, setPracticePuzzles] = useState<{ title: string; category: string; date_time: string }[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (typeof window !== 'undefined') {
         const userDetailsString = localStorage.getItem('userDetails');
         const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-        
+
         if (storedUserDetails) {
           setUserDetails(storedUserDetails);
           try {
-            const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${storedUserDetails.level}`);
+            const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${levelMapping[storedUserDetails.level]}`);
             const data = response.data;
 
-            // Log the data to check its structure
-            console.log('API response data:', data);
-
-            // Adjust based on the actual structure of data
             if (data.image_sets && Array.isArray(data.image_sets)) {
-              // Extract titles from the image_sets array
-              const titlesList = data.image_sets.map((item: { title: string }) => item.title);
-              setTitles(titlesList);
+              const livePuzzlesList = data.image_sets
+                .filter((item: { live: string }) => item.live === 'Yes')
+                .map((item: { title: string; category: string; date_time: string }) => ({
+                  title: item.title,
+                  category: item.category,
+                  date_time: item.date_time
+                }));
+
+              const practicePuzzlesList = data.image_sets
+                .filter((item: { live: string }) => item.live === 'No')
+                .map((item: { title: string; category: string; date_time: string }) => ({
+                  title: item.title,
+                  category: item.category,
+                  date_time: item.date_time
+                }));
+
+              setLivePuzzles(livePuzzlesList);
+              setPracticePuzzles(practicePuzzlesList);
             } else {
-              console.error('Unexpected data structure:', data);
+              setError('Unexpected data structure received from the server.');
             }
           } catch (error) {
+            setError('Failed to fetch level data. Please try again later.');
             console.error('Error fetching level data:', error);
           }
         }
       }
     };
-    
+
     fetchUserDetails();
   }, []);
 
@@ -55,13 +77,13 @@ const PuzzleArena = () => {
         <div className="left-section">
           <img src="/images/puzzlearena.png" alt="Puzzle Arena" />
         </div>
-        
+
         <div className="right-section">
           <div className="header">
             <p>Hi {userDetails ? userDetails.name : 'Student'}</p>
             <p>Your Puzzle Arena Score is .....</p>
           </div>
-          
+
           <div className="arena-scores">
             <div className="score-item">Opening Arena</div>
             <div className="score-item">Middlegame Arena</div>
@@ -74,24 +96,32 @@ const PuzzleArena = () => {
       <div className="bottom-section">
         <div className="theme-practice live-arena">
           <p>Live Arena</p>
-          <div className="practice-item">
-            <p>Upcoming Live Arena</p>
-            <p>05-Aug-2024</p>
-            <p>10:00 A.M</p>
-            <button className="start-button" onClick={() => handleButtonClick('UpcomingLiveArena')}>Join</button>
-          </div>
+          {livePuzzles.length > 0 ? (
+            livePuzzles.map((puzzle, index) => (
+              <div className="practice-item" key={index}>
+                <p>{puzzle.category}:{puzzle.title}</p>
+                 <p>Date & Time: {puzzle.date_time}</p>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title)}>Start</button>
+              </div>
+            ))
+          ) : (
+            <p>No live puzzles available</p>
+          )}
         </div>
-        
+
         <div className="theme-practice">
           <p>Theme Based Practice</p>
-          {titles.map((title, index) => (
-            <div className="practice-item" key={index}>
-              <p>{title}</p>
-              <p>Status</p>
-              <p>0/10</p>
-              <button className="start-button" onClick={() => handleButtonClick(title)}>Start</button>
-            </div>
-          ))}
+          {practicePuzzles.length > 0 ? (
+            practicePuzzles.map((puzzle, index) => (
+              <div className="practice-item" key={index}>
+                <p>{puzzle.category}:{puzzle.title}</p>
+                <p>Date & Time: {puzzle.date_time}</p>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title)}>Start</button>
+              </div>
+            ))
+          ) : (
+            <p>No theme-based puzzles available</p>
+          )}
         </div>
       </div>
     </div>
