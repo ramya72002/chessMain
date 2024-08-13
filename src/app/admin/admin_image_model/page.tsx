@@ -1,10 +1,8 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
 import './model.scss';
-
 import { ModelProps } from '../../types/types';
-
 
 const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
   const [sidLink, setSidLink] = useState<string>('');
@@ -12,10 +10,8 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
- 
-
   const handleSubmit = async () => {
-  if (!isOpen || !puzzleData) return null;
+    if (!puzzleData) return;
 
     try {
       const response = await axios.put('https://backend-chess-tau.vercel.app/get_puzzle_sol', {
@@ -45,11 +41,11 @@ const Model: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
       <div className="modal-content">
         <button className="modal-close" onClick={onClose}>X</button>
         <h2>Puzzle Details</h2>
-        <p><strong>Date Time:</strong> {puzzleData.date_time}</p>
-        <p><strong>Level:</strong> {puzzleData.level}</p>
-        <p><strong>Category:</strong> {puzzleData.category}</p>
-        <p><strong>Title:</strong> {puzzleData.title}</p>
-        <p><strong>Live:</strong> {puzzleData.live}</p>
+        <p><strong>Date Time:</strong> {puzzleData?.date_time}</p>
+        <p><strong>Level:</strong> {puzzleData?.level}</p>
+        <p><strong>Category:</strong> {puzzleData?.category}</p>
+        <p><strong>Title:</strong> {puzzleData?.title}</p>
+        <p><strong>Live:</strong> {puzzleData?.live ? 'Yes' : 'No'}</p>
         <p><strong>Column Name:</strong> {columnName}</p>
         
         <div className="form-group">
