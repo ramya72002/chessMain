@@ -2,32 +2,38 @@
 import React, { useState, useEffect } from 'react';
 import './admin_image_demo.scss';
 
+interface PuzzleData {
+  date_time: string;
+  level: string;
+  category: string;
+  title: string;
+  live: string;
+  file_ids: string[];
+}
+
 const Admin_image_demo = () => {
+  const [puzzleData, setPuzzleData] = useState<PuzzleData[]>([]);
   const [formData, setFormData] = useState({
     level: '',
     category: '',
-    title: '',
+    title: '',  // Changed from 'name' to 'title'
     live: '',
     date_time: '',
   });
-
   const [files, setFiles] = useState<FileList | null>(null);
-  const [puzzlesData, setPuzzlesData] = useState([]);
 
-  // Fetch puzzles data on component mount
   useEffect(() => {
-    const fetchPuzzlesData = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch('http://127.0.0.1:80/imagesets');
         const data = await response.json();
-        setPuzzlesData(data);
+        setPuzzleData(data);
       } catch (error) {
-        console.error('Error fetching puzzles data:', error);
-        alert('An error occurred while fetching puzzles data.');
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchPuzzlesData();
+    fetchData();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -43,46 +49,44 @@ const Admin_image_demo = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!files) {
-      alert('Please select files to upload.');
-      return;
-    }
-
+  const handleAddImage = (puzzleIndex: number, puzzleNumber: number) => {
     const formDataToSend = new FormData();
 
-    for (const key in formData) {
-      formDataToSend.append(key, formData[key as keyof typeof formData]);
+    // Append form data specific to the puzzle being edited
+    formDataToSend.append('level', puzzleData[puzzleIndex].level);
+    formDataToSend.append('category', puzzleData[puzzleIndex].category);
+    formDataToSend.append('title', puzzleData[puzzleIndex].title);
+    formDataToSend.append('live', puzzleData[puzzleIndex].live);
+    formDataToSend.append('date_time', puzzleData[puzzleIndex].date_time);
+
+    if (files) {
+      formDataToSend.append('images', files[0]); // Assuming single file upload
     }
 
-    for (let i = 0; i < files.length; i++) {
-      formDataToSend.append('images', files[i]);
-    }
-
-    try {
-      const response = await fetch('http://127.0.0.1:80/upload', {
-        method: 'POST',
-        body: formDataToSend,
+    fetch('http://127.0.0.1:80/upload', {
+      method: 'POST',
+      body: formDataToSend,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.ok) {
+          alert('Image added successfully!');
+          const updatedPuzzleData = [...puzzleData];
+          updatedPuzzleData[puzzleIndex].file_ids[puzzleNumber - 1] = result.file_id; // Update the puzzle with the new file_id
+          setPuzzleData(updatedPuzzleData);
+        } else {
+          alert('Error: ' + result.error);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('An error occurred while uploading the image.');
       });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert('Images uploaded successfully! File IDs: ' + result.file_ids.join(', '));
-      } else {
-        alert('Error: ' + result.error);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while uploading images.');
-    }
   };
 
   return (
     <>
-      <form className="admin-image-form" onSubmit={handleSubmit}>
+      <form className="admin-image-form" onSubmit={(e) => e.preventDefault()}>
         <select name="level" value={formData.level} onChange={handleChange} required>
           <option value="">Select Level</option>
           <option value="Pawn">Pawn</option>
@@ -132,11 +136,8 @@ const Admin_image_demo = () => {
           onChange={handleChange}
           required
         />
-
-        <button type="submit">Submit</button>
       </form>
 
-      {/* Display puzzles data in a table */}
       <table className="puzzles-table">
         <thead>
           <tr>
@@ -151,19 +152,19 @@ const Admin_image_demo = () => {
           </tr>
         </thead>
         <tbody>
-          {puzzlesData.map((puzzle: any, index: number) => (
+          {puzzleData.map((puzzle, index) => (
             <tr key={index}>
               <td>{new Date(puzzle.date_time).toLocaleDateString()}</td>
               <td>{puzzle.level}</td>
               <td>{puzzle.category}</td>
               <td>{puzzle.title}</td>
-              <td>{puzzle.live ? 'Yes' : 'No'}</td>
+              <td>{puzzle.live}</td>
               {Array.from({ length: 10 }, (_, i) => (
                 <td key={i}>
-                  {puzzle[`puzzle${i + 1}`] ? (
-                    <button>View/Edit</button>
+                  {i < puzzle.file_ids.length ? (
+                    <button type="button">View/Edit</button>
                   ) : (
-                    <button>Add</button>
+                    <button type="button" onClick={() => handleAddImage(index, i + 1)}>Add</button>
                   )}
                 </td>
               ))}
