@@ -9,9 +9,9 @@ import './insidepuzzlearena.scss';
 const PuzzlePageClient = () => {
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id') || '66bb8396af2a1e3287996406'; // Default file_id
-  const title = searchParams.get('title') || 'Title';
-  const level = searchParams.get('level') || 'level';
-  const category = searchParams.get('category') || 'Category';
+  const title = searchParams.get('title') || 'Mastering Pawn Structure';
+  const level = searchParams.get('level') || 'Pawn';
+  const category = searchParams.get('category') || 'Middlegame';
 
   const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -97,7 +97,24 @@ const PuzzlePageClient = () => {
 
   return (
     <div className="puzzle-container">
-      <h1>{title}</h1>
+      <div className="puzzle-header">
+        <table>
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Category</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{level}</td>
+              <td>{category}</td>
+              <td>{title}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div className="puzzle-content">
         <div className="chessboard">
           {imageSrc ? (
@@ -105,18 +122,15 @@ const PuzzlePageClient = () => {
           ) : (
             <p>Loading image...</p>
           )}
-          <div className="move-indicator">{solutions.length > 0 ? solutions[0].move : 'N/A'}</div>
+          <div className="move-indicator">Black to Move</div>
         </div>
         <div className="puzzle-info">
-          <h2>Puzzle - 1</h2>
+          <h2>Puzzle 1</h2>
           <button className="timer-btn" onClick={handleStartTimer}>
-            Start Timer
-            <div className="timer-display">
-              <h3>{formatTime(timer)}</h3>
-            </div>
+            Start/Stop Timer
           </button>
           <button className="solution-btn" onClick={handleShowSolution}>
-            <img src="/images/solution.png" alt="Solution" /> Solution
+            Solution
           </button>
           {activeTab === 'solution' && solutions.length > 0 && (
             <div className="solution-content">
@@ -124,23 +138,26 @@ const PuzzlePageClient = () => {
             </div>
           )}
           <button className="ask-sid-btn" onClick={handleShowSidLink}>
-            <img src="/images/sid.png" alt="Ask SID" />
-            Ask SID
+            Ask Sid
           </button>
           {activeTab === 'sid' && solutions.length > 0 && (
             <div className="sid-link-content">
               <p>{solutions[0].sid_link}</p>
             </div>
           )}
+          
         </div>
+        
       </div>
       <div className="response-buttons">
         <button className="correct-btn">Got it Right</button>
         <button className="incorrect-btn">Missed It</button>
       </div>
-      <p className="explanation">
-        * You ‘Got it Right’ because you were able to correctly identify the first two moves as mentioned in the ‘Solution’ tab above, else you would have marked as ‘Missed it’, correct?
-      </p>
+      
+      <div className="navigation-buttons">
+        <button className="nav-btn">Previous</button>
+        <button className="nav-btn">Next</button>
+      </div>
     </div>
   );
 };
