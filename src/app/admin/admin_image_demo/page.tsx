@@ -291,7 +291,7 @@ const Admin_image_demo: React.FC = () => {
             {Array.from({ length: 9 }, (_, i) => (
               <th key={i}>Puzzle {i + 1}</th>
             ))}
-            <th>Delete</th>
+            <th className="delete-button">Delete</th>
           </tr>
         </thead>
         <tbody>
