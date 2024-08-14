@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./side2.scss";
+import { useRouter } from "next/navigation";
 
 const topics = [
   { title: "Introduction to Blockchain", isQuiz: false, completed: true },
@@ -20,16 +21,25 @@ const topics = [
 ];
 
 const Sidebar2: React.FC = () => {
+  const router = useRouter();
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarMinimized(!isSidebarMinimized);
   };
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page
+  };
+
   return (
     <div className={`course-content ${isSidebarMinimized ? "minimized" : ""}`}>
       <div className="header">
-        <h3>Certified Ethereum Developer Program</h3>
+        {!isSidebarMinimized && (
+          <button className="go-back-button" onClick={handleGoBack}>
+            Go Back
+          </button>
+        )}
         <button className="toggle-button" onClick={toggleSidebar}>
           {isSidebarMinimized ? ">" : "<"}
         </button>
@@ -37,7 +47,7 @@ const Sidebar2: React.FC = () => {
       {!isSidebarMinimized && (
         <div className="module">
           <div className="module-header">
-            <span>Blockchain Basic Concepts</span>
+            <span>Basics Of Chess</span>
             <span className="progress">
               <span className="topics-count">13 Topics</span> | 
               <span className="quizzes-count">8 Quizzes</span>
