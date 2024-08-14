@@ -5,6 +5,7 @@ import Model from '@/app/Model';
 
 interface FileData {
   id: string;
+  move:string;
   solution: string;
   sid_link: string;
 }
@@ -145,6 +146,7 @@ const Admin_image_demo: React.FC = () => {
           const newData = [...prevData];
           newData[puzzleIndex].file_ids[puzzleKey] = {
             id: fileList[0].name,
+            move:'',
             solution: '',
             sid_link: '',
           };
