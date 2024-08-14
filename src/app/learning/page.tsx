@@ -75,7 +75,7 @@ const MyAccount = () => {
             </thead>
             <tbody>
               <tr>
-                <td>Introduction to Blockchain Quiz</td>
+                <td>Basics Of Chess</td>
                 <td>20%</td>
                 <td>20%</td>
                 <td>May 20, 2023 4:42 pm</td>
