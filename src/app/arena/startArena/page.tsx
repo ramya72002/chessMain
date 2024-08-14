@@ -75,8 +75,8 @@ const StartArena = () => {
       });
   };
 
-  const handleImageClick = (image: ImageData) => {
-    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&level=${encodeURIComponent(level)}`;
+  const handleImageClick = (image: ImageData,index:number) => {
+    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&level=${encodeURIComponent(level)}&puzzle_number=${encodeURIComponent(index+1)}`;
     router.push(url);
   };
 
@@ -112,7 +112,7 @@ const StartArena = () => {
       <h1 className="title">{title}</h1>
       <div className="imageGallery">
         {images.map((image,index) => (
-          <div key={image.id} onClick={() => handleImageClick(image)} style={{ cursor: 'pointer' }}>
+          <div key={image.id} onClick={() => handleImageClick(image,index)} style={{ cursor: 'pointer' }}>
             <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
             <div className="imageText">
               <button className="puzzleButton">Puzzle {index + 1}</button>

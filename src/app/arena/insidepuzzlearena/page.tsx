@@ -12,6 +12,7 @@ const PuzzlePageClient = () => {
   const title = searchParams.get('title') || 'Mastering Pawn Structure';
   const level = searchParams.get('level') || 'Pawn';
   const category = searchParams.get('category') || 'Middlegame';
+  const puzzle_number = searchParams.get('puzzle_number') || '1';
 
   const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -125,7 +126,7 @@ const PuzzlePageClient = () => {
           <div className="move-indicator">Black to Move</div>
         </div>
         <div className="puzzle-info">
-          <h2>Puzzle 1</h2>
+          <h2>Puzzle{puzzle_number}</h2>
           <button className="timer-btn" onClick={handleStartTimer}>
             Start/Stop Timer
           </button>
