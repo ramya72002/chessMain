@@ -5,6 +5,25 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { UserDetails } from '../../types/types';
 
+// Define types for file_ids and puzzles
+type FileIdDetail = {
+  id: string;
+  move: string;
+  sid_link: string;
+  solution: string;
+};
+
+type FileIds = {
+  [key: string]: FileIdDetail;
+};
+
+type Puzzle = {
+  title: string;
+  category: string;
+  date_time: string;
+  file_ids?: FileIds; // file_ids is an optional dictionary of FileIdDetail
+};
+
 const PuzzleArena = () => {
   const router = useRouter();
   const levelMapping: Record<string, string> = {
@@ -16,8 +35,8 @@ const PuzzleArena = () => {
     'level6': "King"
   };
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const [livePuzzles, setLivePuzzles] = useState<{ title: string; category: string; date_time: string }[]>([]);
-  const [practicePuzzles, setPracticePuzzles] = useState<{ title: string; category: string; date_time: string }[]>([]);
+  const [livePuzzles, setLivePuzzles] = useState<Puzzle[]>([]);
+  const [practicePuzzles, setPracticePuzzles] = useState<Puzzle[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,24 +52,30 @@ const PuzzleArena = () => {
             const data = response.data;
 
             if (data.image_sets && Array.isArray(data.image_sets)) {
+              console.log("count", data.image_sets);
+              
               const livePuzzlesList = data.image_sets
                 .filter((item: { live: string }) => item.live === 'Yes')
-                .map((item: { title: string; category: string; date_time: string }) => ({
-                  title: item.title,
-                  category: item.category,
-                  date_time: item.date_time
-                }));
-
+                .map((item: Puzzle) => ({
+                      title: item.title,
+                      category: item.category,
+                      date_time: item.date_time,
+                      file_ids: item.file_ids || {}  // Include file_ids, default to empty object if not present
+                  }));
+          
               const practicePuzzlesList = data.image_sets
                 .filter((item: { live: string }) => item.live === 'No')
-                .map((item: { title: string; category: string; date_time: string }) => ({
+                .map((item: Puzzle) => ({
                   title: item.title,
                   category: item.category,
-                  date_time: item.date_time
-                }));
-
+                  date_time: item.date_time,
+                  file_ids: item.file_ids || {}  // Include file_ids, default to empty object if not present
+                  }));
+          
               setLivePuzzles(livePuzzlesList);
               setPracticePuzzles(practicePuzzlesList);
+              console.log("li", livePuzzlesList);
+              console.log("nli", practicePuzzlesList);
             } else {
               setError('Unexpected data structure received from the server.');
             }
@@ -96,7 +121,7 @@ const PuzzleArena = () => {
         <div className="right-section">
           <div className="header">
             <p className='title'>Puzzle Arena Performance Summary</p>
-           </div>
+          </div>
 
           <div className="arena-scores">
             <div className="score-item">Opening Arena</div>
@@ -114,9 +139,10 @@ const PuzzleArena = () => {
             livePuzzles.map((puzzle, index) => (
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
-                 <p>Date & Time: {puzzle.date_time}</p>
-                 <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
-                 </div>
+                <p>Date & Time: {puzzle.date_time}</p>
+                <p>Score: 1/{Object.keys(puzzle.file_ids || {}).length}</p>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
+              </div>
             ))
           ) : (
             <p>No live puzzles available</p>
@@ -130,9 +156,9 @@ const PuzzleArena = () => {
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
-                <p>1/10</p>
+                <p>Score: 1/{Object.keys(puzzle.file_ids || {}).length}</p>
                 <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
-                </div>
+              </div>
             ))
           ) : (
             <p>No theme-based puzzles available</p>
