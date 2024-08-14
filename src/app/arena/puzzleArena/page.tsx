@@ -65,11 +65,26 @@ const PuzzleArena = () => {
     fetchUserDetails();
   }, []);
 
-  const handleButtonClick = (title: string) => {
+  const handleButtonClick = async (title: string, category: string, date_time: string) => {
     if (userDetails?.level) {
-      router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(userDetails.level)}`);
+      const level = levelMapping[userDetails.level] || 'UnknownLevel'; // Default level if not found
+      const apiUrl = `https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
+  
+      try {
+        const response = await axios.get(apiUrl);
+        console.log('API Response:', response.data);
+  
+        // Navigate to the startArena page with additional parameters
+        router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&date_time=${encodeURIComponent(date_time)}`);
+        
+      } catch (error) {
+        console.error('Error calling the API:', error);
+        setError('Failed to fetch puzzle data. Please try again later.');
+      }
     }
   };
+  
+  
 
   return (
     <div className="puzzle-arena-container">
@@ -101,8 +116,8 @@ const PuzzleArena = () => {
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                  <p>Date & Time: {puzzle.date_time}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title)}>Start</button>
-              </div>
+                 <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>Start</button>
+                 </div>
             ))
           ) : (
             <p>No live puzzles available</p>
@@ -116,8 +131,8 @@ const PuzzleArena = () => {
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title)}>Start</button>
-              </div>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>Start</button>
+                </div>
             ))
           ) : (
             <p>No theme-based puzzles available</p>

@@ -10,6 +10,7 @@ export interface Session {
   }
   export interface FileData {
     id: string;
+    move:string;
     solution: string;
     sid_link: string;
   }

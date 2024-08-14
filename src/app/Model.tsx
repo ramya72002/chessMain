@@ -7,6 +7,7 @@ import { ModelProps } from './types/types';
 const Modal: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }) => {
   const [sidLink, setSidLink] = useState<string>('');
   const [solution, setSolution] = useState<string>('');
+  const [move, setMove] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,7 +15,7 @@ console.log("ppppp",puzzleData)
   const handleSubmit = async () => {
     if (!puzzleData) return;
 
-    if (!sidLink || !solution) {
+    if (!sidLink || !solution || !move) {
       setError('SID Link and Solution fields cannot be empty.');
       return;
     }
@@ -28,6 +29,7 @@ console.log("ppppp",puzzleData)
         title: puzzleData.title,
         live: puzzleData.live,
         column_name: columnName,
+        move:move,
         sid_link: sidLink,
         solution: solution,
       });
@@ -35,6 +37,7 @@ console.log("ppppp",puzzleData)
       if (response.status === 200) {
         setSuccess('Puzzle updated successfully u can close this window and reopen for changes');
         setError(null);
+        setMove('');
         setSidLink('');  // Clear the input fields after successful submission
         setSolution('');
       }
@@ -59,10 +62,25 @@ console.log("ppppp",puzzleData)
         <p><strong>Title:</strong> {puzzleData?.title}</p>
         <p><strong>Live:</strong> {puzzleData?.live ? 'Yes' : 'No'}</p>
         <p><strong>Column Name:</strong> {columnName}</p>
+        <p><strong>Move:</strong> {puzzleData.file_ids[columnName].move}</p>
         <p><strong>Solution:</strong> {puzzleData.file_ids[columnName].solution}</p>
         <p><strong>SID Link:</strong> {puzzleData.file_ids[columnName].sid_link}</p>
         <p> if u want to update solution and sid link plz update below</p>
         
+        <div className="form-group">
+          <label>Move:</label>
+          <select
+            name="move"
+            value={move}
+            onChange={(e) => setMove(e.target.value)}
+            required
+          >
+            <option value="">Select Move</option>
+            <option value="White to move">White to move</option>
+            <option value="Black to move">Black to move</option>
+          </select>
+
+        </div>
         <div className="form-group">
           <label>SID Link:</label>
           <input

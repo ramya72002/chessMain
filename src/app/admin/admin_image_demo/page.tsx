@@ -5,6 +5,7 @@ import Model from '@/app/Model';
 
 interface FileData {
   id: string;
+  move:string;
   solution: string;
   sid_link: string;
 }
@@ -145,6 +146,7 @@ const Admin_image_demo: React.FC = () => {
           const newData = [...prevData];
           newData[puzzleIndex].file_ids[puzzleKey] = {
             id: fileList[0].name,
+            move:'',
             solution: '',
             sid_link: '',
           };
@@ -289,7 +291,7 @@ const Admin_image_demo: React.FC = () => {
             {Array.from({ length: 9 }, (_, i) => (
               <th key={i}>Puzzle {i + 1}</th>
             ))}
-            <th>Delete</th>
+            <th className="delete-button">Delete</th>
           </tr>
         </thead>
         <tbody>

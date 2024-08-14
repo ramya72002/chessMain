@@ -1,35 +1,40 @@
 import React, { useState } from "react";
 import "./side2.scss";
+import { useRouter } from "next/navigation";
 
 const topics = [
-  { title: "Introduction to Blockchain", isQuiz: false, completed: true },
-  { title: "Introduction to Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "History of Blockchain", isQuiz: false, completed: true },
-  { title: "History of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "Definition of Blockchain", isQuiz: false, completed: true },
-  { title: "Definition of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "Attributes of Blockchain I", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain II", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain III", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain IV", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "What is Cryptography and its various methods I", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods II", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods III", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods-Quiz", isQuiz: true, completed: true },
-];
+  { title: "Module1", isQuiz: false, completed: true },
+  { title: "Module2", isQuiz: true, completed: true },
+  { title: "Module3", isQuiz: false, completed: true },
+  { title: "Module4", isQuiz: true, completed: true },
+  { title: "Module5", isQuiz: false, completed: true },
+]
 
 const Sidebar2: React.FC = () => {
+  const router = useRouter();
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarMinimized(!isSidebarMinimized);
   };
 
+  const handleGoBack = () => {
+    router.push('/learning'); // Go back to the previous page
+  };
+
+  const handleTopicClick = (title: string) => {
+    // Navigate to the module's route
+    router.push(`/level1Modules/${title.toLowerCase()}`);
+  };
+
   return (
     <div className={`course-content ${isSidebarMinimized ? "minimized" : ""}`}>
       <div className="header">
-        <h3>Certified Ethereum Developer Program</h3>
+        {!isSidebarMinimized && (
+          <button className="go-back-button" onClick={handleGoBack}>
+            Go Back
+          </button>
+        )}
         <button className="toggle-button" onClick={toggleSidebar}>
           {isSidebarMinimized ? ">" : "<"}
         </button>
@@ -37,15 +42,19 @@ const Sidebar2: React.FC = () => {
       {!isSidebarMinimized && (
         <div className="module">
           <div className="module-header">
-            <span>Blockchain Basic Concepts</span>
+            <span>Basics Of Chess</span>
             <span className="progress">
-              <span className="topics-count">13 Topics</span> | 
-              <span className="quizzes-count">8 Quizzes</span>
+              <span className="topics-count">5 Topics</span> | 
+              <span className="quizzes-count">0 Quizzes</span>
             </span>
           </div>
           <div className="topics">
             {topics.map((topic, index) => (
-              <div className={`topic ${topic.completed ? "completed" : ""}`} key={index}>
+              <div
+                className={`topic ${topic.completed ? "completed" : ""}`}
+                key={index}
+                onClick={() => handleTopicClick(topic.title)}
+              >
                 <span className={`icon ${topic.completed ? "check" : ""}`}></span>
                 <span className="title">{topic.title}</span>
               </div>
