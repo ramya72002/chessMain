@@ -27,7 +27,6 @@ const inprogress: React.FC<LessonContentProps> = ({ steps, progress, completedSt
       
       <h1>Blockchain Basic Concepts</h1>
       <p className="course-path">Certified Ethereum Developer Program &gt; Blockchain Basic Concepts</p>
-     
 
       <div className="lesson-steps">
         <h2>Lesson Content <span className="completion-rate">{progress}% Complete | {completedSteps}/{totalSteps} Steps</span></h2>
