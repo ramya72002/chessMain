@@ -48,6 +48,22 @@ const PuzzlePageClient = () => {
   }, [isRunning, timer]);
 
   const fetchImageFile = (id: string) => {
+      axios.post(
+          'https://backend-chess-tau.vercel.app/image_get_fileid',
+          { file_id: id },
+          { responseType: 'blob' }
+        )
+        .then(response => {
+          const url = URL.createObjectURL(
+            new Blob([response.data], { type: response.headers['content-type'] })
+          );
+          setImageSrc(url);
+        })
+        .catch(error => {
+          console.error(`Error fetching image with file ID ${id}:`, error);
+        });
+    
+    
     // Construct the URL with default parameters and the file_id
     const url = `https://backend-chess-tau.vercel.app/images/solutions?title=${title}&level=${level}&category=${category}&id=${id}`;
   
