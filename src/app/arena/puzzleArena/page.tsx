@@ -68,7 +68,7 @@ const PuzzleArena = () => {
   const handleButtonClick = async (title: string, category: string, date_time: string) => {
     if (userDetails?.level) {
       const level = levelMapping[userDetails.level] || 'UnknownLevel'; // Default level if not found
-      const apiUrl = `http://127.0.0.1:80/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
+      const apiUrl = `https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
   
       try {
         const response = await axios.get(apiUrl);

@@ -34,7 +34,7 @@ const StartArena = () => {
     if (title && level) {
       const fetchImages = async () => {
         try {
-          const response = await axios.get(`http://127.0.0.1:80/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
+          const response = await axios.get(`https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
           const imagesData: ImageData[] = response.data.images;
 
           setImages(imagesData);
@@ -69,7 +69,7 @@ const StartArena = () => {
   };
 
   const handleImageClick = (image: ImageData) => {
-    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}`;
+    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&level=${encodeURIComponent(level)}`;
     router.push(url);
   };
 

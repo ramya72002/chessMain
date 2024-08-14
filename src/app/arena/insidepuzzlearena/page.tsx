@@ -8,19 +8,17 @@ import './insidepuzzlearena.scss';
 
 const PuzzlePageClient = () => {
   const searchParams = useSearchParams();
-  const fileId = searchParams.get('file_id') || '';
-  const title =searchParams.get('title') || "Title";
+  const fileId = searchParams.get('file_id') || '66bb8396af2a1e3287996406'; // Default file_id
+  const title = searchParams.get('title') || 'Title';
+  const level = searchParams.get('level') || 'level';
+  const category = searchParams.get('category') || 'Category';
 
   const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (fileId) {
-      fetchImageFile(fileId);
-    } else {
-      console.error('file_id is undefined');
-    }
+    fetchImageFile(fileId); // Call API with fileId
 
     return () => {
       if (imageSrc) {
@@ -50,7 +48,10 @@ const PuzzlePageClient = () => {
   }, [isRunning, timer]);
 
   const fetchImageFile = (id: string) => {
-    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: id }, { responseType: 'blob' })
+    // Construct the URL with default parameters and the file_id
+    const url = `https://backend-chess-tau.vercel.app/images/solutions?title=${title}&level=${level}&category=${category}&id=${id}`;
+  
+    axios.get(url, { responseType: 'blob' })
       .then(response => {
         const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
         setImageSrc(url);
@@ -90,13 +91,13 @@ const PuzzlePageClient = () => {
               <h3>: {formatTime(timer)}</h3>
             </div>
           </button>
-<button className="solution-btn">
-              <img src="/images/solution.png" alt="Solution" />Solution
-            </button>
-            <button className="ask-sid-btn">
-              <img src="/images/sid.png" alt="Ask SID" />
-              Ask SID
-            </button>
+          <button className="solution-btn">
+            <img src="/images/solution.png" alt="Solution" />Solution
+          </button>
+          <button className="ask-sid-btn">
+            <img src="/images/sid.png" alt="Ask SID" />
+            Ask SID
+          </button>
         </div>
       </div>
       <div className="response-buttons">
