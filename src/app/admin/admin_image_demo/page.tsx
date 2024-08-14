@@ -11,7 +11,7 @@ interface FileData {
 }
 
 interface PuzzleData {
-  _id: string; 
+  _id: string;
   date_time: string;
   level: string;
   category: string;
@@ -33,22 +33,23 @@ const Admin_image_demo: React.FC = () => {
   const [selectedPuzzle, setSelectedPuzzle] = useState<{ puzzle: PuzzleData | null; column: string | null }>({ puzzle: null, column: null });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://backend-chess-tau.vercel.app/imagesets'); 
-        if (!response.ok) {
-          throw new Error('Failed to fetch puzzle data');
-        }
-        const data = await response.json();
-        setPuzzleData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        alert('An error occurred while fetching data.');
+  // Define fetchData function
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://backend-chess-tau.vercel.app/imagesets');
+      if (!response.ok) {
+        throw new Error('Failed to fetch puzzle data');
       }
-    };
+      const data = await response.json();
+      setPuzzleData(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      alert('An error occurred while fetching data.');
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchData(); // Fetch data on component mount
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -90,6 +91,10 @@ const Admin_image_demo: React.FC = () => {
       }
 
       alert('Images uploaded successfully!');
+
+      // Call fetchData to refresh the data after successful upload
+      fetchData();
+
       setFormData({
         level: '',
         category: '',
@@ -225,7 +230,7 @@ const Admin_image_demo: React.FC = () => {
       }
     }
   };
-  
+
   return (
     <>
       <form className="admin-image-form" onSubmit={handleSubmit}>
