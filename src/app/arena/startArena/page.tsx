@@ -9,6 +9,8 @@ import { ImageData } from '../../types/types';
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
   const [category, setCategory] = useState<string>('');
+  const [Date, setDate] = useState<string>('');
+
   const [level, setLevel] = useState<string>('');
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,9 +24,12 @@ const StartArena = () => {
     const queryParams = new URLSearchParams(window.location.search);
     const queryTitle = queryParams.get('title');
     const queryLevel = queryParams.get('level');
-    const queryCategory =queryParams.get('category');
+    const queryCategory = queryParams.get('category');
+    const queryDate = queryParams.get('date_time');
 
     if (queryTitle) setTitle(decodeURIComponent(queryTitle));
+    if (queryDate) setDate(decodeURIComponent(queryDate));
+
     if (queryCategory) setCategory(decodeURIComponent(queryCategory));
     if (queryLevel) setLevel(decodeURIComponent(queryLevel));
   }, []);
@@ -78,11 +83,40 @@ const StartArena = () => {
 
   return (
     <div className="container">
+      <div className="infoTable">
+        <table>
+          <thead>
+            <tr>
+            <th>Date Added</th>
+              <th>Level</th>
+              <th>Category</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+            <td>{Date}</td>
+              <td>{level}</td>
+              <td>{category}</td>
+              <td>{title}</td>
+              <td>Not Started</td>
+              <td>1/2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <h1 className="title">{title}</h1>
       <div className="imageGallery">
-        {images.map((image) => (
+        {images.map((image,index) => (
           <div key={image.id} onClick={() => handleImageClick(image)} style={{ cursor: 'pointer' }}>
             <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
+            <div className="imageText">
+              <button className="puzzleButton">Puzzle {index + 1}</button>
+              <button className="statusButton">Not started</button>
+              <button className="statusButton">Correct</button>
+            </div>
           </div>
         ))}
       </div>

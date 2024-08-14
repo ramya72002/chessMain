@@ -95,8 +95,8 @@ const PuzzleArena = () => {
 
         <div className="right-section">
           <div className="header">
-            <p>Hi {userDetails ? userDetails.name : 'Student'}</p>
-            <p>Your Puzzle Arena Score is .....</p>
+            <p>Puzzle Arena performance summary of {userDetails ? userDetails.name : 'Student'}</p>
+            {/* <p>Your Puzzle Arena Score is .....</p> */}
           </div>
 
           <div className="arena-scores">
@@ -116,7 +116,7 @@ const PuzzleArena = () => {
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                  <p>Date & Time: {puzzle.date_time}</p>
-                 <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>Start</button>
+                 <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
                  </div>
             ))
           ) : (
@@ -131,7 +131,8 @@ const PuzzleArena = () => {
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>Start</button>
+                <p>1/10</p>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
                 </div>
             ))
           ) : (
