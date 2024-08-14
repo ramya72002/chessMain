@@ -8,9 +8,7 @@ const topics = [
   { title: "Module3", isQuiz: false, completed: true },
   { title: "Module4", isQuiz: true, completed: true },
   { title: "Module5", isQuiz: false, completed: true },
-  { title: "Module6", isQuiz: true, completed: true },
-  { title: "Module7", isQuiz: false, completed: true }
-];
+]
 
 const Sidebar2: React.FC = () => {
   const router = useRouter();
@@ -46,8 +44,8 @@ const Sidebar2: React.FC = () => {
           <div className="module-header">
             <span>Basics Of Chess</span>
             <span className="progress">
-              <span className="topics-count">13 Topics</span> | 
-              <span className="quizzes-count">8 Quizzes</span>
+              <span className="topics-count">5 Topics</span> | 
+              <span className="quizzes-count">0 Quizzes</span>
             </span>
           </div>
           <div className="topics">
