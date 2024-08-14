@@ -32,8 +32,8 @@ const Admin_image_demo: React.FC = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const [selectedPuzzle, setSelectedPuzzle] = useState<{ puzzle: PuzzleData | null; column: string | null }>({ puzzle: null, column: null });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // New state for loading
 
-  // Define fetchData function
   const fetchData = async () => {
     try {
       const response = await fetch('https://backend-chess-tau.vercel.app/imagesets');
@@ -49,7 +49,7 @@ const Admin_image_demo: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData(); // Fetch data on component mount
+    fetchData();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -67,6 +67,7 @@ const Admin_image_demo: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
 
     const formDataToSend = new FormData();
     formDataToSend.append('level', formData.level);
@@ -91,9 +92,7 @@ const Admin_image_demo: React.FC = () => {
       }
 
       alert('Images uploaded successfully!');
-
-      // Call fetchData to refresh the data after successful upload
-      fetchData();
+      fetchData(); // Refresh data after successful upload
 
       setFormData({
         level: '',
@@ -106,10 +105,12 @@ const Admin_image_demo: React.FC = () => {
     } catch (error) {
       console.error('Error uploading images:', error);
       alert('An error occurred while uploading the images.');
-    }
+    }finally {
+      setIsLoading(false); // Stop loading
+      }
   };
 
-   const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
+  const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -123,6 +124,7 @@ const Admin_image_demo: React.FC = () => {
       
       if (!fileList || fileList.length === 0) {
         alert('No file selected.');
+        document.body.removeChild(fileInput);
         return;
       }
   
@@ -136,6 +138,7 @@ const Admin_image_demo: React.FC = () => {
       formData.append('images', fileList[0]);
   
       try {
+        setIsLoading(true); // Start loading
         const response = await fetch('https://backend-chess-tau.vercel.app/upload', {
           method: 'POST',
           body: formData,
@@ -151,7 +154,7 @@ const Admin_image_demo: React.FC = () => {
           const newData = [...prevData];
           newData[puzzleIndex].file_ids[puzzleKey] = {
             id: fileList[0].name,
-            move:'',
+            move: '',
             solution: '',
             sid_link: '',
           };
@@ -160,13 +163,15 @@ const Admin_image_demo: React.FC = () => {
       } catch (error) {
         console.error('Error uploading image:', error);
         alert('An error occurred while uploading the image.');
+      } finally {
+        setIsLoading(false); // Stop loading
+        document.body.removeChild(fileInput);
       }
-  
-      document.body.removeChild(fileInput);
     };
   
     fileInput.click();
   };
+ 
   
   
 
@@ -282,7 +287,9 @@ const Admin_image_demo: React.FC = () => {
           required
         />
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Loading...' : 'Submit'}
+        </button>
       </form>
 
       <table className="puzzles-table">
