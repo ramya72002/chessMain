@@ -91,7 +91,7 @@ const InProgress: React.FC = () => {
         <p>
           <strong>Castling:</strong> Castling is a unique move involving the king and a rook. To castle, several conditions must be met: neither the king nor the rook involved can have moved previously; the squares between the king and the rook must be unoccupied; the king cannot be in check, nor can it move through or end up on a square that is under attack.
         </p>
-      </section>
+      </section> 
       
     </div>
   );
