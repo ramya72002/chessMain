@@ -95,9 +95,8 @@ const PuzzleArena = () => {
 
         <div className="right-section">
           <div className="header">
-            <p>Puzzle Arena performance summary of {userDetails ? userDetails.name : 'Student'}</p>
-            {/* <p>Your Puzzle Arena Score is .....</p> */}
-          </div>
+            <p className='title'>Puzzle Arena Performance Summary</p>
+           </div>
 
           <div className="arena-scores">
             <div className="score-item">Opening Arena</div>

@@ -6,6 +6,14 @@
   display: flex;
   flex-direction: column;
 }
+.title {
+  font-size: 2.0rem; // Adjust font size as needed
+  font-weight: bold;
+  color: #5ecd32; // Dark color for better readability
+  margin-bottom: 1rem; // Space below the title
+  text-align: left; // Center the title
+ }
+
 
 .top-section {
   display: flex;
@@ -38,14 +46,6 @@
   .header {
     margin-bottom: 20px;
 
-    p:first-child {
-      font-size: 1.5rem;
-      margin-bottom: 5px;
-    }
-    p:last-child {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
   }
 
   .arena-scores {
