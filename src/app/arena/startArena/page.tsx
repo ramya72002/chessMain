@@ -16,6 +16,7 @@ const StartArena = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
+  const totalImages = images.length;
 
   const router = useRouter();
 
@@ -26,6 +27,7 @@ const StartArena = () => {
     const queryLevel = queryParams.get('level');
     const queryCategory = queryParams.get('category');
     const queryDate = queryParams.get('date_time');
+
 
     if (queryTitle) setTitle(decodeURIComponent(queryTitle));
     if (queryDate) setDate(decodeURIComponent(queryDate));
@@ -102,7 +104,7 @@ const StartArena = () => {
               <td>{category}</td>
               <td>{title}</td>
               <td>Not Started</td>
-              <td>1/2</td>
+              <td>1/{totalImages}</td>
             </tr>
           </tbody>
         </table>
