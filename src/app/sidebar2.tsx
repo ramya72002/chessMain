@@ -3,21 +3,13 @@ import "./side2.scss";
 import { useRouter } from "next/navigation";
 
 const topics = [
-  { title: "Introduction to Blockchain", isQuiz: false, completed: true },
-  { title: "Introduction to Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "History of Blockchain", isQuiz: false, completed: true },
-  { title: "History of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "Definition of Blockchain", isQuiz: false, completed: true },
-  { title: "Definition of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "Attributes of Blockchain I", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain II", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain III", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain IV", isQuiz: false, completed: true },
-  { title: "Attributes of Blockchain-Quiz", isQuiz: true, completed: true },
-  { title: "What is Cryptography and its various methods I", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods II", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods III", isQuiz: false, completed: true },
-  { title: "What is Cryptography and its various methods-Quiz", isQuiz: true, completed: true },
+  { title: "Module1", isQuiz: false, completed: true },
+  { title: "Module2", isQuiz: true, completed: true },
+  { title: "Module3", isQuiz: false, completed: true },
+  { title: "Module4", isQuiz: true, completed: true },
+  { title: "Module5", isQuiz: false, completed: true },
+  { title: "Module6", isQuiz: true, completed: true },
+  { title: "Module7", isQuiz: false, completed: true }
 ];
 
 const Sidebar2: React.FC = () => {
@@ -29,7 +21,12 @@ const Sidebar2: React.FC = () => {
   };
 
   const handleGoBack = () => {
-    router.back(); // Go back to the previous page
+    router.push('/learning'); // Go back to the previous page
+  };
+
+  const handleTopicClick = (title: string) => {
+    // Navigate to the module's route
+    router.push(`/level1Modules/${title.toLowerCase()}`);
   };
 
   return (
@@ -55,7 +52,11 @@ const Sidebar2: React.FC = () => {
           </div>
           <div className="topics">
             {topics.map((topic, index) => (
-              <div className={`topic ${topic.completed ? "completed" : ""}`} key={index}>
+              <div
+                className={`topic ${topic.completed ? "completed" : ""}`}
+                key={index}
+                onClick={() => handleTopicClick(topic.title)}
+              >
                 <span className={`icon ${topic.completed ? "check" : ""}`}></span>
                 <span className="title">{topic.title}</span>
               </div>
