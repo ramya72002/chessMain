@@ -16,7 +16,7 @@ const PuzzlePageClient = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>('move'); // Default to 'move'
+  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move'); // Default to 'move'
   const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
   const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for popup visibility
   const intervalRef = useRef<number | undefined>(undefined);
@@ -97,7 +97,7 @@ const PuzzlePageClient = () => {
   };
 
   const handleShowSidLink = () => {
-    setActiveTab('sid');
+    setActiveTab(prevTab => (prevTab === 'sid' ? null : 'sid'));
   };
 
   const handleGotItRight = async () => {
