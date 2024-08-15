@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -57,7 +58,12 @@ const StudentDetails = () => {
             <h3 className="student-name">{student.name}</h3>
             <p>Email: {student.email}</p>
             <p>Level: {student.level}</p>
-            <p>Puzzle Score: {student.puzzle_score}</p>
+            {student.scores && (
+              <p>
+                Arena Scores: "Opening": {student.scores.Opening}, "Middlegame": {student.scores.Middlegame}, 
+                "Endgame": {student.scores.Endgame}, "Mixed": {student.scores.Mixed}
+              </p>
+            )}
           </div>
           <div className="delete-container">
             {confirmDelete === student.email ? (
