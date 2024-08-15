@@ -21,6 +21,7 @@ const StartArena = () => {
   const router = useRouter();
 
   useEffect(() => {
+  
     // Extract query parameters
     const queryParams = new URLSearchParams(window.location.search);
     const queryTitle = queryParams.get('title');
@@ -75,9 +76,29 @@ const StartArena = () => {
       });
   };
 
-  const handleImageClick = (image: ImageData,index:number) => {
-    const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&level=${encodeURIComponent(level)}&puzzle_number=${encodeURIComponent(index+1)}`;
-    router.push(url);
+  const handleImageClick = async (image: ImageData, index: number) => {
+    const puzzleNumber = `Puzzle${index + 1}`;
+    const userDetailsString = localStorage.getItem('userDetails');
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+    const email = storedUserDetails ? storedUserDetails.email : '';
+
+
+    // Call API to update puzzle started flag
+    try {
+      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+        email,  // Replace with actual user email
+        category,
+        title,
+        puzzle_no: puzzleNumber
+      });
+
+      // Navigate to the puzzle page after updating the flag
+      const url = `/arena/insidepuzzlearena?file_id=${encodeURIComponent(image.id)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&level=${encodeURIComponent(level)}&puzzle_number=${encodeURIComponent(index + 1)}`;
+      router.push(url);
+    } catch (error) {
+      console.error('Error updating puzzle started flag:', error);
+      setError('Failed to update puzzle status');
+    }
   };
 
   if (loading) return <p className="loading">Loading...</p>;
@@ -89,7 +110,7 @@ const StartArena = () => {
         <table>
           <thead>
             <tr>
-            <th>Date Added</th>
+              <th>Date Added</th>
               <th>Level</th>
               <th>Category</th>
               <th>Name</th>
@@ -99,7 +120,7 @@ const StartArena = () => {
           </thead>
           <tbody>
             <tr>
-            <td>{Date}</td>
+              <td>{Date}</td>
               <td>{level}</td>
               <td>{category}</td>
               <td>{title}</td>
@@ -111,8 +132,8 @@ const StartArena = () => {
       </div>
       <h1 className="title">{title}</h1>
       <div className="imageGallery">
-        {images.map((image,index) => (
-          <div key={image.id} onClick={() => handleImageClick(image,index)} style={{ cursor: 'pointer' }}>
+        {images.map((image, index) => (
+          <div key={image.id} onClick={() => handleImageClick(image, index)} style={{ cursor: 'pointer' }}>
             <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
             <div className="imageText">
               <button className="puzzleButton">Puzzle {index + 1}</button>

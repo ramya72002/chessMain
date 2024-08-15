@@ -96,6 +96,26 @@ const PuzzlePageClient = () => {
     setActiveTab('sid');
   };
 
+  const handleGotItRight = async () => {
+    const userDetailsString = localStorage.getItem('userDetails');
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+    const email = storedUserDetails ? storedUserDetails.email : '';
+
+
+    try {
+      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+        email,
+        category,
+        title,
+        puzzle_no: `Puzzle${puzzle_number}`,
+        score: 1
+      });
+      console.log('Puzzle status updated successfully');
+    } catch (error) {
+      console.error('Error updating puzzle status:', error);
+    }
+  };
+
   return (
     <div className="puzzle-container">
       <div className="puzzle-header">
@@ -153,7 +173,7 @@ const PuzzlePageClient = () => {
         
       </div>
       <div className="response-buttons">
-        <button className="correct-btn">Got it Right</button>
+        <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
         <button className="incorrect-btn">Missed It</button>
       </div>
       

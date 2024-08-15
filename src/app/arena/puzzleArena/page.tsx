@@ -40,6 +40,9 @@ const PuzzleArena = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails  = userDetailsString ? JSON.parse(userDetailsString) : null; 
+        const email=storedUserDetails.email
     const fetchUserDetails = async () => {
       if (typeof window !== 'undefined') {
         const userDetailsString = localStorage.getItem('userDetails');
@@ -90,24 +93,42 @@ const PuzzleArena = () => {
     fetchUserDetails();
   }, []);
 
-  const handleButtonClick = async (title: string, category: string, date_time: string) => {
-    if (userDetails?.level) {
-      const level = levelMapping[userDetails.level] || 'UnknownLevel'; // Default level if not found
-      const apiUrl = `https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
+  const handleButtonClick = async (title: string, category: string, date_time: string,puzzle_no:number) => {
+    if (userDetails?.email) { 
+      console.log("pppno",puzzle_no)
   
+      const createArenaApiUrl = 'https://backend-chess-tau.vercel.app/create_Arena_user';
+      const imagesApiUrl = `https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(levelMapping[userDetails.level])}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
+    
       try {
-        const response = await axios.get(apiUrl);
-        console.log('API Response:', response.data);
+        // 1. Call the /create_Arena_user API first
+        const createArenaResponse = await axios.post(createArenaApiUrl, {
+          email: userDetails.email,
+          category,
+          title,
+          puzzle_no
+        });
   
-        // Navigate to the startArena page with additional parameters
-        router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&date_time=${encodeURIComponent(date_time)}`);
-        
+        console.log('Create Arena API Response:', createArenaResponse.data);
+  
+        if (createArenaResponse.data.success) {
+          // 2. Proceed with the existing logic after successful Arena creation
+          const imagesResponse = await axios.get(imagesApiUrl);
+          console.log('Images API Response:', imagesResponse.data);
+  
+          // Navigate to the startArena page with additional parameters
+          router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(levelMapping[userDetails.level])}&category=${encodeURIComponent(category)}&date_time=${encodeURIComponent(date_time)}`);
+        } else {
+          setError('Failed to create or update PuzzleArena. Please try again later.');
+        }
+          
       } catch (error) {
-        console.error('Error calling the API:', error);
-        setError('Failed to fetch puzzle data. Please try again later.');
+        console.error('Error during API calls:', error);
+        setError('An error occurred while processing your request. Please try again later.');
       }
     }
   };
+  
   
   
 
@@ -141,8 +162,17 @@ const PuzzleArena = () => {
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Score: 1/{Object.keys(puzzle.file_ids || {}).length}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
+                {/* Dynamically calculate puzzle_no */}
+                {(() => {
+                  const puzzle_no = Object.keys(puzzle.file_ids || {}).length;
+                  return (
+                    <>
+                       <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, puzzle_no)}>View</button>
+                    </>
+                  );
+                })()}
               </div>
+
             ))
           ) : (
             <p>No live puzzles available</p>
@@ -157,8 +187,14 @@ const PuzzleArena = () => {
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Score: 1/{Object.keys(puzzle.file_ids || {}).length}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time)}>View</button>
-              </div>
+                {(() => {
+                  const puzzle_no = Object.keys(puzzle.file_ids || {}).length;
+                  return (
+                    <>
+                       <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, puzzle_no)}>View</button>
+                    </>
+                  );
+                })()}              </div>
             ))
           ) : (
             <p>No theme-based puzzles available</p>
