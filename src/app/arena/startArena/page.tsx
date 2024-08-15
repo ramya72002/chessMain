@@ -11,6 +11,7 @@ const StartArena = () => {
   const [category, setCategory] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [level, setLevel] = useState<string>('');
+  const [score, setScore] = useState<string>('');
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,11 +28,13 @@ const StartArena = () => {
     const queryLevel = queryParams.get('level');
     const queryCategory = queryParams.get('category');
     const queryDate = queryParams.get('date_time');
+    const queryScore = queryParams.get('score');
 
     if (queryTitle) setTitle(decodeURIComponent(queryTitle));
     if (queryDate) setDate(decodeURIComponent(queryDate));
     if (queryCategory) setCategory(decodeURIComponent(queryCategory));
     if (queryLevel) setLevel(decodeURIComponent(queryLevel));
+    if (queryScore) setScore(decodeURIComponent(queryScore));
   }, []);
 
   useEffect(() => {
@@ -145,7 +148,7 @@ const StartArena = () => {
               <td>{level}</td>
               <td>{category}</td>
               <td>{title}</td>
-              <td>1/{totalImages}</td>
+              <td>{score}</td>
             </tr>
           </tbody>
         </table>
