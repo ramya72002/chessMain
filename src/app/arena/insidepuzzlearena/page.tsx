@@ -18,7 +18,7 @@ const PuzzlePageClient = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>('move'); // Default to 'move'
+  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>(); // Default to 'move'
   const intervalRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -123,7 +123,9 @@ const PuzzlePageClient = () => {
           ) : (
             <p>Loading image...</p>
           )}
-          <div className="move-indicator">Black to Move</div>
+           <div className="move-indicator">
+      {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
+    </div>
         </div>
         <div className="puzzle-info">
           <h2>Puzzle{puzzle_number}</h2>
