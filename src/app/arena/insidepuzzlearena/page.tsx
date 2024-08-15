@@ -16,8 +16,9 @@ const PuzzlePageClient = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>(); // Default to 'move'
+  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>('move'); // Default to 'move'
   const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
+  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for popup visibility
   const intervalRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const PuzzlePageClient = () => {
         window.clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, timer]);
+  }, [isRunning]);
 
   const fetchImageFile = (id: string) => {
     axios.post(
@@ -77,8 +78,8 @@ const PuzzlePageClient = () => {
       });
   };
 
-  const handleStartTimer = () => {
-    setIsRunning(true);
+  const handleStartStopTimer = () => {
+    setIsRunning(prev => !prev); // Toggle timer state
   };
 
   const formatTime = (seconds: number) => {
@@ -88,7 +89,11 @@ const PuzzlePageClient = () => {
   };
 
   const handleShowSolution = () => {
-    setActiveTab('solution');
+    setShowSolutionPopup(true); // Show the popup
+  };
+
+  const closeSolutionPopup = () => {
+    setShowSolutionPopup(false); // Hide the popup
   };
 
   const handleShowSidLink = () => {
@@ -99,7 +104,6 @@ const PuzzlePageClient = () => {
     const userDetailsString = localStorage.getItem('userDetails');
     const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
     const email = storedUserDetails ? storedUserDetails.email : '';
-
 
     try {
       await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
@@ -144,22 +148,20 @@ const PuzzlePageClient = () => {
             <p>Loading image...</p>
           )}
            <div className="move-indicator">
-      {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
-    </div>
+             {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
+           </div>
         </div>
         <div className="puzzle-info">
           <h2>Puzzle{puzzle_number}</h2>
-          <button className="timer-btn" onClick={handleStartTimer}>
-            Start/Stop Timer
+          <button className="timer-btn" onClick={handleStartStopTimer}>
+            {isRunning ? 'Stop Timer' : 'Start Timer'}
+            <div className="timer-display">
+              {formatTime(timer)}
+            </div>
           </button>
           <button className="solution-btn" onClick={handleShowSolution}>
             Solution
           </button>
-          {activeTab === 'solution' && solutions.length > 0 && (
-            <div className="solution-content">
-              <p>{solutions[0].solution}</p>
-            </div>
-          )}
           <button className="ask-sid-btn" onClick={handleShowSidLink}>
             Ask Sid
           </button>
@@ -168,26 +170,32 @@ const PuzzlePageClient = () => {
               <p>{solutions[0].sid_link}</p>
             </div>
           )}
-          
         </div>
-        
       </div>
       <div className="response-buttons">
         <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
         <button className="incorrect-btn">Missed It</button>
       </div>
-      
       <div className="navigation-buttons">
         <button className="nav-btn">Previous</button>
         <button className="nav-btn">Next</button>
       </div>
-
       {congratulationsVisible && (
         <div className="congratulations-message">
           <p>Hurry, you made it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
           </button>
+        </div>
+      )}
+      {showSolutionPopup && solutions.length > 0 && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>{solutions[0].solution}</p>
+            <button className="close-popup-btn" onClick={closeSolutionPopup}>
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>
