@@ -158,7 +158,7 @@ const StartArena = () => {
         {images.map((image, index) => {
           const puzzleNumber = `Puzzle${index + 1}`;
           const puzzleData = puzzleArena ? puzzleArena[puzzleNumber] : {};
-          const started = puzzleData.started ? 'started' : 'not started';
+          const started = puzzleData.started ? 'Started' : 'Not Started';
           const score = puzzleData.score || 0;
 
           return (
