@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
             <div className="image-wrapper">
                 <Image src="/images/C1.jpg" alt="C1" className="slide-from-bottom" layout="fill" objectFit="cover" />
             </div>
-            <div className="image-wrapper">
+            {/* <div className="image-wrapper">
                 <Image src="/images/C2.jpg" alt="C2" className="slide-from-top" layout="fill" objectFit="cover" />
             </div>
             <div className="image-wrapper">
@@ -58,7 +58,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="image-wrapper">
                 <Image src="/images/C4.jpg" alt="C4" className="slide-from-top" layout="fill" objectFit="cover" />
-            </div>
+            </div> */}
             <div className="overlay">
                 <h2 className="elementor-heading-title elementor-size-default">
                     We <br />
