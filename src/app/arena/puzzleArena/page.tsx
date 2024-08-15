@@ -25,6 +25,14 @@ type Puzzle = {
   total_title_category_score?: number;
 };
 
+type Scores = {
+  Opening: number;
+  Middlegame: number;
+  Endgame: number;
+  Mixed: number;
+  total: number;
+};
+
 const PuzzleArena = () => {
   const router = useRouter();
   const levelMapping: Record<string, string> = {
@@ -41,6 +49,13 @@ const PuzzleArena = () => {
   const [practicePuzzles, setPracticePuzzles] = useState<Puzzle[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [dataFetched, setDataFetched] = useState<boolean>(false);
+  const [scores, setScores] = useState<Scores>({
+    Opening: 0,
+    Middlegame: 0,
+    Endgame: 0,
+    Mixed: 0,
+    total: 0
+  });
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -54,6 +69,23 @@ const PuzzleArena = () => {
             // Ensure fetch only happens once
             if (!dataFetched) {
               setDataFetched(true);
+  
+              // Fetch scores from API
+              const scoreResponse = await axios.post('https://backend-chess-tau.vercel.app/calculate_scores', {
+                email: storedUserDetails.email
+              });
+              if (scoreResponse.data.success) {
+                const fetchedScores = scoreResponse.data.scores as Scores;
+                setScores({
+                  Opening: fetchedScores.Opening || 0,
+                  Middlegame: fetchedScores.Middlegame || 0,
+                  Endgame: fetchedScores.Endgame || 0,
+                  Mixed: fetchedScores.Mixed || 0,
+                  total: Object.values(fetchedScores).reduce((a, b) => (typeof b === 'number' ? a + b : a), 0)
+                });
+              } else {
+                setError('Failed to fetch scores.');
+              }
   
               const response = await axios.get(`https://backend-chess-tau.vercel.app/get_level?level=${levelMapping[storedUserDetails.level]}`);
               const data = response.data;
@@ -116,9 +148,8 @@ const PuzzleArena = () => {
   
     fetchUserDetails();
   }, [dataFetched]);
-  
 
-  const handleButtonClick = async (title: string, category: string, date_time: string, puzzle_no: number,score: string) => {
+  const handleButtonClick = async (title: string, category: string, date_time: string, puzzle_no: number, score: string) => {
     const userDetailsString = localStorage.getItem('userDetails');
     const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     const email = storedUserDetails.email;
@@ -170,10 +201,11 @@ const PuzzleArena = () => {
           </div>
 
           <div className="arena-scores">
-            <div className="score-item">Opening Arena</div>
-            <div className="score-item">Middlegame Arena</div>
-            <div className="score-item">Endgame Arena</div>
-            <div className="total-score">Puzzle Arena Score <span>276</span></div>
+            <div className="score-item">Opening Arena :        <span>   {scores.Opening}</span></div>
+            <div className="score-item">Middlegame Arena :   <span>{scores.Middlegame}</span></div>
+            <div className="score-item">Endgame Arena : <span>{scores.Endgame}</span></div>
+            <div className="score-item">Mixed Arena : <span>{scores.Mixed}</span></div>
+            <div className="total-score">Puzzle Arena Score : <span>{scores.total}</span></div>
           </div>
         </div>
       </div>
@@ -187,7 +219,7 @@ const PuzzleArena = () => {
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length,`${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length, `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
               </div>
             ))
           ) : (
@@ -195,22 +227,23 @@ const PuzzleArena = () => {
           )}
         </div>
 
-        <div className="theme-practice">
-          <p>Theme Based Practice</p>
+        <div className="theme-practice practice-arena">
+          <p>Practice Arena</p>
           {practicePuzzles.length > 0 ? (
             practicePuzzles.map((puzzle, index) => (
               <div className="practice-item" key={index}>
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length,`${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
+                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length, `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
               </div>
             ))
           ) : (
-            <p>No theme-based puzzles available</p>
+            <p>No practice puzzles available</p>
           )}
         </div>
       </div>
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };
