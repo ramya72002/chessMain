@@ -29,7 +29,7 @@ export default function RootLayout({
             {(pathname === "/inprogress"||pathname === "/level1Modules/module1"||pathname === "/level1Modules/module2"||pathname === "/level1Modules/module3"||pathname === "/level1Modules/module4"||pathname === "/level1Modules/module5") && <Sidebar2/>}
            <div className="content-container">
             {/* {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&&pathname !== "/admin/admin_upcoming_activities" && pathname !== "/admin" && pathname !== "/admin/admin_image_puzzles"&&pathname !== "/admin/StudentDetails" && pathname !== "/admin/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTournament"&& pathname !== "/homeTornRegister"  && <PortalHeader />} */}
-            {(pathname === "/admin" || pathname === "/admin/admin_upcoming_activities" ||   pathname === "/admin/admin_tournaments"||pathname === "/admin/admin_image_puzzles"||pathname === "/admin/StudentDetails") && <AdminHeader />}
+            {(pathname === "/admin" || pathname === "/admin/admin_upcoming_activities" ||   pathname === "/admin/admin_tournaments"||pathname === "/admin/admin_image_demo"||pathname === "/admin/StudentDetails") && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>

@@ -171,13 +171,12 @@ const PuzzlePageClient = () => {
               {solutions[0].sid_link}
             </a>
           </div>
-          
           )}
+          <div className="response-buttons">
+            <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
+            <button className="incorrect-btn">Missed It</button>
+          </div>
         </div>
-      </div>
-      <div className="response-buttons">
-        <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-        <button className="incorrect-btn">Missed It</button>
       </div>
       <div className="navigation-buttons">
         <button className="nav-btn">Previous</button>
