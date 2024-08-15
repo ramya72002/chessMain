@@ -102,7 +102,7 @@ const PuzzlePageClient = () => {
 
 
     try {
-      await axios.post('http://127.0.0.1:80/update_puzzle_started', {
+      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
         email,
         category,
         title,

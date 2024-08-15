@@ -39,10 +39,10 @@ const StartArena = () => {
     if (title && category) {
       const fetchPuzzleArena = async () => {
         const userDetailsString = localStorage.getItem('userDetails');
-    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
-    const email = storedUserDetails ? storedUserDetails.email : '';
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        const email = storedUserDetails ? storedUserDetails.email : '';
         try {
-          const response = await axios.get(`http://127.0.0.1:80/get_Arena_user`, {
+          const response = await axios.get(`https://backend-chess-tau.vercel.app/get_Arena_user`, {
             params: {
               email: email,
               category: category,
@@ -101,7 +101,7 @@ const StartArena = () => {
   const handleImageClick = async (image: ImageData, index: number) => {
     const puzzleNumber = `Puzzle${index + 1}`;
     const userDetailsString = localStorage.getItem('userDetails');
-    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     const email = storedUserDetails ? storedUserDetails.email : '';
 
     // Call API to update puzzle started flag
@@ -136,7 +136,6 @@ const StartArena = () => {
               <th>Level</th>
               <th>Category</th>
               <th>Name</th>
-              <th>Status</th>
               <th>Score</th>
             </tr>
           </thead>
@@ -146,7 +145,6 @@ const StartArena = () => {
               <td>{level}</td>
               <td>{category}</td>
               <td>{title}</td>
-              <td>Not Started</td>
               <td>1/{totalImages}</td>
             </tr>
           </tbody>
@@ -154,16 +152,23 @@ const StartArena = () => {
       </div>
       
       <div className="imageGallery">
-        {images.map((image, index) => (
-          <div key={image.id} onClick={() => handleImageClick(image, index)} style={{ cursor: 'pointer' }}>
-            <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
-            <div className="imageText">
-              <button className="puzzleButton">Puzzle {index + 1}</button>
-              <button className="statusButton">Not started</button>
-              <button className="statusButton">Correct</button>
+        {images.map((image, index) => {
+          const puzzleNumber = `Puzzle${index + 1}`;
+          const puzzleData = puzzleArena ? puzzleArena[puzzleNumber] : {};
+          const started = puzzleData.started ? 'started' : 'not started';
+          const score = puzzleData.score || 0;
+
+          return (
+            <div key={image.id} onClick={() => handleImageClick(image, index)} style={{ cursor: 'pointer' }}>
+              <img src={imageUrls[image.id] || '/default-image.png'} alt={image.filename} />
+              <div className="imageText">
+                <button className="puzzleButton">Puzzle {index + 1}</button>
+                <button className="statusButton">{started}</button>
+                <button className="statusButton">Score: {score}</button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
