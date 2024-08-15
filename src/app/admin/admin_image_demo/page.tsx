@@ -109,6 +109,40 @@ const Admin_image_demo: React.FC = () => {
       setIsLoading(false); // Stop loading
     }
   };
+  const handleEdit = async (puzzle: PuzzleData) => {
+    try {
+      const updatedTitle = prompt('Enter the new title:', puzzle.title);
+      if (updatedTitle === null || updatedTitle === puzzle.title) {
+        return; // No change or cancelled
+      }
+  
+      const response = await fetch('https://backend-chess-tau.vercel.app/edit-arena-title', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          level: puzzle.level,
+          category: puzzle.category,
+          title: puzzle.title,
+          live: puzzle.live,
+          newTitle: updatedTitle,
+        }),
+      });
+  
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || 'Edit failed');
+      }
+  
+      alert('Puzzle title updated successfully!');
+      fetchData(); // Refresh the puzzle data
+    } catch (error) {
+      console.error('Error editing puzzle:', error);
+      alert('An error occurred while editing the puzzle.');
+    }
+  };
+  
 
   const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
@@ -299,6 +333,8 @@ const Admin_image_demo: React.FC = () => {
               <th key={i}>Puzzle {i + 1}</th>
             ))}
             <th className="delete-button">Delete</th>
+            <th className="edit-button">Edit</th>
+
           </tr>
         </thead>
         <tbody>
@@ -321,6 +357,10 @@ const Admin_image_demo: React.FC = () => {
               <td>
                 <button className="delete-button" onClick={() => handleDelete(puzzle)}>Delete</button>
               </td>
+              <td>
+  <button className="edit-button" onClick={() => handleEdit(puzzle)}>Edit</button>
+</td>
+
             </tr>
           ))}
         </tbody>
