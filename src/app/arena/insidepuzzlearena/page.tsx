@@ -18,7 +18,8 @@ const PuzzlePageClient = () => {
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
   const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move'); // Default to 'move'
   const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
-  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for popup visibility
+  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for solution popup visibility
+  const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false); // New state for "Missed It" popup visibility
   const intervalRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -89,11 +90,11 @@ const PuzzlePageClient = () => {
   };
 
   const handleShowSolution = () => {
-    setShowSolutionPopup(true); // Show the popup
+    setShowSolutionPopup(true); // Show the solution popup
   };
 
   const closeSolutionPopup = () => {
-    setShowSolutionPopup(false); // Hide the popup
+    setShowSolutionPopup(false); // Hide the solution popup
   };
 
   const handleShowSidLink = () => {
@@ -120,6 +121,14 @@ const PuzzlePageClient = () => {
     } catch (error) {
       console.error('Error updating puzzle status:', error);
     }
+  };
+
+  const handleMissedIt = () => {
+    setShowMissedItPopup(true); // Show the "Missed It" popup
+  };
+
+  const closeMissedItPopup = () => {
+    setShowMissedItPopup(false); // Hide the "Missed It" popup
   };
 
   return (
@@ -172,7 +181,7 @@ const PuzzlePageClient = () => {
         <div className="response-buttons">
           <h1>Response</h1>
           <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-          <button className="incorrect-btn">Missed It</button>
+          <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
         </div>
         <div className="navigation-buttons">
           <button className="nav-btn">Previous</button>
@@ -183,7 +192,7 @@ const PuzzlePageClient = () => {
       
       {congratulationsVisible && (
         <div className="congratulations-message">
-          <p>Hurray, you got it right! Your score is added.</p>
+          <p>Hurry, you made it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
           </button>
@@ -196,6 +205,15 @@ const PuzzlePageClient = () => {
             <button className="close-popup-btn" onClick={closeSolutionPopup}>
               Close
             </button>
+          </div>
+        </div>
+      )}
+      {showMissedItPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>Oh no, you missed it. Ask Sid?</p>
+            <button className="ask-sid-popup-btn" onClick={handleShowSidLink}>Ask Sid</button>
+            <button className="close-popup-btn" onClick={closeMissedItPopup}>Close</button>
           </div>
         </div>
       )}
