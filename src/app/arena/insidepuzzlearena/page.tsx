@@ -152,6 +152,7 @@ const PuzzlePageClient = () => {
            </div>
         </div>
         <div className="puzzle-info">
+        <div className="response-buttons1">
           <h2>Puzzle{puzzle_number}</h2>
           <button className="timer-btn" onClick={handleStartStopTimer}>
             {isRunning ? 'Stop Timer' : 'Start Timer'}
@@ -172,16 +173,19 @@ const PuzzlePageClient = () => {
             </a>
           </div>
           )}
+          </div>
           <div className="response-buttons">
+            <h1>Response</h1>
             <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
             <button className="incorrect-btn">Missed It</button>
           </div>
+          <div className="navigation-buttons">
+            <button className="nav-btn">Previous</button>
+            <button className="nav-btn">Next</button>
+          </div>
         </div>
       </div>
-      <div className="navigation-buttons">
-        <button className="nav-btn">Previous</button>
-        <button className="nav-btn">Next</button>
-      </div>
+      
       {congratulationsVisible && (
         <div className="congratulations-message">
           <p>Hurry, you made it right! Your score is added.</p>
