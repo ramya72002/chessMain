@@ -9,19 +9,18 @@ import { ImageData } from '../../types/types';
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
   const [category, setCategory] = useState<string>('');
-  const [Date, setDate] = useState<string>('');
-
+  const [date, setDate] = useState<string>('');
   const [level, setLevel] = useState<string>('');
   const [images, setImages] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
+  const [puzzleArena, setPuzzleArena] = useState<any>(null);
   const totalImages = images.length;
 
   const router = useRouter();
 
   useEffect(() => {
-  
     // Extract query parameters
     const queryParams = new URLSearchParams(window.location.search);
     const queryTitle = queryParams.get('title');
@@ -29,13 +28,37 @@ const StartArena = () => {
     const queryCategory = queryParams.get('category');
     const queryDate = queryParams.get('date_time');
 
-
     if (queryTitle) setTitle(decodeURIComponent(queryTitle));
     if (queryDate) setDate(decodeURIComponent(queryDate));
-
     if (queryCategory) setCategory(decodeURIComponent(queryCategory));
     if (queryLevel) setLevel(decodeURIComponent(queryLevel));
   }, []);
+
+  useEffect(() => {
+    // Fetch PuzzleArena details
+    if (title && category) {
+      const fetchPuzzleArena = async () => {
+        const userDetailsString = localStorage.getItem('userDetails');
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+    const email = storedUserDetails ? storedUserDetails.email : '';
+        try {
+          const response = await axios.get(`http://127.0.0.1:80/get_Arena_user`, {
+            params: {
+              email: email,
+              category: category,
+              title: title
+            }
+          });
+          setPuzzleArena(response.data.puzzleArena);
+        } catch (err) {
+          console.error(err);
+          setError('Failed to fetch PuzzleArena details');
+        }
+      };
+
+      fetchPuzzleArena();
+    }
+  }, [title, category]);
 
   useEffect(() => {
     // Fetch images when title and level are available
@@ -44,7 +67,6 @@ const StartArena = () => {
         try {
           const response = await axios.get(`https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
           const imagesData: ImageData[] = response.data.images;
-
           setImages(imagesData);
           fetchAllImages(imagesData); // Fetch the image files
         } catch (err) {
@@ -82,11 +104,10 @@ const StartArena = () => {
     const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
     const email = storedUserDetails ? storedUserDetails.email : '';
 
-
     // Call API to update puzzle started flag
     try {
       await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
-        email,  // Replace with actual user email
+        email,
         category,
         title,
         puzzle_no: puzzleNumber
@@ -106,6 +127,7 @@ const StartArena = () => {
 
   return (
     <div className="container">
+      <h2 className="title">{title}</h2>
       <div className="infoTable">
         <table>
           <thead>
@@ -120,7 +142,7 @@ const StartArena = () => {
           </thead>
           <tbody>
             <tr>
-              <td>{Date}</td>
+              <td>{date}</td>
               <td>{level}</td>
               <td>{category}</td>
               <td>{title}</td>
@@ -130,7 +152,7 @@ const StartArena = () => {
           </tbody>
         </table>
       </div>
-      <h1 className="title">{title}</h1>
+      
       <div className="imageGallery">
         {images.map((image, index) => (
           <div key={image.id} onClick={() => handleImageClick(image, index)} style={{ cursor: 'pointer' }}>
