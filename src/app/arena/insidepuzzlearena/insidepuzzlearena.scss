@@ -92,13 +92,42 @@
           color: white;
         }
       }
-
-      .solution-content, .sid-link-content {
+      .sid-link-content {
         background-color: #f0f0f0;
         color: black;
         padding: 10px;
         margin-top: 10px;
         border-radius: 5px;
+        word-break: break-word; /* Ensures long words/links break */
+        overflow-wrap: break-word; /* Handles overflow */
+      }
+      
+      .sid-link-content a {
+        color: #1a73e8; /* Color for the link */
+        text-decoration: none;
+        font-weight: bold;
+      
+        &:hover {
+          text-decoration: underline; /* Underline on hover */
+        }
+      }
+      
+
+      .solution-content {
+        background-color: #f0f0f0;
+        color: black;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      a {
+        color: #1a73e8; /* Color for the link */
+        text-decoration: none;
+        font-weight: bold;
+    
+        &:hover {
+          text-decoration: underline; /* Underline on hover */
+        }
       }
     }
   }

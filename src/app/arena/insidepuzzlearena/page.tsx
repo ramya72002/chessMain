@@ -167,8 +167,11 @@ const PuzzlePageClient = () => {
           </button>
           {activeTab === 'sid' && solutions.length > 0 && (
             <div className="sid-link-content">
-              <p>{solutions[0].sid_link}</p>
-            </div>
+            <a href={solutions[0].sid_link} target="_blank" rel="noopener noreferrer">
+              {solutions[0].sid_link}
+            </a>
+          </div>
+          
           )}
         </div>
       </div>
