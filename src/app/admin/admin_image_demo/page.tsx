@@ -58,10 +58,10 @@ const Admin_image_demo: React.FC = () => {
     if (e.target instanceof HTMLInputElement && e.target.type === 'file') {
       setFiles(e.target.files);
     } else {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [name]: value,
-      }));
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: value,
+    }));
     }
   };
 
@@ -107,7 +107,7 @@ const Admin_image_demo: React.FC = () => {
       alert('An error occurred while uploading the images.');
     }finally {
       setIsLoading(false); // Stop loading
-      }
+    }
   };
 
   const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
@@ -116,18 +116,18 @@ const Admin_image_demo: React.FC = () => {
     fileInput.type = 'file';
     fileInput.accept = 'image/*';
     fileInput.style.display = 'none';
-  
+
     document.body.appendChild(fileInput);
-  
+
     fileInput.onchange = async (event) => {
       const fileList = (event.target as HTMLInputElement).files;
-      
+
       if (!fileList || fileList.length === 0) {
         alert('No file selected.');
         document.body.removeChild(fileInput);
         return;
       }
-  
+
       const formData = new FormData();
       formData.append('level', puzzle.level);
       formData.append('category', puzzle.category);
@@ -136,19 +136,19 @@ const Admin_image_demo: React.FC = () => {
       formData.append('date_time', puzzle.date_time);
       formData.append('puzzle_number', puzzleKey.replace('puzzle', ''));
       formData.append('images', fileList[0]);
-  
+
       try {
         setIsLoading(true); // Start loading
         const response = await fetch('https://backend-chess-tau.vercel.app/upload', {
           method: 'POST',
           body: formData,
         });
-  
+
         if (!response.ok) {
           const result = await response.json();
           throw new Error(result.error || 'Upload failed');
         }
-  
+
         alert('Image uploaded successfully!');
         setPuzzleData(prevData => {
           const newData = [...prevData];
@@ -168,14 +168,9 @@ const Admin_image_demo: React.FC = () => {
         document.body.removeChild(fileInput);
       }
     };
-  
+
     fileInput.click();
   };
- 
-  
-  
-
-
 
   const handleViewEdit = async (puzzleIndex: number, puzzleKey: string) => {
     const puzzle = puzzleData[puzzleIndex];
@@ -331,12 +326,12 @@ const Admin_image_demo: React.FC = () => {
         </tbody>
       </table>
 
-      <Model
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        <Model
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
         puzzleData={selectedPuzzle.puzzle || null}
         columnName={selectedPuzzle.column || "puzzle1"}
-      />
+        />
     </>
   );
 };
