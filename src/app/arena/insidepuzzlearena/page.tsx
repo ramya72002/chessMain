@@ -97,7 +97,9 @@ const PuzzlePageClient = () => {
   };
 
   const handleShowSidLink = () => {
-    setActiveTab(prevTab => (prevTab === 'sid' ? null : 'sid'));
+    if (solutions.length > 0) {
+      window.open(solutions[0].sid_link, '_blank');
+    }
   };
 
   const handleGotItRight = async () => {
@@ -166,29 +168,22 @@ const PuzzlePageClient = () => {
           <button className="ask-sid-btn" onClick={handleShowSidLink}>
             Ask Sid
           </button>
-          {activeTab === 'sid' && solutions.length > 0 && (
-            <div className="sid-link-content">
-            <a href={solutions[0].sid_link} target="_blank" rel="noopener noreferrer">
-              {solutions[0].sid_link}
-            </a>
-          </div>
-          )}
-          </div>
-          <div className="response-buttons">
-            <h1>Response</h1>
-            <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-            <button className="incorrect-btn">Missed It</button>
-          </div>
-          <div className="navigation-buttons">
-            <button className="nav-btn">Previous</button>
-            <button className="nav-btn">Next</button>
-          </div>
+        </div>
+        <div className="response-buttons">
+          <h1>Response</h1>
+          <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
+          <button className="incorrect-btn">Missed It</button>
+        </div>
+        <div className="navigation-buttons">
+          <button className="nav-btn">Previous</button>
+          <button className="nav-btn">Next</button>
+        </div>
         </div>
       </div>
       
       {congratulationsVisible && (
         <div className="congratulations-message">
-          <p>Hurry, you made it right! Your score is added.</p>
+          <p>Hurray, you got it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
           </button>
