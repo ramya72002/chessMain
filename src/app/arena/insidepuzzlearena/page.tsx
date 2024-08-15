@@ -1,8 +1,6 @@
-'use client';
-
-import { Suspense } from 'react';
+'use client'
+import { Suspense, useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
@@ -19,6 +17,7 @@ const PuzzlePageClient = () => {
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
   const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>(); // Default to 'move'
+  const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
   const intervalRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -103,7 +102,7 @@ const PuzzlePageClient = () => {
 
 
     try {
-      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+      await axios.post('http://127.0.0.1:80/update_puzzle_started', {
         email,
         category,
         title,
@@ -111,6 +110,7 @@ const PuzzlePageClient = () => {
         score: 1
       });
       console.log('Puzzle status updated successfully');
+      setCongratulationsVisible(true); // Show the congratulations message
     } catch (error) {
       console.error('Error updating puzzle status:', error);
     }
@@ -181,6 +181,15 @@ const PuzzlePageClient = () => {
         <button className="nav-btn">Previous</button>
         <button className="nav-btn">Next</button>
       </div>
+
+      {congratulationsVisible && (
+        <div className="congratulations-message">
+          <p>Hurry, you made it right! Your score is added.</p>
+          <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
+            OK
+          </button>
+        </div>
+      )}
     </div>
   );
 };

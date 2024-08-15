@@ -104,7 +104,7 @@
   }
 
   .response-buttons {
-     margin-left: 650px;
+    margin-left: 650px;
 
     button {
       margin: 0 15px;
@@ -138,6 +138,40 @@
       cursor: pointer;
       background-color: #00a86b;
       color: white;
+    }
+  }
+
+  .congratulations-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .congratulations-btn {
+      background-color: #fff;
+      color: #4CAF50;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        opacity: 0.9;
+      }
     }
   }
 }
