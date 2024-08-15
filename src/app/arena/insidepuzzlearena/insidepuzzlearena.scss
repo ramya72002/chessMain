@@ -34,7 +34,7 @@
 
     .chessboard {
       position: relative;
-      width: 400px;
+      width: 480px;
 
       img {
         width: 100%;
@@ -54,20 +54,36 @@
     }
 
     .puzzle-info {
-      background-color: #ff8c00;
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
+      background-color: #60a3d9;
+      padding:10px;
+      width: 280px;
+
+      .navigation-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        justify-content: space-between;
+    
+        button {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          font-weight: bold;
+          cursor: pointer;
+          background-color: #fdd243;
+          color: rgb(0, 0, 0);
+        }
+      }
 
       h2 {
-        margin-bottom: 20px;
-        font-size: 24px;
+        margin-bottom: 7px;
+        font-size: 20px;
       }
 
       button {
         width: 100%;
         margin-bottom: 10px;
-        padding: 15px;
+        padding: 13px;
         border: none;
         border-radius: 5px;
         font-weight: bold;
@@ -78,17 +94,17 @@
         }
 
         &.timer-btn {
-          background-color: #00a86b;
+          background-color: #162e9c;
           color: white;
         }
 
         &.solution-btn {
-          background-color: #00a86b;
+          background-color: #162e9c;
           color: white;
         }
 
         &.ask-sid-btn {
-          background-color: #00a86b;
+          background-color: #162e9c;
           color: white;
         }
       }
@@ -131,45 +147,60 @@
       }
     }
   }
-
+  .response-buttons1 {
+    background-color: #ff8c00;
+    border-radius: 5px;
+    padding:8px;
+  }
   .response-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: space-around;
-
-      button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-
-        &.correct-btn {
-          background-color: #00a86b;
-          color: white;
-        }
-
-        &.incorrect-btn {
-          background-color: #d9534f;
-          color: white;
-        }
-      }
-    }
-
-  .navigation-buttons {
-    margin-top: 50px;
-
+    background-color: rgb(235, 234, 234);
+    border-radius: 5px;
+    margin-top: 20px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center; /* Center buttons horizontally */
+  h1{
+    color: black;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
     button {
-      margin: 0 15px;
-      padding: 15px 30px;
+      padding: 10px 20px;
+      margin-bottom: 10px; /* Add some space between buttons */
       border: none;
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
-      background-color: #00a86b;
-      color: white;
+  
+      &.correct-btn {
+        background-color: #00a86b;
+        color: white;
+      }
+  
+      &.incorrect-btn {
+        background-color: #d9534f;
+        color: white;
+      }
     }
   }
+
+  // .navigation-buttons {
+  
+  //   margin-left: 655px;
+
+  //   button {
+  //     margin: 0 15px;
+  //     padding: 15px 28px;
+  //     border: none;
+  //     border-radius: 5px;
+  //     font-weight: bold;
+  //     cursor: pointer;
+  //     background-color: #fdd243;
+  //     color: rgb(0, 0, 0);
+  //   }
+  // }
 
   .congratulations-message {
     position: fixed;
