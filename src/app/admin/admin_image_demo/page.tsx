@@ -248,8 +248,7 @@ const Admin_image_demo: React.FC = () => {
           body: JSON.stringify({
             level: puzzle.level,
             category: puzzle.category,
-            title: puzzle.title,
-            live: puzzle.live,
+            title: puzzle.title
           }),
         });
 
