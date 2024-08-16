@@ -1,10 +1,11 @@
 'use client'
 import { Suspense, useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams,useRouter } from 'next/navigation';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
 const PuzzlePageClient = () => {
+  const router = useRouter(); 
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id') || '66bb8396af2a1e3287996406'; // Default file_id
   const title = searchParams.get('title') || 'Mastering Pawn Structure';
@@ -21,6 +22,9 @@ const PuzzlePageClient = () => {
   const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for solution popup visibility
   const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false); // New state for "Missed It" popup visibility
   const intervalRef = useRef<number | undefined>(undefined);
+  const handleGoBack = () => {
+    router.back(); // Navigate back to the previous page
+  };
 
   useEffect(() => {
     fetchImageFile(fileId); // Call API with fileId
@@ -184,15 +188,14 @@ const PuzzlePageClient = () => {
           <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
         </div>
         <div className="navigation-buttons">
-          <button className="nav-btn">Previous</button>
-          <button className="nav-btn">Next</button>
+        <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
         </div>
         </div>
       </div>
       
       {congratulationsVisible && (
         <div className="congratulations-message">
-          <p>Hurry, you made it right! Your score is added.</p>
+          <p>Hurray, you got it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
           </button>
