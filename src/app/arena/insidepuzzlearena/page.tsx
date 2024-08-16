@@ -142,10 +142,29 @@ const PuzzlePageContent = () => {
       alert("Please click on Start Timer");
     }
   };
+ 
 
-  const handleMissedIt = () => {
+
+  const handleMissedIt =async () => {
     if (isButtonsActive) {
       setShowMissedItPopup(true); // Show the "Missed It" popup
+      const userDetailsString = localStorage.getItem('userDetails');
+      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+      const email = storedUserDetails ? storedUserDetails.email : '';
+
+      try {
+        await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+          email,
+          category,
+          title,
+          puzzle_no: `Puzzle${puzzle_number}`,
+          score: 0,
+          option_guessed:false
+        });
+        console.log('Puzzle status updated successfully');
+      } catch (error) {
+        console.error('Error updating puzzle status:', error);
+      }
     } else {
       alert("Please click on Start Timer");
     }
