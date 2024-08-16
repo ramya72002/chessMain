@@ -57,7 +57,7 @@
     bottom: 0; /* Start from the bottom */
     left: 0;
     width: 100%; /* Full width */
-    height: 50%; /* 50% height */
+    height:52%; /* 50% height */
     background-color: #CE1010CC;
     opacity: 0;
     animation: slideOverlayFromBottom 2s forwards ease-in-out; /* Custom animation */
@@ -89,9 +89,10 @@
   
 .right-side {
     position: absolute;
-    right: 0;
-    width: 58%;
-    height: 100%;
+    right: 80px;
+    top: 130px;
+    width: 60%;
+    height: 90%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -159,7 +160,7 @@
 .zoom-in {
     opacity: 1;
     animation-name: zoomIn;
-    animation-delay: 3s;
+    animation-delay: 1s;
 }
 
 @keyframes zoomIn {
@@ -186,9 +187,8 @@
     text-align: left;
     color: #fff;
     font-family: "NeueHaasDisplay-Bold", Sans-serif;
-    font-size: 6vw;
+    font-size: 5vw;
     line-height: 95px;
-    letter-spacing: -1.3px;
-    font-weight: 700;
-    padding-top: 60px;
+    letter-spacing: -1px;
+    font-weight: 600;
 }

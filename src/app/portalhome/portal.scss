@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Corben:wght@400;700&family=Lilita+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Corben:wght@400;700&family=Lilita+One&family=Matemasie&display=swap');
 .hero {
   padding: 20px;
   background-color: #2b87e2;
@@ -9,20 +11,20 @@
   
     h2 {
       margin: 0;
-      font-size: 48px; /* Larger font size */
+      font-size: 68px; /* Larger font size */
       font-weight: bold; /* Bold text */
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* Kid-friendly font */
-      background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff); /* Gradient background */
+      font-family: "Matemasie", sans-serif;
+      background: linear-gradient(90deg, #fdfdfd, #ffffff, #fcfcfc); /* Gradient background */
       -webkit-background-clip: text; /* Clipping the background to text */
-      -webkit-text-fill-color: transparent; /* Text color becomes transparent to show gradient */
-      text-shadow: 4px 4px #ffbe0b; /* Bright, fun shadow */
+      -webkit-text-fill-color: transparent; 
+      -webkit-text-stroke: 1px rgb(4, 0, 255);/* Text color becomes transparent to show gradient */
+
       letter-spacing: 3px; /* More spacing between letters */
       animation: textGlow 1.5s ease-in-out infinite alternate; /* Glow animation */
       
       span {
         color: #06d6a0; /* Bright, contrasting color for dynamic text */
-        font-size: 52px; /* Slightly larger for emphasis */
-        text-shadow: 5px 5px #eca90e, 0 0 10px #d65206; /* Glow and shadow for dynamic text */
+        font-size: 72px; /* Slightly larger for emphasis */
         animation: textGlow 1.5s ease-in-out infinite alternate; /* Same glow animation */
       }
     }
