@@ -189,6 +189,7 @@ const PuzzleArena = () => {
   };
 
   return (
+    <div className="puzzle-arena-page">
     <div className="puzzle-arena-container">
       <div className="top-section">
         <div className="left-section">
@@ -244,6 +245,7 @@ const PuzzleArena = () => {
         </div>
       </div>
       {error && <div className="error-message">{error}</div>}
+    </div>
     </div>
   );
 };

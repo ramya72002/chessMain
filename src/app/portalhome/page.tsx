@@ -68,6 +68,7 @@ const Hero = () => {
   };
   
   return (
+    <div style={{ padding: '20px' }}>
     <div className="hero">
       <div className="header">
         <h2>Chess Journey of <span>{userDetails ? userDetails.name : 'Student'}</span></h2>
@@ -227,6 +228,7 @@ const Hero = () => {
           ))
         )}
       </div>
+    </div>
     </div>
   );
 };
