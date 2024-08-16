@@ -201,9 +201,9 @@ const PuzzleArena = () => {
           </div>
 
           <div className="arena-scores">
-            <div className="score-item">Opening Arena :        <span>   {scores.Opening}</span></div>
-            <div className="score-item">Middlegame Arena :   <span>{scores.Middlegame}</span></div>
-            <div className="score-item">Endgame Arena : <span>{scores.Endgame}</span></div>
+            <div className="score-item1">Opening Arena :        <span>   {scores.Opening}</span></div>
+            <div className="score-item2">Middlegame Arena :   <span>{scores.Middlegame}</span></div>
+            <div className="score-item3">Endgame Arena : <span>{scores.Endgame}</span></div>
             <div className="score-item">Mixed Arena : <span>{scores.Mixed}</span></div>
             <div className="total-score">Puzzle Arena Score : <span>{scores.total}</span></div>
           </div>
