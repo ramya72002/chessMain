@@ -48,20 +48,19 @@ const Hero: React.FC = () => {
     return (
         <div className="image-container">
             <div className="image-wrapper">
-                <Image src="/images/C1.jpg" alt="C1" layout="fill" objectFit="cover" />
+                <Image src="/images/C1.jpg" alt="C1" className="slide-from-bottom" layout="fill" objectFit="cover" />
+            </div>
+            <div className="overlay">
                 <h2 className="elementor-heading-title elementor-size-default">
-                    We 
-                    unlock
+                    We <br />
+                    unlock<br />
                     real <br />
                     {texts.map((text, index) => (
                         <span key={index} className={visibleTextIndex === index ? 'visible' : 'hidden'}>
-                          {text}
+                            {text}
                         </span>
                     ))}
                 </h2>
-            </div>
-            <div className="overlay">
-                
             </div>
             <div className="right-side">
                 {[1, 2, 3, 4].map((index) => (
