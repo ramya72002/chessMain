@@ -1,12 +1,13 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import './hero.scss'; 
+import './hero.scss';
 
 const Hero: React.FC = () => {
     const [visibleTextIndex, setVisibleTextIndex] = useState(-1);
     const [hoveredImageIndex, setHoveredImageIndex] = useState(-1);
+    const [showPopup, setShowPopup] = useState(false);
     const texts = ['About Us', 'Student Login', 'Tournaments', 'Clubs'];
     const router = useRouter();
 
@@ -31,17 +32,13 @@ const Hero: React.FC = () => {
     }, []);
 
     const handleImageClick = (index: number) => {
-        if (index === 0) {
-            router.push('/signin');
-        }
         if (index === 1) {
             router.push('/signup');
-        }
-        if (index === 2) {
-            router.push('/tournaments');
-        }
-        if (index === 3) {
-            router.push('/admin');
+        } else {
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 500); // Show the popup for 0.1 seconds
         }
     };
 
@@ -68,6 +65,7 @@ const Hero: React.FC = () => {
                         key={index}
                         className={`image-wrapper1 zoom-in ${hoveredImageIndex === index - 1 ? 'hover' : ''}`}
                         onClick={() => handleImageClick(index - 1)}
+                        onMouseEnter={() => index !== 2 && setHoveredImageIndex(index - 1)}
                     >
                         <Image src={`/images/image${index}.png`} alt={`i${index}`} layout="fill" objectFit="cover" />
                         <div className="overlay1"></div>
@@ -77,6 +75,14 @@ const Hero: React.FC = () => {
                     </div>
                 ))}
             </div>
+
+            {showPopup && (
+                <div className="custom-popup">
+                    <div className="popup-content">
+                        <p>Coming Soon</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
