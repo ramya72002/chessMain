@@ -183,8 +183,8 @@
 }
 
 .elementor-heading-title {
-    padding-left: 25px;
-    text-align: left;
+    // padding-left: 25px;
+    text-align: center;
     color: #fff;
     font-family: "NeueHaasDisplay-Bold", Sans-serif;
     font-size: 5vw;
@@ -208,7 +208,7 @@
 .elementor-heading-title {
     position: absolute;
     top: 2%; /* Adjust the position as needed */
-    left:3%; /* Adjust the position as needed */
+    left:20%; /* Adjust the position as needed */
     color: #fff;
     font-family: "NeueHaasDisplay-Bold", Sans-serif;
     font-size: 5vw;
@@ -216,8 +216,8 @@
     letter-spacing: -1px;
     font-weight: 600;
     z-index: 2; /* Ensure it appears above the image */
-    padding-left: 25px;
-    text-align: left;
+    // padding-left: 25px;
+    text-align: center;
 }
 
 .hidden {

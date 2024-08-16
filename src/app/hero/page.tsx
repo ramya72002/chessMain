@@ -7,7 +7,7 @@ import './hero.scss';
 const Hero: React.FC = () => {
     const [visibleTextIndex, setVisibleTextIndex] = useState(-1);
     const [hoveredImageIndex, setHoveredImageIndex] = useState(-1);
-    const texts = ['About Us', 'Student Login', 'Tournaments', 'Clubs'];
+    const texts = [' About Us', ' Student Login', ' Tournaments', ' Clubs'];
     const router = useRouter();
 
     useEffect(() => {
@@ -52,10 +52,10 @@ const Hero: React.FC = () => {
                 <h2 className="elementor-heading-title elementor-size-default">
                     We 
                     unlock
-                    real <br />
+                    real   
                     {texts.map((text, index) => (
                         <span key={index} className={visibleTextIndex === index ? 'visible' : 'hidden'}>
-                          {text}
+                          { text}
                         </span>
                     ))}
                 </h2>
