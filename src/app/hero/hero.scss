@@ -229,3 +229,71 @@
     opacity: 1;
     transition: opacity 1s ease-in-out;
 }
+// /* For tablets (portrait and landscape) */
+// @media (max-width: 1024px) {
+//     .right-side {
+//         right: 10%; /* Adjusted to center the content */
+//         top: 150px;
+//         width: 80%;
+//         height: 80%;
+//         padding: 20px; /* Reduced padding to maintain even spacing */
+//         gap: 20px; /* Even gap between images */
+//         grid-template-columns: 1fr 1fr; /* Two columns */
+//         grid-template-rows: 1fr 1fr; /* Two rows */
+//     }
+
+//     .elementor-heading-title {
+//         font-size: 5vw; /* Increased font size */
+//         line-height: 85px;
+//     }
+
+//     .text-overlay1 {
+//         font-size: 24px; /* Increased text size */
+//     }
+// }
+
+// /* For small tablets and large smartphones */
+// @media (max-width: 768px) {
+//     .right-side {
+//         right: 5%; /* Adjusted to center the content */
+//         top: 150px;
+//         width: 90%;
+//         height: 70%;
+//         padding: 15px; /* Reduced padding to maintain even spacing */
+//         gap: 15px; /* Even gap between images */
+//         grid-template-columns: 1fr 1fr; /* Two columns */
+//         grid-template-rows: 1fr 1fr; /* Two rows */
+//     }
+
+//     .elementor-heading-title {
+//         font-size: 4.5vw; /* Increased font size */
+//         line-height: 75px;
+//     }
+
+//     .text-overlay1 {
+//         font-size: 22px; /* Increased text size */
+//     }
+// }
+
+// /* For smartphones */
+// @media (max-width: 480px) {
+//     .right-side {
+//         right: 2.5%; /* Adjusted to center the content */
+//         top: 200px;
+//         width: 95%;
+//         height: 60%;
+//         padding: 10px; /* Reduced padding to maintain even spacing */
+//         gap: 10px; /* Even gap between images */
+//         grid-template-columns: 1fr 1fr; /* Two columns */
+//         grid-template-rows: 1fr 1fr; /* Two rows */
+//     }
+
+//     .elementor-heading-title {
+//         font-size: 10vw; /* Increased font size */
+//         line-height: 65px;
+//     }
+
+//     .text-overlay1 {
+//         font-size: 20px; /* Increased text size */
+//     }
+// }
