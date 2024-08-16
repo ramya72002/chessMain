@@ -110,14 +110,17 @@ const Admin_image_demo: React.FC = () => {
     }
   };
   const handleEdit = async (puzzle: PuzzleData) => {
-    try {
-      const updatedTitle = prompt('Enter the new title:', puzzle.title);
-      if (updatedTitle === null || updatedTitle === puzzle.title) {
-        return; // No change or cancelled
-      }
   
-      const response = await fetch('https://backend-chess-tau.vercel.app/edit-arena-title', {
-        method: 'PUT',
+    // Update puzzle live status if needed
+    const updatedLive = prompt('Enter the new live status (Yes/No):', puzzle.live);
+    if (updatedLive === null) {
+      return; // No change or cancelled
+    }
+  
+    try {
+      // Call the /updatepuzzle API to update the puzzle
+      const response = await fetch('https://backend-chess-tau.vercel.app/updatelivepuzzle', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -125,23 +128,25 @@ const Admin_image_demo: React.FC = () => {
           level: puzzle.level,
           category: puzzle.category,
           title: puzzle.title,
-          live: puzzle.live,
-          newTitle: updatedTitle,
+          live: updatedLive, // Use the new live status
         }),
       });
   
       if (!response.ok) {
         const result = await response.json();
-        throw new Error(result.error || 'Edit failed');
+        throw new Error(result.error || 'Update failed');
       }
   
-      alert('Puzzle title updated successfully!');
-      fetchData(); // Refresh the puzzle data
+      // Fetch updated puzzle data
+      await fetchData(); // Refresh the puzzle data
+  
+      alert('Puzzle updated successfully!');
     } catch (error) {
-      console.error('Error editing puzzle:', error);
-      alert('An error occurred while editing the puzzle.');
+      console.error('Error updating puzzle:', error);
+      alert('An error occurred while updating the puzzle.');
     }
   };
+  
   
 
   const handleAddImage = async (puzzleIndex: number, puzzleKey: string) => {
@@ -360,6 +365,7 @@ const Admin_image_demo: React.FC = () => {
               <td>
   <button className="edit-button" onClick={() => handleEdit(puzzle)}>Edit</button>
 </td>
+
 
             </tr>
           ))}
