@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import { Suspense, useState, useEffect, useRef } from 'react';
-import { useSearchParams,useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
@@ -17,11 +18,13 @@ const PuzzlePageClient = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move'); // Default to 'move'
-  const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
-  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for solution popup visibility
-  const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false); // New state for "Missed It" popup visibility
+  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move');
+  const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false);
+  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false);
+  const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false);
+  const [showStartTimerPopup, setShowStartTimerPopup] = useState<boolean>(false); // State for start timer popup
   const intervalRef = useRef<number | undefined>(undefined);
+
   const handleGoBack = () => {
     router.back(); // Navigate back to the previous page
   };
@@ -93,46 +96,58 @@ const PuzzlePageClient = () => {
     return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const handleActionWithTimerCheck = (action: () => void) => {
+    if (isRunning) {
+      action();
+    } else {
+      setShowStartTimerPopup(true); // Show start timer popup if timer is not running
+    }
+  };
+
   const handleShowSolution = () => {
-    setShowSolutionPopup(true); // Show the solution popup
+    handleActionWithTimerCheck(() => setShowSolutionPopup(true));
   };
 
   const closeSolutionPopup = () => {
-    setShowSolutionPopup(false); // Hide the solution popup
+    setShowSolutionPopup(false);
   };
 
   const handleShowSidLink = () => {
-    if (solutions.length > 0) {
-      window.open(solutions[0].sid_link, '_blank');
-    }
+    handleActionWithTimerCheck(() => {
+      if (solutions.length > 0) {
+        window.open(solutions[0].sid_link, '_blank');
+      }
+    });
   };
 
   const handleGotItRight = async () => {
-    const userDetailsString = localStorage.getItem('userDetails');
-    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
-    const email = storedUserDetails ? storedUserDetails.email : '';
+    handleActionWithTimerCheck(async () => {
+      const userDetailsString = localStorage.getItem('userDetails');
+      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+      const email = storedUserDetails ? storedUserDetails.email : '';
 
-    try {
-      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
-        email,
-        category,
-        title,
-        puzzle_no: `Puzzle${puzzle_number}`,
-        score: 1
-      });
-      console.log('Puzzle status updated successfully');
-      setCongratulationsVisible(true); // Show the congratulations message
-    } catch (error) {
-      console.error('Error updating puzzle status:', error);
-    }
+      try {
+        await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+          email,
+          category,
+          title,
+          puzzle_no: `Puzzle${puzzle_number}`,
+          score: 1
+        });
+        console.log('Puzzle status updated successfully');
+        setCongratulationsVisible(true);
+      } catch (error) {
+        console.error('Error updating puzzle status:', error);
+      }
+    });
   };
 
   const handleMissedIt = () => {
-    setShowMissedItPopup(true); // Show the "Missed It" popup
+    handleActionWithTimerCheck(() => setShowMissedItPopup(true));
   };
 
   const closeMissedItPopup = () => {
-    setShowMissedItPopup(false); // Hide the "Missed It" popup
+    setShowMissedItPopup(false);
   };
 
   return (
@@ -162,34 +177,34 @@ const PuzzlePageClient = () => {
           ) : (
             <p>Loading image...</p>
           )}
-           <div className="move-indicator">
-             {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
-           </div>
+          <div className="move-indicator">
+            {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
+          </div>
         </div>
         <div className="puzzle-info">
-        <div className="response-buttons1">
-          <h2>Puzzle{puzzle_number}</h2>
-          <button className="timer-btn" onClick={handleStartStopTimer}>
-            {isRunning ? 'Stop Timer' : 'Start Timer'}
-            <div className="timer-display">
-              {formatTime(timer)}
-            </div>
-          </button>
-          <button className="solution-btn" onClick={handleShowSolution}>
-            Solution
-          </button>
-          <button className="ask-sid-btn" onClick={handleShowSidLink}>
-            Ask Sid
-          </button>
-        </div>
-        <div className="response-buttons">
-          <h1>Response</h1>
-          <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-          <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
-        </div>
-        <div className="navigation-buttons">
-        <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
-        </div>
+          <div className="response-buttons1">
+            <h2>Puzzle{puzzle_number}</h2>
+            <button className="timer-btn" onClick={handleStartStopTimer}>
+              {isRunning ? 'Stop Timer' : 'Start Timer'}
+              <div className="timer-display">
+                {formatTime(timer)}
+              </div>
+            </button>
+            <button className="solution-btn" onClick={handleShowSolution}>
+              Solution
+            </button>
+            <button className="ask-sid-btn" onClick={handleShowSidLink}>
+              Ask Sid
+            </button>
+          </div>
+          <div className="response-buttons">
+            <h1>Response</h1>
+            <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
+            <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
+          </div>
+          <div className="navigation-buttons">
+            <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
+          </div>
         </div>
       </div>
       
@@ -214,9 +229,16 @@ const PuzzlePageClient = () => {
       {showMissedItPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
-            <p>Oh no, you missed it. Ask Sid?</p>
-            <button className="ask-sid-popup-btn" onClick={handleShowSidLink}>Ask Sid</button>
+            <p>Oh No, You Missed It. Ask Sid For The Solution</p>
             <button className="close-popup-btn" onClick={closeMissedItPopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {showStartTimerPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>Please click on "Start Timer" to activate these options.</p>
+            <button className="close-popup-btn" onClick={() => setShowStartTimerPopup(false)}>OK</button>
           </div>
         </div>
       )}
@@ -224,12 +246,4 @@ const PuzzlePageClient = () => {
   );
 };
 
-const PuzzlePage = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PuzzlePageClient />
-    </Suspense>
-  );
-};
-
-export default PuzzlePage;
+export default PuzzlePageClient
