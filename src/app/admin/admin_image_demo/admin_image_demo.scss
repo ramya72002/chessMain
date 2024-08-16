@@ -93,7 +93,16 @@
     color: #fff;
 
     &:hover {
+      background-color: #9b0917; // Darker red on hover
+    }
+  }
+  td button.edit-button {
+    background-color: #fb8405;  // Red color
+    color: #fff;
+
+    &:hover {
       background-color: #c82333; // Darker red on hover
     }
   }
+  
 }

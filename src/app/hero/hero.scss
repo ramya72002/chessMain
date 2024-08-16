@@ -7,7 +7,7 @@
 }
 .image-wrapper {
     position: relative;
-    width: 30%;
+    width: 100%;
     height: 100%;
 }
 
@@ -16,11 +16,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease-in-out;
+    opacity: 1; /* Ensure full opacity */
+    animation: none; /* Disable any animation */
+    transition: none; /* Disable any transitions */
 }
+
 
 .slide-from-bottom {
     animation-name: slideFromBottom;
@@ -54,26 +54,27 @@
 
 .overlay {
     position: absolute;
-    top: 0;
+    bottom: 0; /* Start from the bottom */
     left: 0;
-    width: 50%;
-    height: 100%;
+    width: 100%; /* Full width */
+    height: 50%; /* 50% height */
     background-color: #CE1010CC;
     opacity: 0;
-    animation: slideOverlay 2s forwards ease-in-out;
+    animation: slideOverlayFromBottom 2s forwards ease-in-out; /* Custom animation */
     animation-delay: 2s;
 }
 
-@keyframes slideOverlay {
+@keyframes slideOverlayFromBottom {
     0% {
         opacity: 0;
-        transform: translateX(-100%);
+        transform: translateY(100%); /* Start from below the visible area */
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0); /* Slide up to its normal position */
     }
 }
+
 
 @keyframes fadeIn {
     0% {
@@ -112,7 +113,7 @@
     height: 100%;
     position: relative;
     opacity: 0;
-    animation-duration: 2s;
+    animation-duration: 0s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in-out;
     transition: transform 0.4s;

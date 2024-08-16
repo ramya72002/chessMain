@@ -52,12 +52,19 @@ export interface Session {
     roundsTiming: RoundsTiming;
     sections: Section[];
   }
+  export interface Scores {
+    Opening: number;
+    Middlegame: number;
+    Endgame: number;
+    Mixed: number;
+  }
   export interface Student {
     email: string;
     name: string;
     image: string;
     level: string; 
     puzzle_score:string;
+    scores:Scores;
   }
   export interface UserDetails {
     name: string;

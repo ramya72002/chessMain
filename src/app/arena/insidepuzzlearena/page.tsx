@@ -1,10 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 import { Suspense, useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
 
 const PuzzlePageClient = () => {
+  const router = useRouter(); 
   const searchParams = useSearchParams();
   const fileId = searchParams.get('file_id') || '66bb8396af2a1e3287996406'; // Default file_id
   const title = searchParams.get('title') || 'Mastering Pawn Structure';
@@ -16,10 +18,16 @@ const PuzzlePageClient = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid'>('move'); // Default to 'move'
-  const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
-  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for popup visibility
+  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move');
+  const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false);
+  const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false);
+  const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false);
+  const [showStartTimerPopup, setShowStartTimerPopup] = useState<boolean>(false); // State for start timer popup
   const intervalRef = useRef<number | undefined>(undefined);
+
+  const handleGoBack = () => {
+    router.back(); // Navigate back to the previous page
+  };
 
   useEffect(() => {
     fetchImageFile(fileId); // Call API with fileId
@@ -88,36 +96,58 @@ const PuzzlePageClient = () => {
     return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const handleActionWithTimerCheck = (action: () => void) => {
+    if (isRunning) {
+      action();
+    } else {
+      setShowStartTimerPopup(true); // Show start timer popup if timer is not running
+    }
+  };
+
   const handleShowSolution = () => {
-    setShowSolutionPopup(true); // Show the popup
+    handleActionWithTimerCheck(() => setShowSolutionPopup(true));
   };
 
   const closeSolutionPopup = () => {
-    setShowSolutionPopup(false); // Hide the popup
+    setShowSolutionPopup(false);
   };
 
   const handleShowSidLink = () => {
-    setActiveTab('sid');
+    handleActionWithTimerCheck(() => {
+      if (solutions.length > 0) {
+        window.open(solutions[0].sid_link, '_blank');
+      }
+    });
   };
 
   const handleGotItRight = async () => {
-    const userDetailsString = localStorage.getItem('userDetails');
-    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
-    const email = storedUserDetails ? storedUserDetails.email : '';
+    handleActionWithTimerCheck(async () => {
+      const userDetailsString = localStorage.getItem('userDetails');
+      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+      const email = storedUserDetails ? storedUserDetails.email : '';
 
-    try {
-      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
-        email,
-        category,
-        title,
-        puzzle_no: `Puzzle${puzzle_number}`,
-        score: 1
-      });
-      console.log('Puzzle status updated successfully');
-      setCongratulationsVisible(true); // Show the congratulations message
-    } catch (error) {
-      console.error('Error updating puzzle status:', error);
-    }
+      try {
+        await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+          email,
+          category,
+          title,
+          puzzle_no: `Puzzle${puzzle_number}`,
+          score: 1
+        });
+        console.log('Puzzle status updated successfully');
+        setCongratulationsVisible(true);
+      } catch (error) {
+        console.error('Error updating puzzle status:', error);
+      }
+    });
+  };
+
+  const handleMissedIt = () => {
+    handleActionWithTimerCheck(() => setShowMissedItPopup(true));
+  };
+
+  const closeMissedItPopup = () => {
+    setShowMissedItPopup(false);
   };
 
   return (
@@ -147,48 +177,40 @@ const PuzzlePageClient = () => {
           ) : (
             <p>Loading image...</p>
           )}
-           <div className="move-indicator">
-             {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
-           </div>
+          <div className="move-indicator">
+            {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
+          </div>
         </div>
         <div className="puzzle-info">
-        <div className="response-buttons1">
-          <h2>Puzzle{puzzle_number}</h2>
-          <button className="timer-btn" onClick={handleStartStopTimer}>
-            {isRunning ? 'Stop Timer' : 'Start Timer'}
-            <div className="timer-display">
-              {formatTime(timer)}
-            </div>
-          </button>
-          <button className="solution-btn" onClick={handleShowSolution}>
-            Solution
-          </button>
-          <button className="ask-sid-btn" onClick={handleShowSidLink}>
-            Ask Sid
-          </button>
-          {activeTab === 'sid' && solutions.length > 0 && (
-            <div className="sid-link-content">
-            <a href={solutions[0].sid_link} target="_blank" rel="noopener noreferrer">
-              {solutions[0].sid_link}
-            </a>
-          </div>
-          )}
+          <div className="response-buttons1">
+            <h2>Puzzle{puzzle_number}</h2>
+            <button className="timer-btn" onClick={handleStartStopTimer}>
+              {isRunning ? 'Stop Timer' : 'Start Timer'}
+              <div className="timer-display">
+                {formatTime(timer)}
+              </div>
+            </button>
+            <button className="solution-btn" onClick={handleShowSolution}>
+              Solution
+            </button>
+            <button className="ask-sid-btn" onClick={handleShowSidLink}>
+              Ask Sid
+            </button>
           </div>
           <div className="response-buttons">
             <h1>Response</h1>
             <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-            <button className="incorrect-btn">Missed It</button>
+            <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
           </div>
           <div className="navigation-buttons">
-            <button className="nav-btn">Previous</button>
-            <button className="nav-btn">Next</button>
+            <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
           </div>
         </div>
       </div>
       
       {congratulationsVisible && (
         <div className="congratulations-message">
-          <p>Hurry, you made it right! Your score is added.</p>
+          <p>Hurray, you got it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
           </button>
@@ -204,16 +226,24 @@ const PuzzlePageClient = () => {
           </div>
         </div>
       )}
+      {showMissedItPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>Oh No, You Missed It. Ask Sid For The Solution</p>
+            <button className="close-popup-btn" onClick={closeMissedItPopup}>Close</button>
+          </div>
+        </div>
+      )}
+      {showStartTimerPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <p>Please click on "Start Timer" to activate these options.</p>
+            <button className="close-popup-btn" onClick={() => setShowStartTimerPopup(false)}>OK</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-const PuzzlePage = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PuzzlePageClient />
-    </Suspense>
-  );
-};
-
-export default PuzzlePage;
+export default PuzzlePageClient
