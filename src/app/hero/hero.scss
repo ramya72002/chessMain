@@ -247,12 +247,15 @@
         height: auto;
         grid-template-rows: repeat(4, 1fr);
         padding: 240px;
+        justify-content: center;
+    align-items: center;
         // padding-right: 5px;
     }
 
     .image-wrapper1 {
         height: 200px;
         width:200px;
+        padding-left: 10px;
     }
 
     .text-overlay1 {
@@ -288,6 +291,8 @@
         height: auto;
         grid-template-rows: repeat(4, 1fr);
         padding: 240px;
+        justify-content: center;
+    align-items: center;
     }
 
     .image-wrapper1 {
