@@ -309,7 +309,7 @@
 @media (max-width: 1024px) {
     .right-side {
         right: 10%; /* Adjusted to center the content */
-        top: 152220px;
+        top: 220px;
         width: 80%;
         height: 80%;
         padding: 20px; /* Reduced padding to maintain even spacing */
@@ -320,7 +320,7 @@
 
     .elementor-heading-title {
         font-size: 5vw; /* Increased font size */
-        line-height: 85px;
+        line-height: 45px;
     }
 
     .text-overlay1 {
@@ -331,19 +331,19 @@
 /* For small tablets and large smartphones */
 @media (max-width: 768px) {
     .right-side {
-        right: 5%; /* Adjusted to center the content */
-        top: 180px;
-        width: 90%;
+        right: 3%; /* Adjusted to center the content */
+        top: 190px;
+        width:85%;
         height: 70%;
-        padding: 15px; /* Reduced padding to maintain even spacing */
-        gap: 15px; /* Even gap between images */
+        padding: 20px; /* Reduced padding to maintain even spacing */
+        gap: 10px; /* Even gap between images */
         grid-template-columns: 1fr 1fr; /* Two columns */
         grid-template-rows: 1fr 1fr; /* Two rows */
     }
 
     .elementor-heading-title {
         font-size: 4.5vw; /* Increased font size */
-        line-height: 75px;
+        line-height: 40px;
     }
 
     .text-overlay1 {
@@ -354,7 +354,7 @@
 /* For smartphones */
 @media (max-width: 480px) {
     .right-side {
-        right: 2.5%; /* Adjusted to center the content */
+        left: 3%;
         top: 250px;
         width: 95%;
         height: 60%;
@@ -363,13 +363,17 @@
         grid-template-columns: 1fr 1fr; /* Two columns */
         grid-template-rows: 1fr 1fr; /* Two rows */
     }
+    .image-wrapper1 {
+        height: 170px; /* Updated height for images */
+        width: 170px; /* Updated width for images */
+    }
 
     .elementor-heading-title {
-        font-size: 4vw; /* Increased font size */
-        line-height: 65px;
+        font-size: 5vw; /* Increased font size */
+        line-height: 40px;
     }
 
     .text-overlay1 {
-        font-size: 20px; /* Increased text size */
+        font-size: 15px; /* Increased text size */
     }
 }
