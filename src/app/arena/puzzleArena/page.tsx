@@ -139,8 +139,7 @@ const PuzzleArena = () => {
               }
             }
           } catch (error) {
-            setError('Failed to fetch level data. Please try again later.');
-            console.error('Error fetching level data:', error);
+          
           }
         }
       }
