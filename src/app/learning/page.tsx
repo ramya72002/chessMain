@@ -20,31 +20,7 @@ const MyAccount = () => {
     <div className="account-page">
       <header className="account-header">
         <h1>My Learning</h1>
-        <p>Welcome to your account. Manage profile, courses, and orders here.</p>
-      </header>
-
-      <section className="account-summary">
-        <h2><strong>{userDetails ? userDetails.name : 'Student'}</strong></h2> {/* This is where the name will be displayed */}
-
-        <div className="stats">
-          <div className="stat-item">
-            <span>0</span>
-            <p>Modules</p>
-          </div>
-          <div className="stat-item">
-            <span>0</span>
-            <p>Sub Modules</p>
-          </div>
-          <div className="stat-item">
-            <span>0</span>
-            <p>Certificates</p>
-          </div>
-          <div className="stat-item">
-            <span>0</span>
-            <p>Points</p>
-          </div>
-        </div>
-      </section>
+       </header>
 
       <section className="courses-section">
         <div className="courses-header">
@@ -52,39 +28,57 @@ const MyAccount = () => {
         </div>
 
         <div className="course-card">
-          <div className="course-status">
-            <h4>Certified Ethereum Developer Program</h4>
-            <Link href="/inprogress">
-              <span className="progress">In Progress</span>
-            </Link>
-          </div>
-          <div className="progress-bar">
-            <div className="progress-completed" style={{ width: '0%' }}></div>
-          </div>
-          <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
+    <div className="course-status">
+        <h4>Basics of Chess</h4>
+        <Link href="/inprogress">
+            <span className="progress">In Progress</span>
+        </Link>
+    </div>
+    <div className="progress-bar">
+        <div className="progress-completed" style={{ width: '0%' }}></div>
+    </div>
+    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
+</div>
 
-          <table className="course-table">
-            <thead>
-              <tr>
-                <th>Quizzes</th>
-                <th>Certificate</th>
-                <th>Score</th>
-                <th>Statistics</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Basics Of Chess</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>May 20, 2023 4:42 pm</td>
-                <td>May 20, 2023 4:42 pm</td>
-              </tr>
-              {/* Add more rows as necessary */}
-            </tbody>
-          </table>
-        </div>
+<div className="course-card">
+    <div className="course-status">
+        <h4>Good Bishop Bad Bishop</h4>
+        <Link href="/notstarted">
+            <span className="progress" style={{ backgroundColor: 'red' }}>Not Started</span>
+        </Link>
+    </div>
+    <div className="progress-bar">
+        <div className="progress-completed" style={{ width: '0%' }}></div>
+    </div>
+    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
+</div>
+
+<div className="course-card">
+    <div className="course-status">
+        <h4>Basic Checkmates</h4>
+        <Link href="/completed">
+            <span className="progress" style={{ backgroundColor: 'green' }}>Completed</span>
+        </Link>
+    </div>
+    <div className="progress-bar">
+        <div className="progress-completed" style={{ width: '100%' }}></div>
+    </div>
+    <p className="completed-steps">100% COMPLETE | 94/94 Steps</p>
+</div>
+
+<div className="course-card">
+    <div className="course-status">
+        <h4>Basic Checkmates - 2</h4>
+        <Link href="/register">
+            <span className="progress" style={{ backgroundColor: 'blue' }}>Register</span>
+        </Link>
+    </div>
+    <div className="progress-bar">
+        <div className="progress-completed" style={{ width: '0%' }}></div>
+    </div>
+    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
+</div>
+
       </section>
     </div>
   );
