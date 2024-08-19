@@ -247,6 +247,7 @@
         height: auto;
         grid-template-rows: repeat(4, 1fr);
         padding: 240px;
+        padding-left: 20px;
         justify-content: center;
     align-items: center;
         // padding-right: 5px;
@@ -289,6 +290,8 @@
     .right-side {
         width: 100%;
         height: auto;
+        padding-left: 20px;
+
         grid-template-rows: repeat(4, 1fr);
         padding: 240px;
         justify-content: center;
