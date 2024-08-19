@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
                     >
                         <Image src={`/images/image${index}.png`} alt={`i${index}`} layout="fill" objectFit="cover" />
                          <div className="text-overlay1">
-                            {texts[index - 1]} <span className='arrow'>→</span>
+                            
                         </div>
                     </div>
                 ))}
