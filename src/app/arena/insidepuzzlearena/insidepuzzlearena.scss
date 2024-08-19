@@ -7,6 +7,7 @@
 
   .puzzle-header {
     margin-bottom: 20px;
+    background-color: #60a3d9;
 
     table {
       margin: 0 auto;
@@ -31,9 +32,11 @@
     display: flex;
     justify-content: space-around;
     align-items: flex-start;
+    background-color: #60a3d9;
 
     .chessboard {
       position: relative;
+      background-color: #60a3d9;
       width: 480px;
 
       img {
@@ -186,21 +189,7 @@
     }
   }
 
-  // .navigation-buttons {
   
-  //   margin-left: 655px;
-
-  //   button {
-  //     margin: 0 15px;
-  //     padding: 15px 28px;
-  //     border: none;
-  //     border-radius: 5px;
-  //     font-weight: bold;
-  //     cursor: pointer;
-  //     background-color: #fdd243;
-  //     color: rgb(0, 0, 0);
-  //   }
-  // }
 
   .congratulations-message {
     position: fixed;
