@@ -17,10 +17,11 @@ const PuzzlePageContent = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
-  const [activeTab, setActiveTab] = useState<'move' | 'solution' | 'sid' | null>('move'); // Default to 'move'
   const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
   const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for solution popup visibility
   const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false); // New state for "Missed It" popup visibility
+  const [puzzleBlocked, setPuzzleBlocked] = useState<string>(""); // New state for "Missed It" popup visibility
+
   const intervalRef = useRef<number | undefined>(undefined);
   
   const [isButtonsActive, setIsButtonsActive] = useState<boolean>(false);
@@ -29,9 +30,28 @@ const PuzzlePageContent = () => {
     router.back(); // Navigate back to the previous page
   };
 
+  const checkPuzzleStatus = async (email: string) => {
+    try {
+      const response = await axios.get(`https://backend-chess-tau.vercel.app/get_visited_info`, {
+        params: { email, category, title, puzzle_no: `Puzzle${puzzle_number}` }
+      });
+      if (response.data.success) {
+        setPuzzleBlocked(response.data.option_guessed);
+        console.log("rrr", puzzleBlocked)
+      }
+    } catch (error) {
+      console.error('Error fetching puzzle status:', error);
+    }
+  };
+
   useEffect(() => {
     fetchImageFile(fileId); // Call API with fileId
     fetchSolutions(); // Fetch solutions
+    const userDetailsString = localStorage.getItem('userDetails');
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+    const email = storedUserDetails ? storedUserDetails.email : '';
+
+    checkPuzzleStatus(email);
 
     return () => {
       if (imageSrc) {
@@ -122,7 +142,7 @@ const PuzzlePageContent = () => {
   const handleGotItRight = async () => {
     if (isButtonsActive) {
       const userDetailsString = localStorage.getItem('userDetails');
-      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
       const email = storedUserDetails ? storedUserDetails.email : '';
 
       try {
@@ -131,6 +151,7 @@ const PuzzlePageContent = () => {
           category,
           title,
           puzzle_no: `Puzzle${puzzle_number}`,
+          option_guessed: true,
           score: 1
         });
         console.log('Puzzle status updated successfully');
@@ -142,14 +163,12 @@ const PuzzlePageContent = () => {
       alert("Please click on Start Timer");
     }
   };
- 
 
-
-  const handleMissedIt =async () => {
+  const handleMissedIt = async () => {
     if (isButtonsActive) {
       setShowMissedItPopup(true); // Show the "Missed It" popup
       const userDetailsString = localStorage.getItem('userDetails');
-      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null; 
+      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
       const email = storedUserDetails ? storedUserDetails.email : '';
 
       try {
@@ -159,7 +178,7 @@ const PuzzlePageContent = () => {
           title,
           puzzle_no: `Puzzle${puzzle_number}`,
           score: 0,
-          option_guessed:false
+          option_guessed: false
         });
         console.log('Puzzle status updated successfully');
       } catch (error) {
@@ -201,44 +220,56 @@ const PuzzlePageContent = () => {
           ) : (
             <p>Loading image...</p>
           )}
-           <div className="move-indicator">
-             {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
-           </div>
+          <div className="move-indicator">
+            {solutions.length > 0 ? solutions[0].move : 'Loading move...'}
+          </div>
         </div>
         <div className="puzzle-info">
-        <div className="response-buttons1">
-          <h2>Puzzle{puzzle_number}</h2>
-          <button className="timer-btn" onClick={handleStartStopTimer}>
-            {isRunning ? 'Stop Timer' : 'Start Timer'}
-            <div className="timer-display">
-              {formatTime(timer)}
-            </div>
-          </button>
-          <button className="solution-btn" onClick={handleShowSolution}>
-            Solution
-          </button>
-          <button className="ask-sid-btn" onClick={handleShowSidLink}>
-            Ask Sid
-          </button>
-        </div>
-        <div className="response-buttons">
-          <h1>Response</h1>
-          <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
+          <div className="response-buttons1">
+            <h2>Puzzle{puzzle_number}</h2>
+            <button className="timer-btn" onClick={handleStartStopTimer}>
+              {isRunning ? 'Stop Timer' : 'Start Timer'}
+              <div className="timer-display">
+                {formatTime(timer)}
+              </div>
+            </button>
+            <button className="solution-btn" onClick={handleShowSolution}>
+              Solution
+            </button>
+            <button className="ask-sid-btn" onClick={handleShowSidLink}>
+              Ask Sid
+            </button>
+          </div>
+          {puzzleBlocked==null && (
+            <div className="response-buttons">
+              <h1>Response</h1>
+              <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
           <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
+              
+            </div>
+          )}
+           {puzzleBlocked!=null && (
+            <div className="response-buttons">
+             <button className="correct-btn">Puzzle already attempted.</button>
+          
+            </div>
+          )}
+          <div className="navigation-buttons">
+              <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
+
+              </div>
         </div>
-        <div className="navigation-buttons">
-        <button className="nav-btn" onClick={handleGoBack}>Go Back To Arena</button>
-        </div>
-        </div>
+        
       </div>
-      
-      {congratulationsVisible && (
-        <div className="congratulations-message">
+      {congratulationsVisible ? ( // Conditional rendering based on puzzleBlocked value
+      <div className="congratulations-message">
           <p>Hurray, you got it right! Your score is added.</p>
           <button className="congratulations-btn" onClick={() => setCongratulationsVisible(false)}>
             OK
-          </button>
-        </div>
+        </button>
+      </div>
+      ) : (
+        <p></p> // Show this message if puzzleBlocked is not null
       )}
       {showSolutionPopup && solutions.length > 0 && (
         <div className="popup-overlay">
@@ -246,7 +277,7 @@ const PuzzlePageContent = () => {
             <p>{solutions[0].solution}</p>
             <button className="close-popup-btn" onClick={closeSolutionPopup}>
               Close
-            </button>
+              </button>
           </div>
         </div>
       )}
