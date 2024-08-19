@@ -3,23 +3,12 @@
 import React from 'react';
 import './module.scss';
 
-
-
-const Module1: React.FC = () => {
-  return(
+const InProgress: React.FC = () => {
+  return (
     <div className="lesson-content">
-      {/* <div className="progress-bar">
-        <span>{progress}% COMPLETE</span>
-        <span>{completedSteps}/{totalSteps} Steps</span>
-        <div className="progress">
-          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
-        </div>
-      </div> */}
-      
       <h1>Basics Of Chess</h1>
       
       <section className="chessboard-info">
-        
         {/* Video Section */}
         <div className="video-container">
           <video controls width="100%">
@@ -38,8 +27,6 @@ const Module1: React.FC = () => {
           To understand the naming of squares on a chessboard, think of the files (vertical columns) as first names and the ranks (horizontal rows) as last names. The files are labeled from A to H, starting from the leftmost column (A) to the rightmost column (H). The ranks are numbered from 1 to 8, starting from the bottom row (1) to the top row (8). Each square is uniquely identified by combining the file letter and the rank number, similar to combining a first name and a last name to identify a person. For example, the square at the intersection of the D file (fourth column) and the 4th rank (fourth row) is called D4. Similarly, the square at the intersection of the B file (second column) and the 6th rank (sixth row) is called B6. This system helps players communicate their moves and positions accurately, ensuring clarity and precision in the game.
         </p>
         
-        
-
         <h2>Introduction to Chess Pieces</h2>
         <p>Let's introduce you to the chess pieces! - Before we start, I would like to talk about the major pieces and the minor pieces.</p>
         
@@ -87,10 +74,36 @@ const Module1: React.FC = () => {
         <p>
           <strong>Castling:</strong> Castling is a unique move involving the king and a rook. To castle, several conditions must be met: neither the king nor the rook involved can have moved previously; the squares between the king and the rook must be unoccupied; the king cannot be in check, nor can it move through or end up on a square that is under attack.
         </p>
+      </section> 
+
+      {/* New Sections */}
+      <section className="additional-sections">
+        <h2>Downloads</h2>
+        <ul>
+          <li><a href="/downloads/chess-rules.pdf" download>Download Chess Rules PDF</a></li>
+          <li><a href="/downloads/chessboard-diagram.png" download>Download Chessboard Diagram</a></li>
+        </ul>
+
+        <h2>Practice Links</h2>
+        <ul>
+          <li><a href="https://www.chess.com/" target="_blank" rel="noopener noreferrer">Play Chess on Chess.com</a></li>
+          <li><a href="https://www.chessbase.com/" target="_blank" rel="noopener noreferrer">ChessBase Online Practice</a></li>
+        </ul>
+
+        <h2>Reference Links</h2>
+        <ul>
+          <li><a href="https://www.fide.com/" target="_blank" rel="noopener noreferrer">FIDE - International Chess Federation</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Chess" target="_blank" rel="noopener noreferrer">Wikipedia - Chess</a></li>
+        </ul>
       </section>
-      
+
+      {/* Navigation Buttons */}
+      <div className="navigation-buttons">
+        <button className="prev-button">Previous</button>
+        <button className="next-button">Next</button>
+      </div>
     </div>
   );
 };
 
-export default Module1;
+export default InProgress;
