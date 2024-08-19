@@ -71,8 +71,7 @@ const Hero: React.FC = () => {
                         onMouseEnter={() => index !== 2 && setHoveredImageIndex(index - 1)}
                     >
                         <Image src={`/images/image${index}.png`} alt={`i${index}`} layout="fill" objectFit="cover" />
-                        <div className="overlay1"></div>
-                        <div className="text-overlay1">
+                         <div className="text-overlay1">
                             {texts[index - 1]} <span className='arrow'>→</span>
                         </div>
                     </div>
