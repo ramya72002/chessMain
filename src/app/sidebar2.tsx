@@ -71,7 +71,7 @@ const Sidebar2: React.FC = () => {
                 key={index}
               >
                 <div onClick={() => handleTopicClick(topic.title)}>
-                  <span className={`icon ${topic.completed ? "check" : ""}`}></span>
+                  {/* <span className={`icon ${topic.completed ? "check" : ""}`}></span> */}
                   <span className="title">{topic.title}</span>
                 </div>
                 {activeModule === topic.title && (
