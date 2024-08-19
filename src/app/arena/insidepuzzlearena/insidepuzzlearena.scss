@@ -180,11 +180,21 @@
       &.correct-btn {
         background-color: #00a86b;
         color: white;
+        &:disabled {
+          background-color: #b3d9b3; /* Light green for disabled state */
+          color: #66c2a5; /* Slightly darker green for text */
+          cursor: not-allowed;
+        }
       }
   
       &.incorrect-btn {
         background-color: #d9534f;
         color: white;
+        &:disabled {
+          background-color: #f5b4b4; /* Light red for disabled state */
+          color: #d9534f; /* Slightly darker red for text */
+          cursor: not-allowed;
+        }
       }
     }
   }
