@@ -8,7 +8,7 @@ const Hero: React.FC = () => {
     const [visibleTextIndex, setVisibleTextIndex] = useState(-1);
     const [hoveredImageIndex, setHoveredImageIndex] = useState(-1);
     const [showPopup, setShowPopup] = useState(false);
-    const texts = ['About Us', 'Student Login', 'Tournaments', 'Clubs'];
+    const texts = ['Smarter', 'Strategic', 'Skilled', 'Superior','Sharp'];
     const router = useRouter();
 
     useEffect(() => {
@@ -49,9 +49,12 @@ const Hero: React.FC = () => {
             </div>
             <div className="overlay">
                 <h2 className="elementor-heading-title elementor-size-default">
-                    We <br />
-                    unlock<br />
-                    real <br />
+                <div className="chess-text">
+    Playing chess <br />
+    Makes your<br />
+    Kid<br />
+</div>
+
                     {texts.map((text, index) => (
                         <span key={index} className={visibleTextIndex === index ? 'visible' : 'hidden'}>
                             {text}
