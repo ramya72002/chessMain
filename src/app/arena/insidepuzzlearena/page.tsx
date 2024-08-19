@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 import { Suspense, useState, useEffect, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -21,7 +22,8 @@ const PuzzlePageContent = () => {
   const [showSolutionPopup, setShowSolutionPopup] = useState<boolean>(false); // New state for solution popup visibility
   const [showMissedItPopup, setShowMissedItPopup] = useState<boolean>(false); // New state for "Missed It" popup visibility
   const [puzzleBlocked, setPuzzleBlocked] = useState<string>(""); // New state for "Missed It" popup visibility
-
+  const [isGotItRightDisabled, setIsGotItRightDisabled] = useState<boolean>(false);
+  const [isMissedItDisabled, setIsMissedItDisabled] = useState<boolean>(false);
   const intervalRef = useRef<number | undefined>(undefined);
   
   const [isButtonsActive, setIsButtonsActive] = useState<boolean>(false);
@@ -140,6 +142,7 @@ const PuzzlePageContent = () => {
   };
 
   const handleGotItRight = async () => {
+    setIsMissedItDisabled(true);
     if (isButtonsActive) {
       const userDetailsString = localStorage.getItem('userDetails');
       const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
@@ -156,6 +159,7 @@ const PuzzlePageContent = () => {
         });
         console.log('Puzzle status updated successfully');
         setCongratulationsVisible(true); // Show the congratulations message
+        
       } catch (error) {
         console.error('Error updating puzzle status:', error);
       }
@@ -165,7 +169,9 @@ const PuzzlePageContent = () => {
   };
 
   const handleMissedIt = async () => {
+    setIsGotItRightDisabled(true);
     if (isButtonsActive) {
+      
       setShowMissedItPopup(true); // Show the "Missed It" popup
       const userDetailsString = localStorage.getItem('userDetails');
       const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
@@ -181,6 +187,7 @@ const PuzzlePageContent = () => {
           option_guessed: false
         });
         console.log('Puzzle status updated successfully');
+        
       } catch (error) {
         console.error('Error updating puzzle status:', error);
       }
@@ -243,9 +250,9 @@ const PuzzlePageContent = () => {
           {puzzleBlocked==null && (
             <div className="response-buttons">
               <h1>Response</h1>
-              <button className="correct-btn" onClick={handleGotItRight}>Got it Right</button>
-          <button className="incorrect-btn" onClick={handleMissedIt}>Missed It</button>
-              
+              <button className='correct-btn' onClick={handleGotItRight} disabled={isGotItRightDisabled} >"Got It Right" </button>
+<button className='incorrect-btn' onClick={handleMissedIt} disabled={isMissedItDisabled} >"Missed It" </button>
+ 
             </div>
           )}
            {puzzleBlocked!=null && (
