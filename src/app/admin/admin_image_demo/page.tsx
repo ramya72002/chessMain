@@ -114,15 +114,20 @@ const Admin_image_demo: React.FC = () => {
     }
   };
   const handleEdit = async (puzzle: PuzzleData) => {
-  
-    // Update puzzle live status if needed
+    // Prompt for live status
     const updatedLive = prompt('Enter the new live status (Yes/No):', puzzle.live);
     if (updatedLive === null) {
       return; // No change or cancelled
     }
   
+    // Prompt for live link if the live status is "Yes"
+    let updatedLiveLink = puzzle.live_link;
+    if (updatedLive.toLowerCase() === 'yes') {
+      updatedLiveLink = prompt('Enter the new live link:', puzzle.live_link) || puzzle.live_link;
+    }
+  
     try {
-      // Call the /updatepuzzle API to update the puzzle
+      // Call the /updatelivepuzzle API to update the puzzle
       const response = await fetch('https://backend-chess-tau.vercel.app/updatelivepuzzle', {
         method: 'POST',
         headers: {
@@ -132,7 +137,8 @@ const Admin_image_demo: React.FC = () => {
           level: puzzle.level,
           category: puzzle.category,
           title: puzzle.title,
-          live: updatedLive, // Use the new live status
+          live: updatedLive,
+          live_link: updatedLiveLink,
         }),
       });
   
@@ -150,6 +156,7 @@ const Admin_image_demo: React.FC = () => {
       alert('An error occurred while updating the puzzle.');
     }
   };
+  
   
   
 
