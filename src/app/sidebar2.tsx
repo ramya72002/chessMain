@@ -4,73 +4,73 @@ import { useRouter } from "next/navigation";
 
 const topics = [
   {
-    title: "Basics Of Chess",
+    title: "1. Basics Of Chess",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Chessboard and Pieces Overview", completed: true },
-      { title: "Basic Chess Rules", completed: true },
-      { title: "Chess Notation Basics", completed: true }
+      { title: "1.1 Chessboard and Pieces Overview", completed: true },
+      { title: "1.2 Basic Chess Rules", completed: true },
+      { title: "1.3 Chess Notation Basics", completed: true }
     ]
   },
   {
-    title: "Opening Principles",
+    title: "2. Opening Principles",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Control of the Center", completed: true },
-      { title: "Development of Pieces", completed: true },
-      { title: "Common Opening Mistakes", completed: true }
+      { title: "2.1 Control of the Center", completed: true },
+      { title: "2.2 Development of Pieces", completed: true },
+      { title: "2.3 Common Opening Mistakes", completed: true }
     ]
   },
   {
-    title: "Middle Game Strategies",
+    title: "3. Middle Game Strategies",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Pawn Structures", completed: true },
-      { title: "Piece Coordination", completed: true },
-      { title: "Planning and Strategy", completed: true }
+      { title: "3.1 Pawn Structures", completed: true },
+      { title: "3.2 Piece Coordination", completed: true },
+      { title: "3.3 Planning and Strategy", completed: true }
     ]
   },
   {
-    title: "Endgame Techniques",
+    title: "4. Endgame Techniques",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Basic Checkmates", completed: true },
-      { title: "King and Pawn Endgames", completed: true },
-      { title: "Rook and Minor Piece Endgames", completed: true }
+      { title: "4.1 Basic Checkmates", completed: true },
+      { title: "4.2 King and Pawn Endgames", completed: true },
+      { title: "4.3 Rook and Minor Piece Endgames", completed: true }
     ]
   },
   {
-    title: "Advanced Tactics",
+    title: "5. Advanced Tactics",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Forks and Pins", completed: true },
-      { title: "Discovered Attacks", completed: true },
-      { title: "Deflection and Decoy", completed: true }
+      { title: "5.1 Forks and Pins", completed: true },
+      { title: "5.2 Discovered Attacks", completed: true },
+      { title: "5.3 Deflection and Decoy", completed: true }
     ]
   },
   {
-    title: "Positional Play",
+    title: "6. Positional Play",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "Weak Squares and Weak Pawns", completed: true },
-      { title: "Space and Piece Activity", completed: true },
-      { title: "Positional Sacrifices", completed: true }
+      { title: "6.1 Weak Squares and Weak Pawns", completed: true },
+      { title: "6.2 Space and Piece Activity", completed: true },
+      { title: "6.3 Positional Sacrifices", completed: true }
     ]
   },
   {
-    title: "Chess Psychology and Mindset",
+    title: "7. Chess Psychology and Mindset",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "The Importance of Focus and Concentration", completed: true },
-      { title: "Handling Pressure in Competitive Play", completed: true },
-      { title: "Understanding Your Opponent", completed: true }
+      { title: "7.1 The Importance of Focus and Concentration", completed: true },
+      { title: "7.2 Handling Pressure in Competitive Play", completed: true },
+      { title: "7.3 Understanding Your Opponent", completed: true }
     ]
   }
   // Other modules...
@@ -90,11 +90,11 @@ const Sidebar2: React.FC = () => {
   };
 
   const handleSubmoduleClick = (title: string) => {
-    if (title === "Chessboard and Pieces Overview") {
+    if (title === "1.1 Chessboard and Pieces Overview") {
       router.push("/modules/m1");
-    } else if (title === "Basic Chess Rules") {
+    } else if (title === "1.2 Basic Chess Rules") {
       router.push("/modules/m2");
-    } else if (title === "Chess Notation Basics") {
+    } else if (title === "1.3 Chess Notation Basics") {
       router.push("/modules/m3");
     } else {
       const formattedModule = activeModule?.toLowerCase().replace(/\s+/g, '-');
