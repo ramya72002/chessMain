@@ -15,6 +15,7 @@ export interface Session {
     sid_link: string;
   }
   export interface PuzzleData {
+    live_link: string;
     _id: string;
     date_time: string;
     level: string;
@@ -59,12 +60,27 @@ export interface Session {
     Mixed: number;
   }
   export interface Student {
-    email: string;
     name: string;
+    email: string;
+    level: string;
     image: string;
-    level: string; 
-    puzzle_score:string;
-    scores:Scores;
+    scores?: {
+      Opening: number;
+      Middlegame: number;
+      Endgame: number;
+      Mixed: number;
+    };
+    PuzzleArena?: {
+      [category: string]: {
+        [part: string]: {
+          [puzzle: string]: {
+            started: boolean;
+            option_guessed: number | null;
+            score: number;
+          };
+        };
+      };
+    };
   }
   export interface UserDetails {
     name: string;

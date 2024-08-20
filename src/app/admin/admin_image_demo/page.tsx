@@ -17,6 +17,7 @@ interface PuzzleData {
   category: string;
   title: string;
   live: string;
+  live_link:string,
   file_ids: { [key: string]: FileData };
 }
 
@@ -27,6 +28,7 @@ const Admin_image_demo: React.FC = () => {
     category: '',
     title: '',
     live: '',
+    live_link:'',
     date_time: '',
   });
   const [files, setFiles] = useState<FileList | null>(null);
@@ -74,6 +76,7 @@ const Admin_image_demo: React.FC = () => {
     formDataToSend.append('category', formData.category);
     formDataToSend.append('title', formData.title);
     formDataToSend.append('live', formData.live);
+    formDataToSend.append('live_link', formData.live_link);
     formDataToSend.append('date_time', formData.date_time);
 
     if (files) {
@@ -99,6 +102,7 @@ const Admin_image_demo: React.FC = () => {
         category: '',
         title: '',
         live: '',
+        live_link:"",
         date_time: '',
       });
       setFiles(null);
@@ -110,15 +114,20 @@ const Admin_image_demo: React.FC = () => {
     }
   };
   const handleEdit = async (puzzle: PuzzleData) => {
-  
-    // Update puzzle live status if needed
+    // Prompt for live status
     const updatedLive = prompt('Enter the new live status (Yes/No):', puzzle.live);
     if (updatedLive === null) {
       return; // No change or cancelled
     }
   
+    // Prompt for live link if the live status is "Yes"
+    let updatedLiveLink = puzzle.live_link;
+    if (updatedLive.toLowerCase() === 'yes') {
+      updatedLiveLink = prompt('Enter the new live link:', puzzle.live_link) || puzzle.live_link;
+    }
+  
     try {
-      // Call the /updatepuzzle API to update the puzzle
+      // Call the /updatelivepuzzle API to update the puzzle
       const response = await fetch('https://backend-chess-tau.vercel.app/updatelivepuzzle', {
         method: 'POST',
         headers: {
@@ -128,7 +137,8 @@ const Admin_image_demo: React.FC = () => {
           level: puzzle.level,
           category: puzzle.category,
           title: puzzle.title,
-          live: updatedLive, // Use the new live status
+          live: updatedLive,
+          live_link: updatedLiveLink,
         }),
       });
   
@@ -146,6 +156,7 @@ const Admin_image_demo: React.FC = () => {
       alert('An error occurred while updating the puzzle.');
     }
   };
+  
   
   
 
@@ -172,6 +183,7 @@ const Admin_image_demo: React.FC = () => {
       formData.append('category', puzzle.category);
       formData.append('title', puzzle.title);
       formData.append('live', puzzle.live);
+      formData.append('live_link', puzzle.live_link);
       formData.append('date_time', puzzle.date_time);
       formData.append('puzzle_number', puzzleKey.replace('puzzle', ''));
       formData.append('images', fileList[0]);
@@ -304,6 +316,14 @@ const Admin_image_demo: React.FC = () => {
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
+        <input
+  type="text"
+  name="live_link"
+  value={formData.live_link}
+  onChange={handleChange}
+  placeholder="Enter live link if needed"
+/>
+
 
         <input
           type="datetime-local"
