@@ -142,8 +142,9 @@ const PuzzlePageContent = () => {
   };
 
   const handleGotItRight = async () => {
-    setIsMissedItDisabled(true);
+    
     if (isButtonsActive) {
+      setIsMissedItDisabled(true);
       const userDetailsString = localStorage.getItem('userDetails');
       const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
       const email = storedUserDetails ? storedUserDetails.email : '';
@@ -169,8 +170,9 @@ const PuzzlePageContent = () => {
   };
 
   const handleMissedIt = async () => {
-    setIsGotItRightDisabled(true);
+    
     if (isButtonsActive) {
+      setIsGotItRightDisabled(true);
       
       setShowMissedItPopup(true); // Show the "Missed It" popup
       const userDetailsString = localStorage.getItem('userDetails');
