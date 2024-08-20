@@ -15,6 +15,7 @@ export interface Session {
     sid_link: string;
   }
   export interface PuzzleData {
+    live_link: string;
     _id: string;
     date_time: string;
     level: string;

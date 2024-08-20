@@ -61,6 +61,7 @@ console.log("ppppp",puzzleData)
         <p><strong>Category:</strong> {puzzleData?.category}</p>
         <p><strong>Title:</strong> {puzzleData?.title}</p>
         <p><strong>Live:</strong> {puzzleData?.live ? 'Yes' : 'No'}</p>
+        <p><strong>Live:</strong> {puzzleData?.live_link}</p>
         <p><strong>Column Name:</strong> {columnName}</p>
         <p><strong>Move:</strong> {puzzleData.file_ids[columnName].move}</p>
         <p><strong>Solution:</strong> {puzzleData.file_ids[columnName].solution}</p>

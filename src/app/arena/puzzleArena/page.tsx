@@ -21,6 +21,7 @@ type Puzzle = {
   title: string;
   category: string;
   date_time: string;
+  live_link:string,
   file_ids?: FileIds;
   total_title_category_score?: number;
 };
@@ -186,7 +187,16 @@ const PuzzleArena = () => {
       }
     }
   };
-
+  const handleJoinClick = async (live_link: string) => {
+    // Check if the live_link is valid
+    if (live_link) {
+      // Open the URL in a new window/tab
+      window.open(live_link, '_blank');
+    } else {
+      alert('No link provided.');
+    }
+  };
+  
   return (
     <div className="puzzle-arena-page">
     <div className="puzzle-arena-container">
@@ -219,8 +229,10 @@ const PuzzleArena = () => {
                 <p>{puzzle.category}:{puzzle.title}</p>
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-                <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length, `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
-              </div>
+               <p> <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length, `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
+               <button className="start-button" onClick={() => handleJoinClick(puzzle.live_link)}>Join</button>
+
+               </p></div>
             ))
           ) : (
             <p>No live puzzles available</p>
