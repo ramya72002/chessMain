@@ -16,6 +16,8 @@ const PuzzlePageContent = () => {
 
   const [timer, setTimer] = useState<number>(0);
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isTimerStopped, setIsTimerStopped] = useState<boolean>(true); // Assume timer is stopped initially
+
   const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
   const [solutions, setSolutions] = useState<{ id: string; move: string; sid_link: string; solution: string }[]>([]);
   const [congratulationsVisible, setCongratulationsVisible] = useState<boolean>(false); // New state for congratulatory message
@@ -72,13 +74,15 @@ const PuzzlePageContent = () => {
         window.clearInterval(intervalRef.current);
       }
     }
-
+  
     return () => {
       if (intervalRef.current) {
         window.clearInterval(intervalRef.current);
       }
     };
   }, [isRunning]);
+  
+ 
 
   const fetchImageFile = (id: string) => {
     axios.post(
@@ -110,8 +114,10 @@ const PuzzlePageContent = () => {
 
   const handleStartStopTimer = () => {
     setIsRunning(prev => !prev); // Toggle timer state
-    setIsButtonsActive(true); // Activate buttons when timer starts
+    setIsButtonsActive(prev => !prev); // Toggle buttons active state
+    setIsTimerStopped(prev => !prev); // Toggle timer stopped state
   };
+  
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -142,42 +148,49 @@ const PuzzlePageContent = () => {
   };
 
   const handleGotItRight = async () => {
-    
-    if (isButtonsActive) {
-      setIsMissedItDisabled(true);
-      const userDetailsString = localStorage.getItem('userDetails');
-      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-      const email = storedUserDetails ? storedUserDetails.email : '';
-
-      try {
-        await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
-          email,
-          category,
-          title,
-          puzzle_no: `Puzzle${puzzle_number}`,
-          option_guessed: true,
-          score: 1
-        });
-        console.log('Puzzle status updated successfully');
-        setCongratulationsVisible(true); // Show the congratulations message
-        
-      } catch (error) {
-        console.error('Error updating puzzle status:', error);
+    console.log("ss",isButtonsActive,isTimerStopped,isRunning)
+    if (timer == 0) { // Check if timer is not stopped
+      alert("Please start the timer");
+      console.log(timer)
+    }else if (!isButtonsActive && isTimerStopped && !isRunning && timer !== 0) {
+        setIsMissedItDisabled(true);
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        const email = storedUserDetails ? storedUserDetails.email : '';
+  
+        try {
+          await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+            email,
+            category,
+            title,
+            puzzle_no: `Puzzle${puzzle_number}`,
+            option_guessed: true,
+            score: 1
+          });
+          console.log('Puzzle status updated successfully');
+          setCongratulationsVisible(true); // Show the congratulations message
+        } catch (error) {
+          console.error('Error updating puzzle status:', error);
+        }
       }
-    } else {
-      alert("Please click on Start Timer");
-    }
+      else {
+        alert("Please stop the timer to select");
+      }
+     
   };
-
+  
   const handleMissedIt = async () => {
-    
-    if (isButtonsActive) {
+    console.log("ss",isButtonsActive,isTimerStopped,isRunning)
+    if (timer == 0) { // Check if timer is not stopped
+      alert("Please start the timer");
+      console.log(timer)
+    }else if (!isButtonsActive && isTimerStopped && !isRunning && timer !== 0) {
       setIsGotItRightDisabled(true);
       
-      setShowMissedItPopup(true); // Show the "Missed It" popup
-      const userDetailsString = localStorage.getItem('userDetails');
-      const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-      const email = storedUserDetails ? storedUserDetails.email : '';
+      
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+        const email = storedUserDetails ? storedUserDetails.email : '';
 
       try {
         await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
@@ -189,14 +202,17 @@ const PuzzlePageContent = () => {
           option_guessed: false
         });
         console.log('Puzzle status updated successfully');
+        setShowMissedItPopup(true);
         
       } catch (error) {
         console.error('Error updating puzzle status:', error);
       }
-    } else {
-      alert("Please click on Start Timer");
     }
-  };
+    else {
+      alert("Please stop the timer to select");
+    }
+   
+};
 
   const closeMissedItPopup = () => {
     setShowMissedItPopup(false); // Hide the "Missed It" popup
