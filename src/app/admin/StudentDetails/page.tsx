@@ -108,6 +108,7 @@ function StudentDetails() {
                           <th>Puzzle</th>
                           <th>Started</th>
                           <th>Guessed</th>
+                          <th>Timer</th>
                           <th>Score</th>
                         </tr>
                       </thead>
