@@ -87,6 +87,23 @@ export interface Session {
     email: string;
     image: string;
     level: string;
+    scores?: {
+      Opening: number;
+      Middlegame: number;
+      Endgame: number;
+      Mixed: number;
+    };
+    PuzzleArena?: {
+      [category: string]: {
+        [part: string]: {
+          [puzzle: string]: {
+            started: boolean;
+            option_guessed: number | null;
+            score: number;
+          };
+        };
+      };
+    };
   }
 
   export interface ImageData {
