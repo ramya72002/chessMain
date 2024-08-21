@@ -4,6 +4,7 @@ import './puzzleArena.scss';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { UserDetails } from '../../types/types';
+import Arenaresult from '@/app/Arenaresult';
 
 // Define types for file_ids and puzzles
 type FileIdDetail = {
@@ -58,6 +59,8 @@ const PuzzleArena = () => {
     Mixed: 0,
     total: 0,
   });
+  const [showArenaResult, setShowArenaResult] = useState<boolean>(false);
+
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -167,7 +170,10 @@ const PuzzleArena = () => {
 
     fetchUserDetails();
   }, [dataFetched]);
-
+  const handleClick = () => {
+    console.log("button clicked")
+    setShowArenaResult(true);
+  };
   const handleButtonClick = async (
     title: string,
     category: string,
@@ -266,12 +272,11 @@ const PuzzleArena = () => {
               <div className="score-item">
                 Mixed Arena : <span>{scores.Mixed}</span>
               </div>
-              <div className="total-score">
-                Puzzle Arena Score : <span>{scores.total}</span>
-              </div>
+              <div className="total-score">Puzzle Arena Score : <span onClick={handleClick} className="clickable-link">{scores.total}</span></div>
+            </div>
             </div>
           </div>
-        </div>
+       
 
         <div className="bottom-section">
           <div className="theme-practice live-arena">
@@ -353,9 +358,11 @@ const PuzzleArena = () => {
               <p>No Practice Puzzles Available</p>
             )}
           </div>
+          {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
+
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
