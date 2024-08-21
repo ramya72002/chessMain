@@ -11,12 +11,14 @@ const Modal: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-console.log("ppppp",puzzleData)
+
+  console.log("ppppp", puzzleData);
+
   const handleSubmit = async () => {
     if (!puzzleData) return;
 
-    if (!sidLink || !solution || !move) {
-      setError('SID Link and Solution fields cannot be empty.');
+    if (!solution || !move) {
+      setError('Solution and Move fields cannot be empty.');
       return;
     }
 
@@ -29,13 +31,13 @@ console.log("ppppp",puzzleData)
         title: puzzleData.title,
         live: puzzleData.live,
         column_name: columnName,
-        move:move,
-        sid_link: sidLink,
+        move: move,
+        sid_link: sidLink, // SID Link can be empty
         solution: solution,
       });
-      
+
       if (response.status === 200) {
-        setSuccess('Puzzle updated successfully u can close this window and reopen for changes');
+        setSuccess('Puzzle updated successfully. You can close this window and reopen for changes.');
         setError(null);
         setMove('');
         setSidLink('');  // Clear the input fields after successful submission
@@ -61,13 +63,13 @@ console.log("ppppp",puzzleData)
         <p><strong>Category:</strong> {puzzleData?.category}</p>
         <p><strong>Title:</strong> {puzzleData?.title}</p>
         <p><strong>Live:</strong> {puzzleData?.live ? 'Yes' : 'No'}</p>
-        <p><strong>Live:</strong> {puzzleData?.live_link}</p>
+        <p><strong>Live Link:</strong> {puzzleData?.live_link}</p>
         <p><strong>Column Name:</strong> {columnName}</p>
         <p><strong>Move:</strong> {puzzleData.file_ids[columnName].move}</p>
         <p><strong>Solution:</strong> {puzzleData.file_ids[columnName].solution}</p>
         <p><strong>SID Link:</strong> {puzzleData.file_ids[columnName].sid_link}</p>
-        <p> if u want to update solution and sid link plz update below</p>
-        
+        <p>If you want to update the solution and SID link, please update below:</p>
+
         <div className="form-group">
           <label>Move:</label>
           <select
@@ -80,8 +82,8 @@ console.log("ppppp",puzzleData)
             <option value="White to move">White to move</option>
             <option value="Black to move">Black to move</option>
           </select>
-
         </div>
+
         <div className="form-group">
           <label>SID Link:</label>
           <input
@@ -91,7 +93,7 @@ console.log("ppppp",puzzleData)
             placeholder="Enter SID Link"
           />
         </div>
-        
+
         <div className="form-group">
           <label>Solution:</label>
           <input
