@@ -1,5 +1,6 @@
 .puzzle-arena-page {
   padding: 20px;
+  position: relative; 
 }
 .puzzle-arena-container {
   background-color: #276089;
@@ -198,3 +199,26 @@
     }
   }
 }
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above all other content */
+}
+
+.loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width:250px; /* Adjust size as needed */
+    height: 250px;
+  }
+}
+

@@ -105,3 +105,26 @@
       }
     }
   }
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999; // Ensures the loading screen is above all other elements
+  
+    img {
+      width: 250px; // Set the desired width for the loading GIF
+      height: 250px; // Maintain aspect ratio
+    }
+  }
+  
+  .error {
+    color: red;
+    text-align: center;
+    padding: 20px;
+  }

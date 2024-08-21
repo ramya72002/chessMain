@@ -125,7 +125,9 @@ const StartArena = () => {
     }
   };
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return <p className="loading">
+    <img src="/images/loading.gif" alt="" />
+  </p>;
   if (error) return <p className="error">{error}</p>;
 
   return (
