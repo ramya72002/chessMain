@@ -165,6 +165,7 @@ const PuzzlePageContent = () => {
             title,
             puzzle_no: `Puzzle${puzzle_number}`,
             option_guessed: true,
+            timer:timer,
             score: 1
           });
           console.log('Puzzle status updated successfully');
@@ -199,6 +200,7 @@ const PuzzlePageContent = () => {
           title,
           puzzle_no: `Puzzle${puzzle_number}`,
           score: 0,
+          timer:timer,
           option_guessed: false
         });
         console.log('Puzzle status updated successfully');

@@ -106,6 +106,7 @@ const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
                       <td>{puzzleName}</td>
                       <td>Started: {puzzleData.started ? 'Yes' : 'No'}</td>
                       <td>Option Guessed: {puzzleData.option_guessed !== null ? (puzzleData.option_guessed ? 'Yes' : 'No') : 'N/A'}</td>
+                      <td>Timer: {puzzleData.timer}seconds</td>
                       <td>Score: {puzzleData.score}</td>
                     </tr>
                   ))}
