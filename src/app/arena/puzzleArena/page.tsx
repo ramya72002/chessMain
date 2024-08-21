@@ -284,9 +284,10 @@ const PuzzleArena = () => {
                   <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
                   <p className='loading-page'>
                     {loading[index] ? (
-                      <img src="/images/loading.gif" alt="Loading..." />
+                      <button className="loading-button">Loading...</button>
                     ) : (
-                      <button
+                      <>
+                        <button
                         className="start-button"
                         onClick={() =>
                           handleButtonClick(
@@ -297,27 +298,28 @@ const PuzzleArena = () => {
                             `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
                             index
                           )
-                        }
-                      >
-                        View
-                      </button>
+                          }
+                        >
+                          View
+                        </button>
+                        <button
+                          className="join-button"
+                          onClick={() => handleJoinClick(puzzle.live_link)}
+                        >
+                          Join
+                        </button>
+                      </>
                     )}
-                    <button
-                      className="join-button"
-                      onClick={() => handleJoinClick(puzzle.live_link)}
-                    >
-                      Join
-                    </button>
                   </p>
                 </div>
               ))
             ) : (
-              <p>No live puzzles available</p>
+              <p>No Live Puzzles Available</p>
             )}
           </div>
 
-          <div className="theme-practice practice-arena">
-            <p>Practice Arena</p>
+          <div className="theme-practice">
+            <p>Theme Practice</p>
             {practicePuzzles.length > 0 ? (
               practicePuzzles.map((puzzle, index) => (
                 <div className="practice-item" key={index}>
@@ -326,19 +328,19 @@ const PuzzleArena = () => {
                   <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
                   <p className='loading-page'>
                     {loading[index] ? (
-                      <img src="/images/loading.gif" alt="Loading..." />
+                      <button className="loading-button">Loading...</button>
                     ) : (
                       <button
-                        className="start-button"
-                        onClick={() =>
-                          handleButtonClick(
-                            puzzle.title,
-                            puzzle.category,
-                            puzzle.date_time,
-                            Object.keys(puzzle.file_ids || {}).length,
-                            `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                            index
-                          )
+                      className='start-button'
+                      onClick={() =>
+                        handleButtonClick(
+                          puzzle.title,
+                          puzzle.category,
+                          puzzle.date_time,
+                          Object.keys(puzzle.file_ids || {}).length,
+                          `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
+                          index
+                        )
                         }
                       >
                         View
@@ -348,7 +350,7 @@ const PuzzleArena = () => {
                 </div>
               ))
             ) : (
-              <p>No practice puzzles available</p>
+              <p>No Practice Puzzles Available</p>
             )}
           </div>
         </div>
