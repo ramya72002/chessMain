@@ -30,7 +30,7 @@ const MyAccount = () => {
         <div className="course-card">
     <div className="course-status">
         <h4>Basics of Chess</h4>
-        <Link href="/inprogress">
+        <Link href="/modules/m1">
             <span className="progress">In Progress</span>
         </Link>
     </div>
