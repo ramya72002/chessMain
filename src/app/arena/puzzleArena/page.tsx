@@ -230,7 +230,7 @@ const PuzzleArena = () => {
                 <p>Date & Time: {puzzle.date_time}</p>
                 <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
                <p> <button className="start-button" onClick={() => handleButtonClick(puzzle.title, puzzle.category, puzzle.date_time, Object.keys(puzzle.file_ids || {}).length, `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`)}>View</button>
-               <button className="start-button" onClick={() => handleJoinClick(puzzle.live_link)}>Join</button>
+               <button className="join-button" onClick={() => handleJoinClick(puzzle.live_link)}>Join</button>
 
                </p></div>
             ))
