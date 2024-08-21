@@ -261,9 +261,12 @@ const PuzzlePageContent = () => {
             <button className="solution-btn" onClick={handleShowSolution}>
               Solution
             </button>
-            <button className="ask-sid-btn" onClick={handleShowSidLink}>
-              Ask Sid
-            </button>
+            {solutions.length > 0 && solutions[0].sid_link && (
+  <button className="ask-sid-btn" onClick={handleShowSidLink}>
+    Ask Sid
+  </button>
+)}
+
           </div>
           {puzzleBlocked==null && (
             <div className="response-buttons">
