@@ -1,4 +1,3 @@
-// Arenaresult.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Arenaresult.scss';
@@ -13,7 +12,6 @@ const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 
   useEffect(() => {
-    // Fetch user details from API
     const fetchUserDetails = async () => {
       const userDetailsString = localStorage.getItem('userDetails');
       const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
@@ -86,41 +84,45 @@ const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
               <tr>
                 <td>Puzzle Arena</td>
                 <td>
-                  {userDetails.PuzzleArena &&
-                    Object.entries(userDetails.PuzzleArena).map(([arenaType, puzzles]) => (
-                      <div key={arenaType} className="puzzle-arena-section">
-                        <h3>{arenaType}</h3>
-                        {Object.entries(puzzles).map(([part, puzzlesData]) => (
-                          <div key={part} className="puzzle-category">
-                            <h4>{part}</h4>
-                            <table className="puzzles-table">
-                              <tbody>
-                                {Object.entries(puzzlesData).map(([puzzleName, puzzleData]) => (
-                                  <tr key={puzzleName}>
-                                    <td>{puzzleName}</td>
-                                    <td>
-                                      Started: {puzzleData.started ? 'Yes' : 'No'}
-                                    </td>
-                                    <td>
-                                      Option Guessed: {puzzleData.option_guessed !== null ? (puzzleData.option_guessed ? 'Yes' : 'No') : 'N/A'}
-                                    </td>
-                                    <td>
-                                      Score: {puzzleData.score}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                </td>
+  {userDetails.PuzzleArena &&
+    Object.entries(userDetails.PuzzleArena).map(([arenaType, puzzles]) => (
+      <div key={arenaType} className="puzzle-arena-section">
+        <h3>{arenaType}</h3>
+        {Object.entries(puzzles).map(([part, puzzlesData]) => {
+          // Sort the puzzles by their puzzle number
+          const sortedPuzzles = Object.entries(puzzlesData).sort(([a], [b]) => {
+            const numberA = parseInt(a.replace('Puzzle', ''));
+            const numberB = parseInt(b.replace('Puzzle', ''));
+            return numberA - numberB;
+          });
+
+          return (
+            <div key={part} className="puzzle-category">
+              <h4>{part}</h4>
+              <table className="puzzles-table">
+                <tbody>
+                  {sortedPuzzles.slice(0, 10).map(([puzzleName, puzzleData]) => (
+                    <tr key={puzzleName}>
+                      <td>{puzzleName}</td>
+                      <td>Started: {puzzleData.started ? 'Yes' : 'No'}</td>
+                      <td>Option Guessed: {puzzleData.option_guessed !== null ? (puzzleData.option_guessed ? 'Yes' : 'No') : 'N/A'}</td>
+                      <td>Score: {puzzleData.score}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })}
+      </div>
+    ))}
+</td>
+
               </tr>
             </tbody>
           </table>
         ) : (
-          <p>Loading...</p>
+          <p>Loading user details...</p>
         )}
       </div>
     </div>
