@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 import { ImageData } from '../../types/types';
+import Loading from '@/app/Loading';
 
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
@@ -125,9 +126,7 @@ const StartArena = () => {
     }
   };
 
-  if (loading) return <p className="loading">
-    <img src="/images/loading.gif" alt="" />
-  </p>;
+  if (loading) return <Loading />;
   if (error) return <p className="error">{error}</p>;
 
   return (

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Learnclass.scss';
 import { Session } from '../types/types';
+import Loading from '../Loading';
 
 const Learnclass = () => {
   const [sessions, setSessions] = useState<Session[]>([]);  const [loading, setLoading] = useState(true); // State for loading indicator
@@ -66,7 +67,7 @@ const [messages, setMessages] = useState<{ [key: string]: string }>({});
   return (
     <div className="container">
       {loading ? (
-        <p>Loading sessions...</p>
+       <Loading />
       ) : sessions.length > 0 ? (
         sessions.map((session) => (
           <div key={session._id} className="session-card">

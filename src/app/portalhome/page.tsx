@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './portal.scss';
 import { UserDetails, UpcomingActivity } from '../types/types';
+import Loading from '../Loading';
 
 const Hero = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
@@ -196,7 +197,7 @@ const Hero = () => {
       <div className="learnings">
         <h3>My Learning</h3>
         {loading ? (
-          <p>Loading Learning...</p>
+          <Loading />
         ) : (
           upcomingActivities.map((activity, index) => (
             <div className="learn" key={index}>
