@@ -4,73 +4,109 @@ import { useRouter } from "next/navigation";
 
 const topics = [
   {
-    title: "1. Basics Of Chess",
+    title: "1. Introduction",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "1.1 Chessboard and Pieces Overview", completed: true },
-      { title: "1.2 Basic Chess Rules", completed: true },
-      { title: "1.3 Chess Notation Basics", completed: true }
+      { title: "1.1 Introduction", completed: true },
     ]
   },
   {
-    title: "2. Opening Principles",
+    title: "2. The Chessboard",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "2.1 Control of the Center", completed: true },
-      { title: "2.2 Development of Pieces", completed: true },
-      { title: "2.3 Common Opening Mistakes", completed: true }
+      { title: "2.1 Board Set-up", completed: true },
+      { title: "2.2 Letters & Numbers", completed: true },
+      { title: "2.3 Understanding 'File'", completed: true },
+      { title: "2.4 Understanding 'Rank'", completed: true },
+      { title: "2.5 Understanding 'Diagonals'", completed: true },
+      { title: "2.6 Name of the Squares", completed: true }
     ]
   },
   {
-    title: "3. Middle Game Strategies",
+    title: "3. Introduction to Pieces",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "3.1 Pawn Structures", completed: true },
-      { title: "3.2 Piece Coordination", completed: true },
-      { title: "3.3 Planning and Strategy", completed: true }
+      { title: "3.1 Know the Pieces", completed: true },
+      { title: "3.2 'Major' and 'Minor' Pieces", completed: true },
+      { title: "3.3 Understanding the ‘King’", completed: true },
+      { title: "3.4 Understanding the ‘Bishop’", completed: true },
+      { title: "3.5 Understanding the 'Rook’", completed: true },
+      { title: "3.6 Understanding the ‘Knight’", completed: true },
+      { title: "3.7 Understanding the ‘Pawn’", completed: true },
+      { title: "3.8 Understanding the ‘Queen’", completed: true }
     ]
   },
   {
-    title: "4. Endgame Techniques",
+    title: "4. Arraignment of Pieces",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "4.1 Basic Checkmates", completed: true },
-      { title: "4.2 King and Pawn Endgames", completed: true },
-      { title: "4.3 Rook and Minor Piece Endgames", completed: true }
+      { title: "4.1 Light Side", completed: true },
+      { title: "4.2 Dark Side", completed: true }
     ]
   },
   {
-    title: "5. Advanced Tactics",
+    title: "5. Special Moves",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "5.1 Forks and Pins", completed: true },
-      { title: "5.2 Discovered Attacks", completed: true },
-      { title: "5.3 Deflection and Decoy", completed: true }
+      { title: "5.1 Castling", completed: true },
+      { title: "5.2 Promotion", completed: true },
+      { title: "5.3 En-passant", completed: true }
     ]
   },
   {
-    title: "6. Positional Play",
+    title: "6. Winning in Chess",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "6.1 Weak Squares and Weak Pawns", completed: true },
-      { title: "6.2 Space and Piece Activity", completed: true },
-      { title: "6.3 Positional Sacrifices", completed: true }
+      { title: "6.1 Checkmate", completed: true },
+      { title: "6.2 Checks", completed: true },
+      { title: "6.3 Stalemate", completed: true },
+      { title: "6.4 Principles of Attacking", completed: true },
+      { title: "6.5 Art of Attacking – Capture", completed: true },
+      { title: "6.6  Draw", completed: true }
     ]
   },
   {
-    title: "7. Chess Psychology and Mindset",
+    title: "7. Understanding Piece Exchanges",
     isQuiz: false,
     completed: true,
     submodules: [
-      { title: "7.1 The Importance of Focus and Concentration", completed: true },
-      { title: "7.2 Handling Pressure in Competitive Play", completed: true },
-      { title: "7.3 Understanding Your Opponent", completed: true }
+      { title: "7.1 Fair Trade", completed: true },
+      { title: "7.2 Exchange Up", completed: true },
+      { title: "7.3 Exchange Down", completed: true },
+      { title: "7.4 Material Up", completed: true },
+      { title: "7.5 Material Down", completed: true },
+    ]
+  },
+  {
+    title: "8. Let’s Start Playing 3 Stages of the Game: Opening, Middlegame and Endgam",
+    isQuiz: false,
+    completed: true,
+    submodules: [
+      { title: "8.1 Opening", completed: true },
+      { title: "8.2 Middlegame", completed: true },
+      { title: "8.3 Endgame", completed: true }
+    ]
+  },
+  {
+    title: "9. Understanding Notations",
+    isQuiz: false,
+    completed: true,
+    submodules: [
+      { title: "9.1 Understanding Notations", completed: true }
+    ]
+  },
+  {
+    title: "10. Chess Game: Let’s study a game",
+    isQuiz: false,
+    completed: true,
+    submodules: [
+      { title: "10.1 Chess Game: Let’s study a game", completed: true }
     ]
   }
   // Other modules...
