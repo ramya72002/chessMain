@@ -10,6 +10,7 @@ interface ArenaresultProps {
 
 const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [visiblePuzzleTable, setVisiblePuzzleTable] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -33,6 +34,13 @@ const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
 
     fetchUserDetails();
   }, []);
+
+  const togglePuzzleTableVisibility = (part: string) => {
+    setVisiblePuzzleTable(prevState => ({
+      ...prevState,
+      [part]: !prevState[part],
+    }));
+  };
 
   if (!isOpen) return null; // Do not render if not open
 
@@ -84,41 +92,49 @@ const Arenaresult: React.FC<ArenaresultProps> = ({ isOpen, onClose }) => {
               <tr>
                 <td>Puzzle Arena</td>
                 <td>
-  {userDetails.PuzzleArena &&
-    Object.entries(userDetails.PuzzleArena).map(([arenaType, puzzles]) => (
-      <div key={arenaType} className="puzzle-arena-section">
-        <h3>{arenaType}</h3>
-        {Object.entries(puzzles).map(([part, puzzlesData]) => {
-          // Sort the puzzles by their puzzle number
-          const sortedPuzzles = Object.entries(puzzlesData).sort(([a], [b]) => {
-            const numberA = parseInt(a.replace('Puzzle', ''));
-            const numberB = parseInt(b.replace('Puzzle', ''));
-            return numberA - numberB;
-          });
+                  {userDetails.PuzzleArena &&
+                    Object.entries(userDetails.PuzzleArena).map(([arenaType, puzzles]) => (
+                      <div key={arenaType} className="puzzle-arena-section">
+                        <h3>{arenaType}</h3>
+                        {Object.entries(puzzles).map(([part, puzzlesData]) => {
+                          const sortedPuzzles = Object.entries(puzzlesData).sort(([a], [b]) => {
+                            const numberA = parseInt(a.replace('Puzzle', ''));
+                            const numberB = parseInt(b.replace('Puzzle', ''));
+                            return numberA - numberB;
+                          });
 
-          return (
-            <div key={part} className="puzzle-category">
-              <h4>{part}</h4>
-              <table className="puzzles-table">
-                <tbody>
-                  {sortedPuzzles.slice(0, 10).map(([puzzleName, puzzleData]) => (
-                    <tr key={puzzleName}>
-                      <td>{puzzleName}</td>
-                      <td>Started: {puzzleData.started ? 'Yes' : 'No'}</td>
-                      <td>Option Guessed: {puzzleData.option_guessed !== null ? (puzzleData.option_guessed ? 'Yes' : 'No') : 'N/A'}</td>
-                      <td>Timer: {puzzleData.timer}seconds</td>
-                      <td>Score: {puzzleData.score}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          );
-        })}
-      </div>
-    ))}
-</td>
+                          const sumOfScores = sortedPuzzles.reduce((sum, [_, puzzleData]) => sum + (puzzleData.score || 0), 0);
 
+                          return (
+                            <div key={part} className="puzzle-category">
+                              <h4 
+                                className="puzzle-title" 
+                                onClick={() => togglePuzzleTableVisibility(part)}
+                                style={{ cursor: 'pointer', textDecoration: 'underline', color: 'blue' }}
+                              >
+                                Title: {part}-(Total score: {sumOfScores})
+                              </h4>
+                              {visiblePuzzleTable[part] && (
+                                <table className="puzzles-table">
+                                  <tbody>
+                                    {sortedPuzzles.slice(0, 10).map(([puzzleName, puzzleData]) => (
+                                      <tr key={puzzleName}>
+                                        <td>{puzzleName}</td>
+                                        <td>Started: {puzzleData.started ? 'Yes' : 'No'}</td>
+                                        <td>Option Guessed: {puzzleData.option_guessed !== null ? (puzzleData.option_guessed ? 'Yes' : 'No') : 'N/A'}</td>
+                                        <td>Timer: {puzzleData.timer} seconds</td>
+                                        <td>Score: {puzzleData.score}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                </td>
               </tr>
             </tbody>
           </table>
