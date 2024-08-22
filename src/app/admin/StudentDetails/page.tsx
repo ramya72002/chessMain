@@ -22,6 +22,7 @@ interface Student {
         [puzzle: string]: {
           started: boolean;
           option_guessed: number | null;
+          timer:number|0;
           score: number;
         };
       };
@@ -107,6 +108,7 @@ function StudentDetails() {
                           <th>Puzzle</th>
                           <th>Started</th>
                           <th>Guessed</th>
+                          <th>Timer</th>
                           <th>Score</th>
                         </tr>
                       </thead>
@@ -123,6 +125,7 @@ function StudentDetails() {
                                 <td>{puzzleKey} </td>
                                 <td>{puzzle.started ? "Yes" : "No"}</td>
                                 <td>{puzzle.option_guessed !== null ? puzzle.option_guessed.toString() : "N/A"}</td>
+                                <td>{puzzle.timer}</td>
                                 <td>{puzzle.score}</td>
                               </tr>
                             );

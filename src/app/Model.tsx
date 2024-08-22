@@ -17,11 +17,6 @@ const Modal: React.FC<ModelProps> = ({ isOpen, onClose, puzzleData, columnName }
   const handleSubmit = async () => {
     if (!puzzleData) return;
 
-    if (!solution || !move) {
-      setError('Solution and Move fields cannot be empty.');
-      return;
-    }
-
     setIsLoading(true);
 
     try {
