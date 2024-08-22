@@ -252,24 +252,30 @@ const PuzzlePageContent = () => {
           </div>
         </div>
         <div className="puzzle-info">
-          <div className="response-buttons1">
-            <h2>Puzzle{puzzle_number}</h2>
-            <button className="timer-btn" onClick={handleStartStopTimer}>
-              {isRunning ? 'Stop Timer' : 'Start Timer'}
-              <div className="timer-display">
-                {formatTime(timer)}
-              </div>
-            </button>
-            <button className="solution-btn" onClick={handleShowSolution}>
-              Solution
-            </button>
-            {solutions.length > 0 && solutions[0].sid_link && (
-  <button className="ask-sid-btn" onClick={handleShowSidLink}>
-    Ask Sid
+        <div className="response-buttons1">
+  <h2>Puzzle {puzzle_number}</h2>
+  <button className="timer-btn" onClick={handleStartStopTimer}>
+    {isRunning ? 'Stop Timer' : 'Start Timer'}
+    <div className="timer-display">
+      {formatTime(timer)}
+    </div>
   </button>
-)}
 
-          </div>
+  {/* Conditionally render the Solution button only if there's a solution */}
+  {solutions.length > 0 && solutions[0].solution && (
+    <button className="solution-btn" onClick={handleShowSolution}>
+      Solution
+    </button>
+  )}
+
+  {solutions.length > 0 && solutions[0].sid_link && (
+    <button className="ask-sid-btn" onClick={handleShowSidLink}>
+      Ask Sid
+    </button>
+  )}
+</div>
+
+
           {puzzleBlocked==null && (
             <div className="response-buttons">
               <h1>Response</h1>
