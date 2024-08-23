@@ -15,8 +15,7 @@ const M3: React.FC = () => {
   };
   return (
     <div className="lesson-content">
-        <h1>1. Basics of Chess</h1>
-      <h3>1.3 Chess Notation Basics</h3>
+      <h3>2.2 Letters and Numbers</h3>
       
       <section className="chessboard-info">
         {/* Video Section */}
