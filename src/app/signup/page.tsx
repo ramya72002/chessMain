@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import './Signup.scss'; // Import the SCSS file
+import './Signup.scss'; // Import the SCSS file for signup styles
+import Loading from '../Loading';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -30,9 +31,7 @@ const Signup = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       {loading ? (
-        <div className="loading-container">
-          <img src="/images/loading.gif" alt="Loading..." className="loading-gif" />
-        </div>
+        <Loading /> // Use the Loading component
       ) : (
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
           <h2 className="text-3xl font-bold mb-4 text-black text-center">Sign Up</h2>

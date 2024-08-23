@@ -1,0 +1,13 @@
+// Loading.scss
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; // Ensure it takes the full screen height
+  }
+  
+  .loading-gif {
+    width: 350px;
+    height: 350px;
+  }
+  

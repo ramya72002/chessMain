@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import './Signin.scss'; // Import the SCSS file
+import Loading from '../Loading';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -51,9 +52,7 @@ const SignIn = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-black">
       {loading ? (
-        <div className="loading-container">
-          <img src="/images/loading.gif" alt="Loading..." className="loading-gif" />
-        </div>
+        <Loading /> // Use the Loading component here
       ) : (
         <div className={`bg-white p-8 rounded shadow-md w-full max-w-md email-box ${showPopup ? 'slide-from-left' : ''}`} style={{ borderRadius: '10px' }}>
           <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>

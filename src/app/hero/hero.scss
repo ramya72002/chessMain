@@ -22,36 +22,6 @@
     transition: none; /* Disable any transitions */
 }
 
-.slide-from-bottom {
-    animation-name: slideFromBottom;
-}
-
-.slide-from-top {
-    animation-name: slideFromTop;
-}
-
-@keyframes slideFromBottom {
-    0% {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideFromTop {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .overlay {
     position: absolute;
     top: 0;
@@ -117,38 +87,36 @@
     animation-timing-function: ease-in-out;
     transition: transform 0.4s;
     overflow: hidden;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
 }
 
 .image-wrapper1 img {
     width: 100%;
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
 }
 
  
-
-.image-wrapper1.hover .overlay1 {
-    opacity: 1;
-}
 
 .chess-text {
     margin-top: 50px;
 }
 
-.text-overlay1 {
-    position: absolute;
-    bottom: 10px;
-    padding-left: 10px;
-    color: #3d64da;
-    font-family: "NeueHaasDisplay-Bold", Sans-serif;
-    font-size: 25px;
-    text-align: left;
-    font-weight: 800;
-}
-
-.arrow {
-    margin-left: 5px;
-    font-size: 30px;
-    cursor: pointer;
-}
 
 .zoom-in {
     opacity: 1;
@@ -249,11 +217,6 @@
         width:200px;
     }
 
-    .text-overlay1 {
-        font-size: 16px;
-        bottom: 5px;
-        text-align: left;
-    }
 
     .elementor-heading-title {
         font-size: 8vw;
@@ -293,11 +256,6 @@
         width:200px;
     }
 
-    .text-overlay1 {
-        font-size: 16px;
-        bottom: 5px;
-        text-align: left;
-    }
 
     .elementor-heading-title {
         font-size: 8vw;
@@ -323,11 +281,7 @@
         line-height: 45px;
     }
 
-    .text-overlay1 {
-        font-size: 24px; /* Increased text size */
-    }
 }
-
 /* For small tablets and large smartphones */
 @media (max-width: 768px) {
     .right-side {
@@ -346,9 +300,6 @@
         line-height: 40px;
     }
 
-    .text-overlay1 {
-        font-size: 22px; /* Increased text size */
-    }
 }
 
 /* For smartphones */
@@ -373,7 +324,4 @@
         line-height: 40px;
     }
 
-    .text-overlay1 {
-        font-size:15px; /* Increased text size */
-    }
 }
