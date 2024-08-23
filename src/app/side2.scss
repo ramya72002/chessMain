@@ -1,14 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 .course-content {
   width: 360px;
+  max-height: 100vh; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
   background-color: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: width 0.3s ease;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: 'Montserrat', sans-serif;
 
   &.minimized {
     width: 80px;
+  }
+
+  /* Customize the scrollbar for WebKit browsers */
+  &::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #b51772; /* Color of the scrollbar thumb */
+    border-radius: 12px;
+
+    &:hover {
+      background-color: #e65c5c; /* Color when hovering over the scrollbar thumb */
+    }
   }
 
   .header {

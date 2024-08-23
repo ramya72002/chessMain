@@ -115,15 +115,10 @@ const topics = [
 const Sidebar2: React.FC = () => {
   const router = useRouter();
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-  const [activeModule, setActiveModule] = useState<string | null>(null);
 
   const toggleSidebar = () => setIsSidebarMinimized(!isSidebarMinimized);
 
   const handleGoBack = () => router.push('/learning');
-
-  const handleTopicClick = (title: string) => {
-    setActiveModule(prev => (title === prev ? null : title));
-  };
 
   const handleSubmoduleClick = (title: string) => {
     if (title === "1.1 Chessboard and Pieces Overview") {
@@ -133,9 +128,8 @@ const Sidebar2: React.FC = () => {
     } else if (title === "1.3 Chess Notation Basics") {
       router.push("/modules/m3");
     } else {
-      const formattedModule = activeModule?.toLowerCase().replace(/\s+/g, '-');
       const formattedSubmodule = title.toLowerCase().replace(/\s+/g, '-');
-      router.push(`/level1Modules/${formattedModule}/${formattedSubmodule}`);
+      router.push(`/level1Modules/${formattedSubmodule}`);
     }
   };
 
@@ -156,9 +150,8 @@ const Sidebar2: React.FC = () => {
           <div className="module-header">
             <span>Basics Of Chess</span>
             <span className="progress">
-              <span className="topics-count">{topics.length} Topics</span> | 
-              <span className="quizzes-count">0 Quizzes</span>
-            </span>
+              <span className="topics-count">{topics.length} Topics</span> 
+             </span>
           </div>
           <div className="topics">
             {topics.map((topic, index) => (
@@ -166,23 +159,21 @@ const Sidebar2: React.FC = () => {
                 className={`topic ${topic.completed ? "completed" : ""}`}
                 key={index}
               >
-                <div onClick={() => handleTopicClick(topic.title)}>
+                <div>
                   <span className="title">{topic.title}</span>
                 </div>
-                {activeModule === topic.title && (
-                  <div className="submodules">
-                    {topic.submodules.map((submodule, subIndex) => (
-                      <div
-                        className={`submodule ${submodule.completed ? "completed" : ""}`}
-                        key={subIndex}
-                        onClick={() => handleSubmoduleClick(submodule.title)}
-                      >
-                        <span className={`icon ${submodule.completed ? "check" : ""}`}></span>
-                        <span className="title">{submodule.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <div className="submodules">
+                  {topic.submodules.map((submodule, subIndex) => (
+                    <div
+                      className={`submodule ${submodule.completed ? "completed" : ""}`}
+                      key={subIndex}
+                      onClick={() => handleSubmoduleClick(submodule.title)}
+                    >
+                      <span className={`icon ${submodule.completed ? "check" : ""}`}></span>
+                      <span className="title">{submodule.title}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
