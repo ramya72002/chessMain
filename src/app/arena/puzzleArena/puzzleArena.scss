@@ -129,35 +129,53 @@
       text-align: center;
     
       span {
+        padding: 10px;
         font-size: 1.5rem;
         font-weight: bold;
       }
     
       .clickable-link {
         cursor: pointer;
-        display: inline-block;
-        color: white; /* Text color */
-        text-decoration: none; /* Remove the default underline */
-        position: relative; /* Position the link relative to the pseudo-element */
-        
+        color: rgb(255, 255, 255); /* Keeps the text white */
+        text-decoration: none; /* Removes underline by default */
+        font-weight: bold; /* Makes the text bold */
+        position: relative; /* Allows for pseudo-element positioning */
+        transition: color 0.3s ease, text-decoration 0.3s ease, transform 0.3s ease;
+      
+        &:hover {
+          color: rgb(255, 255, 255); /* Slightly darkens the color on hover */
+          text-decoration: none; /* Underlines the text on hover */
+          transform: translateY(-2px); /* Slightly lifts the link on hover */
+        }
+      
+        &:active,
+        &:focus {
+          outline: none;
+          color: rgb(255, 255, 255); /* Darkens color when active or focused */
+          text-decoration: underline; /* Keeps underline */
+          transform: scale(0.98); /* Slightly reduces size when clicked */
+        }
+      
         &::after {
-          content: "";
-          background: rgb(0, 0, 0); /* Initial background color */
-          mix-blend-mode: exclusion; /* Blend mode for visual effect */
-          width: calc(100% + 15px); /* Extend background beyond the text width */
-          height: 0; /* Initial height is 0 */
+          content: ''; /* Adds a decorative line after the text */
           position: absolute;
-          bottom: -1px; /* Position slightly below the text */
-          left: -6px; /* Position slightly to the left of the text */
-          transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95), background-color 0.3s ease; /* Smooth transition effect */
+          left: 0;
+          bottom: 7px; /* Positions the line just below the text */
+          width: 100%;
+          height: 2px;
+          background-color: rgb(255, 255, 255); /* Line color matches the text */
+          transform: scaleX(0);
+          transform-origin: right;
+          transition: transform 0.3s ease;
         }
       
         &:hover::after {
-          height: calc(100% + 1px); /* Expand background height on hover */
-          background-color: #ffffff; /* Change background color on hover */
+          transform: scaleX(1); /* Expands the line on hover */
+          transform-origin: left;
         }
       }
-       
+      
+      
     }
     
   }
