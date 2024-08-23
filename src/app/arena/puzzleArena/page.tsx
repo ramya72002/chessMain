@@ -60,6 +60,18 @@ const PuzzleArena = () => {
     total: 0,
   });
   const [showArenaResult, setShowArenaResult] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+    const handleCategoryClick = (category:string) => {
+      setSelectedCategory(category);
+    };
+  
+    const filteredPuzzles = selectedCategory
+      ? practicePuzzles.filter((puzzle) => puzzle.category === selectedCategory)
+      : practicePuzzles;
+    const LivefilteredPuzzles = selectedCategory
+    ? livePuzzles.filter((puzzle) => puzzle.category === selectedCategory)
+    : livePuzzles;
 
 
   useEffect(() => {
@@ -284,8 +296,19 @@ const PuzzleArena = () => {
         <div className="bottom-section">
           <div className="theme-practice live-arena">
             <p>Live Arena</p>
-            {livePuzzles.length > 0 ? (
-              livePuzzles.map((puzzle, index) => (
+            <div className="category-boxes">
+        {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
+          <div
+            key={category}
+            className={`category-box ${category}`}
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category}
+          </div>
+        ))}
+      </div>
+      {LivefilteredPuzzles.length > 0 ? (
+        LivefilteredPuzzles.map((puzzle, index) => (
                 <div className="practice-item" key={index}>
                   <p>{puzzle.category}:{puzzle.title}</p>
                   <p>Date & Time: {puzzle.date_time}</p>
@@ -327,42 +350,55 @@ const PuzzleArena = () => {
           </div>
 
           <div className="theme-practice">
-            <p>Theme Practice</p>
-            {practicePuzzles.length > 0 ? (
-              practicePuzzles.map((puzzle, index) => (
-                <div className="practice-item" key={index}>
-                  <p>{puzzle.category}:{puzzle.title}</p>
-                  <p>Date & Time: {puzzle.date_time}</p>
-                  <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-                  <p className='loading-page'>
-                    {loading[index] ? (
-                      <button className="loading-button">Loading...</button>
-                    ) : (
-                      <button
-                      className='start-button'
-                      onClick={() =>
-                        handleButtonClick(
-                          puzzle.title,
-                          puzzle.category,
-                          puzzle.date_time,
-                          Object.keys(puzzle.file_ids || {}).length,
-                          `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                          index
-                        )
-                        }
-                      >
-                        View
-                      </button>
-                    )}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <p>No Practice Puzzles Available</p>
-            )}
-          </div>
-          {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
+      <p>Theme Practice</p>
 
+      <div className="category-boxes">
+        {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
+          <div
+            key={category}
+            className={`category-box ${category}`}
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category}
+          </div>
+        ))}
+      </div>
+
+      {filteredPuzzles.length > 0 ? (
+        filteredPuzzles.map((puzzle, index) => (
+          <div className="practice-item" key={index}>
+            <p>{puzzle.category}:{puzzle.title}</p>
+            <p>Date & Time: {puzzle.date_time}</p>
+            <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
+            <p className='loading-page'>
+              {loading[index] ? (
+                <button className="loading-button">Loading...</button>
+              ) : (
+                <button
+                  className='start-button'
+                  onClick={() =>
+                    handleButtonClick(
+                      puzzle.title,
+                      puzzle.category,
+                      puzzle.date_time,
+                      Object.keys(puzzle.file_ids || {}).length,
+                      `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
+                      index
+                    )
+                  }
+                >
+                  View
+                </button>
+              )}
+            </p>
+          </div>
+        ))
+      ) : (
+        <p>No Practice Puzzles Available</p>
+      )}
+    </div>
+          {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
+ 
         </div>
       </div>
       </div>

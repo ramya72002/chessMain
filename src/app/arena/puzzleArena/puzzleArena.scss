@@ -192,7 +192,41 @@
     
   }
 }
+.category-boxes {
+  display: flex;
+  justify-content: space-around; // Distribute space evenly
+  margin-bottom: 20px; // Space below the category boxes
 
+  .category-box {
+    background-color: #48b906; // Default background color
+    border: 1px solid #000; // Black border
+    border-radius: 10px; // Rounded corners
+    padding: 10px 20px; // Padding inside the box
+    color: white; // Text color
+    cursor: pointer; // Pointer cursor on hover
+    transition: background-color 0.3s ease; // Smooth transition for background color
+
+    &:hover {
+      background-color: #3a9706; // Darker green on hover
+    }
+
+    &.Opening {
+      background-color: #14bed5; // Example custom color for g1
+    }
+
+    &.Middlegame {
+      background-color: #ff5500; // Example custom color for t1
+    }
+
+    &.Endgame {
+      background-color: #0066ff; // Example custom color for y2
+    }
+
+    &.Mixed {
+      background-color: #cc5f00; // Example custom color for u3
+    }
+  }
+}
 .bottom-section {
   width: 100%;
   padding: 20px;
@@ -248,6 +282,7 @@
         border: 1px solid #000;
         color: white;
       }
+      
     }
   }
 
@@ -282,4 +317,6 @@
     width:200; /* Adjust size as needed */
     height: 200;
   }
+  
+  
 }
