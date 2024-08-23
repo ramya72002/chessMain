@@ -288,8 +288,8 @@ const PuzzlePageContent = () => {
           {puzzleBlocked==null && (
             <div className="response-buttons">
               <h1>Response</h1>
-              <button className='correct-btn' onClick={handleGotItRight} disabled={isGotItRightDisabled} >"Got It Right" </button>
-<button className='incorrect-btn' onClick={handleMissedIt} disabled={isMissedItDisabled} >"Missed It" </button>
+              <button className='correct-btn' onClick={handleGotItRight} disabled={isGotItRightDisabled} > Got It Right </button>
+<button className='incorrect-btn' onClick={handleMissedIt} disabled={isMissedItDisabled} > Missed It </button>
  
             </div>
           )}
