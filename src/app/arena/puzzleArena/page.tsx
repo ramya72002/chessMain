@@ -272,7 +272,10 @@ const PuzzleArena = () => {
               <div className="score-item">
                 Mixed Arena : <span>{scores.Mixed}</span>
               </div>
-              <div className="total-score">Puzzle Arena Score : <span onClick={handleClick} className="clickable-link">{scores.total}</span></div>
+              <div className="total-score">
+                Puzzle Arena Score: <span onClick={handleClick} className="clickable-link">{scores.total}</span>
+              </div>
+
             </div>
             </div>
           </div>

@@ -129,15 +129,35 @@
       text-align: center;
     
       span {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
       }
     
       .clickable-link {
         cursor: pointer;
-        color: blue; /* Add styles to indicate it's clickable */
-        text-decoration: underline;
+        display: inline-block;
+        color: white; /* Text color */
+        text-decoration: none; /* Remove the default underline */
+        position: relative; /* Position the link relative to the pseudo-element */
+        
+        &::after {
+          content: "";
+          background: rgb(0, 0, 0); /* Initial background color */
+          mix-blend-mode: exclusion; /* Blend mode for visual effect */
+          width: calc(100% + 15px); /* Extend background beyond the text width */
+          height: 0; /* Initial height is 0 */
+          position: absolute;
+          bottom: -1px; /* Position slightly below the text */
+          left: -6px; /* Position slightly to the left of the text */
+          transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95), background-color 0.3s ease; /* Smooth transition effect */
+        }
+      
+        &:hover::after {
+          height: calc(100% + 1px); /* Expand background height on hover */
+          background-color: #ffffff; /* Change background color on hover */
+        }
       }
+       
     }
     
   }
