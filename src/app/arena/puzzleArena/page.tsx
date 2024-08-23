@@ -72,6 +72,20 @@ const PuzzleArena = () => {
     const LivefilteredPuzzles = selectedCategory
     ? livePuzzles.filter((puzzle) => puzzle.category === selectedCategory)
     : livePuzzles;
+      const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerPage = 3;
+
+  const handleNextClick = () => {
+    if (currentIndex + itemsPerPage < filteredPuzzles.length) {
+      setCurrentIndex(currentIndex + itemsPerPage);
+    }
+  };
+
+  const handlePrevClick = () => {
+    if (currentIndex - itemsPerPage >= 0) {
+      setCurrentIndex(currentIndex - itemsPerPage);
+    }
+  };
 
 
   useEffect(() => {
@@ -308,7 +322,8 @@ const PuzzleArena = () => {
         ))}
       </div>
       {LivefilteredPuzzles.length > 0 ? (
-        LivefilteredPuzzles.map((puzzle, index) => (
+        <>
+        {LivefilteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
                 <div className="practice-item" key={index}>
                   <p>{puzzle.category}:{puzzle.title}</p>
                   <p>Date & Time: {puzzle.date_time}</p>
@@ -343,7 +358,16 @@ const PuzzleArena = () => {
                     )}
                   </p>
                 </div>
-              ))
+              ))}
+               <div className="pagination-controls">
+            {currentIndex > 0 && (
+              <button className="prev-button" onClick={handlePrevClick}>Previous</button>
+            )}
+            {currentIndex + itemsPerPage < filteredPuzzles.length && (
+              <button className="next-button" onClick={handleNextClick}>Next</button>
+            )}
+          </div>
+        </>
             ) : (
               <p>No Live Puzzles Available</p>
             )}
@@ -365,34 +389,44 @@ const PuzzleArena = () => {
       </div>
 
       {filteredPuzzles.length > 0 ? (
-        filteredPuzzles.map((puzzle, index) => (
-          <div className="practice-item" key={index}>
-            <p>{puzzle.category}:{puzzle.title}</p>
-            <p>Date & Time: {puzzle.date_time}</p>
-            <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-            <p className='loading-page'>
-              {loading[index] ? (
-                <button className="loading-button">Loading...</button>
-              ) : (
-                <button
-                  className='start-button'
-                  onClick={() =>
-                    handleButtonClick(
-                      puzzle.title,
-                      puzzle.category,
-                      puzzle.date_time,
-                      Object.keys(puzzle.file_ids || {}).length,
-                      `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                      index
-                    )
-                  }
-                >
-                  View
-                </button>
-              )}
-            </p>
+        <>
+          {filteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
+            <div className="practice-item" key={index}>
+              <p>{puzzle.category}: {puzzle.title}</p>
+              <p>Date & Time: {puzzle.date_time}</p>
+              <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
+              <p className='loading-page'>
+                {loading[index] ? (
+                  <button className="loading-button">Loading...</button>
+                ) : (
+                  <button
+                    className='start-button'
+                    onClick={() =>
+                      handleButtonClick(
+                        puzzle.title,
+                        puzzle.category,
+                        puzzle.date_time,
+                        Object.keys(puzzle.file_ids || {}).length,
+                        `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
+                        index
+                      )
+                    }
+                  >
+                    View
+                  </button>
+                )}
+              </p>
+            </div>
+          ))}
+          <div className="pagination-controls">
+            {currentIndex > 0 && (
+              <button className="prev-button" onClick={handlePrevClick}>Previous</button>
+            )}
+            {currentIndex + itemsPerPage < filteredPuzzles.length && (
+              <button className="next-button" onClick={handleNextClick}>Next</button>
+            )}
           </div>
-        ))
+        </>
       ) : (
         <p>No Practice Puzzles Available</p>
       )}
