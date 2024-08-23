@@ -172,6 +172,15 @@
         }
       }
 
+      &.test {
+        background-color: #3936ff; /* SteelBlue */
+        color: white;
+
+        &:hover {
+          background-color: #3936ff;
+        }
+      }
+
       &.classes {
         background-color: #32cd32; /* LimeGreen */
         color: white;

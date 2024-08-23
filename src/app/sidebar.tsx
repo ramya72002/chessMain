@@ -170,6 +170,9 @@ const Sidebar = () => {
         <a href="/learning" className="navItem tests">
           <FaQuestionCircle /> Learning
         </a>
+        <a href="/coaching" className="navItem test">
+          <FaQuestionCircle /> Coaching
+        </a>
         <a href="/learnclass" className="navItem classes">
           <FaGraduationCap /> Learning Classes
         </a>
