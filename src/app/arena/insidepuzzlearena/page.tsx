@@ -126,10 +126,15 @@ const PuzzlePageContent = () => {
   };
 
   const handleShowSolution = () => {
-    if (isButtonsActive) {
+    if (timer == 0) { // Check if timer is not stopped
+      alert("Please start the timer");
+      console.log(timer)
+    }
+    else if (!isButtonsActive &&isTimerStopped&&!isRunning) {
+      console.log("ss",isButtonsActive,isTimerStopped,isRunning)
       setShowSolutionPopup(true); // Show the solution popup
     } else {
-      alert("Please click on Start Timer");
+      alert("Please click on Stop Timer to view solution");
     }
   };
 
@@ -138,12 +143,16 @@ const PuzzlePageContent = () => {
   };
 
   const handleShowSidLink = () => {
-    if (isButtonsActive) {
+    if (timer == 0) { // Check if timer is not stopped
+      alert("Please start the timer");
+      console.log(timer)
+    }
+    else if (!isButtonsActive &&isTimerStopped&&!isRunning) {
       if (solutions.length > 0) {
         window.open(solutions[0].sid_link, '_blank');
       }
     } else {
-      alert("Please click on Start Timer");
+      alert("Please click on Stop Timer to Ask SID");
     }
   };
 
