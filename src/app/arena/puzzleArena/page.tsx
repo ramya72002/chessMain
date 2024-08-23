@@ -69,9 +69,6 @@ const PuzzleArena = () => {
     const filteredPuzzles = selectedCategory
       ? practicePuzzles.filter((puzzle) => puzzle.category === selectedCategory)
       : practicePuzzles;
-    const LivefilteredPuzzles = selectedCategory
-    ? livePuzzles.filter((puzzle) => puzzle.category === selectedCategory)
-    : livePuzzles;
       const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3;
 
@@ -308,22 +305,10 @@ const PuzzleArena = () => {
        
 
         <div className="bottom-section">
-          <div className="theme-practice live-arena">
+        <div className="theme-practice live-arena">
             <p>Live Arena</p>
-            <div className="category-boxes">
-        {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
-          <div
-            key={category}
-            className={`category-box ${category}`}
-            onClick={() => handleCategoryClick(category)}
-          >
-            {category}
-          </div>
-        ))}
-      </div>
-      {LivefilteredPuzzles.length > 0 ? (
-        <>
-        {LivefilteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
+            {livePuzzles.length > 0 ? (
+              livePuzzles.map((puzzle, index) => (
                 <div className="practice-item" key={index}>
                   <p>{puzzle.category}:{puzzle.title}</p>
                   <p>Date & Time: {puzzle.date_time}</p>
@@ -358,20 +343,12 @@ const PuzzleArena = () => {
                     )}
                   </p>
                 </div>
-              ))}
-               <div className="pagination-controls">
-            {currentIndex > 0 && (
-              <button className="prev-button" onClick={handlePrevClick}>Previous</button>
-            )}
-            {currentIndex + itemsPerPage < filteredPuzzles.length && (
-              <button className="next-button" onClick={handleNextClick}>Next</button>
-            )}
-          </div>
-        </>
+              ))
             ) : (
               <p>No Live Puzzles Available</p>
             )}
           </div>
+
 
           <div className="theme-practice">
       <p>Theme Practice</p>

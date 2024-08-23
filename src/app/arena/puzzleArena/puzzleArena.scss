@@ -233,31 +233,48 @@
 
   .category-box {
     background-color: #48b906; // Default background color
-    border: 1px solid #000; // Black border
-    border-radius: 10px; // Rounded corners
-    padding: 10px 20px; // Padding inside the box
+    border: 1px solid #e3dbdb; // Black border
+     padding: 10px 20px; // Padding inside the box
     color: white; // Text color
+    width:200px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     cursor: pointer; // Pointer cursor on hover
     transition: background-color 0.3s ease; // Smooth transition for background color
 
     &:hover {
       background-color: #3a9706; // Darker green on hover
+      transform: scale(1.05); // Slight zoom effect on hover
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
     &.Opening {
-      background-color: #14bed5; // Example custom color for g1
+      background-color: #d59114; // Example custom color for g1
+      &:hover {
+        background-color: #b57612; // Darker shade on hover
+      }
     }
 
     &.Middlegame {
-      background-color: #ff5500; // Example custom color for t1
+      background-color: #00a6ff; // Example custom color for t1
+    &:hover {
+      background-color: #008dcc; // Darker shade on hover
+    }
     }
 
     &.Endgame {
-      background-color: #0066ff; // Example custom color for y2
+      background-color: #617e70; // Example custom color for y2
+      &:hover {
+        background-color: #4f665a; // Darker shade on hover
+      }
     }
 
     &.Mixed {
       background-color: #cc5f00; // Example custom color for u3
+      &:hover {
+        background-color: #a64c00; // Darker shade on hover
+      }
     }
   }
   
