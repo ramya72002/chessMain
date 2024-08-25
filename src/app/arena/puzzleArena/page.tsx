@@ -410,7 +410,7 @@ const PuzzleArena = () => {
         {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
           <div
             key={category}
-            className={`category-box ${category}`}
+            className={`category-box ${category} ${selectedCategory === category ? 'active' : ''}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category}
