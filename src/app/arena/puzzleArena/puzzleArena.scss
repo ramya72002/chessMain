@@ -315,10 +315,10 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
-  
+    
       .filter-dropdown {
         position: relative;
-  
+    
         .filter-button {
           background-color: #ff5500;
           border: 1px solid #000;
@@ -326,36 +326,46 @@
           color: white;
           cursor: pointer;
           padding: 5px 10px;
+          width: 150px; /* Example fixed width */
+  height: 40px; /* Example fixed height */
+    
+          &.active {
+            background-color: #fd1500; /* Change background when active */
+          }
         }
-  
+    
         .filter-options {
           display: none;
           position: absolute;
           right: 0;
+          width: 150px; /* Example fixed width */
+          
           background-color: #5ecd32;
           border: 1px solid #000;
           border-radius: 5px;
           margin-top: 5px;
           padding: 5px 0;
           z-index: 1000;
-  
+    
           p {
             padding: 5px 10px;
             margin: 0;
             cursor: pointer;
             color: white;
-  
+    
             &:hover {
               background-color: #861cdd;
             }
           }
         }
-  
-        &:hover .filter-options {
+    
+        &:hover .filter-options,
+        &.active .filter-options {
           display: block;
         }
       }
     }
+    
   
     p:first-child {
       font-size: 1.2rem;

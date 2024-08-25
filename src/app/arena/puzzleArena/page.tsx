@@ -65,6 +65,11 @@ const PuzzleArena = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -393,18 +398,22 @@ const PuzzleArena = () => {
 
 
           <div className="theme-practice">
-      <div className="filter-container">
-        <p>Theme Practice</p>
-        <div className="filter-dropdown">
-          <button className="filter-button">Filter</button>
+          <div className="filter-container">
+      <p>Theme Practice</p>
+      <div className="filter-dropdown">
+      <button className={`filter-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
+      Filter
+    </button>
+        {isDropdownOpen && (
           <div className="filter-options">
             <p onClick={() => handleFilterClick('All')}>All</p>
             <p onClick={() => handleFilterClick('Not Started')}>Not Started</p>
             <p onClick={() => handleFilterClick('In Progress')}>In Progress</p>
             <p onClick={() => handleFilterClick('Completed')}>Completed</p>
           </div>
-        </div>
+        )}
       </div>
+    </div>
 
       <div className="category-boxes">
         {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
