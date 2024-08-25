@@ -25,6 +25,7 @@ type Puzzle = {
   live_link: string;
   file_ids?: FileIds;
   total_title_category_score?: number;
+  statusFlag:string;
 };
 
 type Scores = {
@@ -92,13 +93,13 @@ const PuzzleArena = () => {
         const storedUserDetails = userDetailsString
           ? JSON.parse(userDetailsString)
           : null;
-
+  
         if (storedUserDetails) {
           setUserDetails(storedUserDetails);
           try {
             if (!dataFetched) {
               setDataFetched(true);
-
+  
               const scoreResponse = await axios.post(
                 'https://backend-chess-tau.vercel.app/calculate_scores',
                 {
@@ -120,12 +121,12 @@ const PuzzleArena = () => {
               } else {
                 setError('Failed to fetch scores.');
               }
-
+  
               const response = await axios.get(
                 `https://backend-chess-tau.vercel.app/get_level?level=${levelMapping[storedUserDetails.level]}`
               );
               const data = response.data;
-
+  
               if (data.image_sets && Array.isArray(data.image_sets)) {
                 const fetchPuzzles = async (liveStatus: string) => {
                   return Promise.all(
@@ -145,21 +146,47 @@ const PuzzleArena = () => {
                               },
                             }
                           );
-
+  
+                          let statusFlag = 'Not Started';
+  
+                          if (arenaUserResponse.data.success) {
+                            const puzzleArena = arenaUserResponse.data.puzzleArena;
+  
+                            const isStarted = Object.values(puzzleArena).some(
+                              (puzzle: any) => puzzle.option_guessed !== null
+                            );
+                            const isCompleted = Object.values(puzzleArena).every(
+                              (puzzle: any) =>
+                                puzzle.option_guessed !== null
+                            );
+                            const isInProgress = Object.values(puzzleArena).some(
+                              (puzzle: any) =>
+                                puzzle.option_guessed !== null && puzzle.started
+                            );
+  
+                            if (isCompleted) {
+                              statusFlag = 'Completed';
+                            } else if (isInProgress) {
+                              statusFlag = 'In Progress';
+                            } else if (isStarted) {
+                              statusFlag = 'Started';
+                            }
+                          }
+  
+                          console.log(item.title, arenaUserResponse, statusFlag);
+  
                           const total_title_category_score =
                             arenaUserResponse.data.success
-                              ? Object.values(
-                                  arenaUserResponse.data.puzzleArena
-                                ).reduce(
-                                  (total: number, puzzle: any) =>
-                                    total + puzzle.score,
+                              ? Object.values(arenaUserResponse.data.puzzleArena).reduce(
+                                  (total: number, puzzle: any) => total + puzzle.score,
                                   0
                                 )
                               : 0;
-
+  
                           return {
                             ...item,
                             total_title_category_score,
+                            statusFlag,
                           };
                         } catch (error) {
                           console.error(
@@ -169,15 +196,16 @@ const PuzzleArena = () => {
                           return {
                             ...item,
                             total_title_category_score: 0,
+                            statusFlag: 'Not Started',
                           };
                         }
                       })
                   );
                 };
-
+  
                 const livePuzzlesList = await fetchPuzzles('Yes');
                 const practicePuzzlesList = await fetchPuzzles('No');
-
+  
                 setLivePuzzles(livePuzzlesList);
                 setPracticePuzzles(practicePuzzlesList);
               } else {
@@ -190,9 +218,13 @@ const PuzzleArena = () => {
         }
       }
     };
-
+  
     fetchUserDetails();
   }, [dataFetched]);
+  
+
+
+
   const handleClick = () => {
     console.log("button clicked")
     setShowArenaResult(true);
@@ -261,6 +293,10 @@ const PuzzleArena = () => {
       alert('No link provided.');
     }
   };
+
+  function handleFilterClick(arg0: string): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <div className="puzzle-arena-page">
@@ -351,63 +387,76 @@ const PuzzleArena = () => {
 
 
           <div className="theme-practice">
-      <p>Theme Practice</p>
-
-      <div className="category-boxes">
-        {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
-          <div
-            key={category}
-            className={`category-box ${category}`}
-            onClick={() => handleCategoryClick(category)}
-          >
-            {category}
-          </div>
-        ))}
+  <div className="filter-container">
+    <p>Theme Practice</p>
+    <div className="filter-dropdown">
+      <button className="filter-button">Filter</button>
+      <div className="filter-options">
+        <p onClick={() => handleFilterClick('All')}>All</p>
+        <p onClick={() => handleFilterClick('Not Started')}>Not Started</p>
+        <p onClick={() => handleFilterClick('In Progress')}>In Progress</p>
+        <p onClick={() => handleFilterClick('Completed')}>Completed</p>
       </div>
-
-      {filteredPuzzles.length > 0 ? (
-        <>
-          {filteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
-            <div className="practice-item" key={index}>
-              <p>{puzzle.category}: {puzzle.title}</p>
-              <p>Date & Time: {puzzle.date_time}</p>
-              <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-              <p className='loading-page'>
-                {loading[index] ? (
-                  <button className="loading-button">Loading...</button>
-                ) : (
-                  <button
-                    className='start-button'
-                    onClick={() =>
-                      handleButtonClick(
-                        puzzle.title,
-                        puzzle.category,
-                        puzzle.date_time,
-                        Object.keys(puzzle.file_ids || {}).length,
-                        `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                        index
-                      )
-                    }
-                  >
-                    View
-                  </button>
-                )}
-              </p>
-            </div>
-          ))}
-          <div className="pagination-controls">
-            {currentIndex > 0 && (
-              <button className="prev-button" onClick={handlePrevClick}>Previous</button>
-            )}
-            {currentIndex + itemsPerPage < filteredPuzzles.length && (
-              <button className="next-button" onClick={handleNextClick}>Next</button>
-            )}
-          </div>
-        </>
-      ) : (
-        <p>No Practice Puzzles Available</p>
-      )}
     </div>
+  </div>
+
+  <div className="category-boxes">
+    {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
+      <div
+        key={category}
+        className={`category-box ${category}`}
+        onClick={() => handleCategoryClick(category)}
+      >
+        {category}
+      </div>
+    ))}
+  </div>
+
+  {filteredPuzzles.length > 0 ? (
+    <>
+      {filteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
+        <div className="practice-item" key={index}>
+          <p>{puzzle.category}: {puzzle.title}</p>
+          <p>Date & Time: {puzzle.date_time}</p>
+          <p>{puzzle.statusFlag}</p>
+          <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
+          <p className='loading-page'>
+            {loading[index] ? (
+              <button className="loading-button">Loading...</button>
+            ) : (
+              <button
+                className='start-button'
+                onClick={() =>
+                  handleButtonClick(
+                    puzzle.title,
+                    puzzle.category,
+                    puzzle.date_time,
+                    Object.keys(puzzle.file_ids || {}).length,
+                    `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
+                    index
+                  )
+                }
+              >
+                View
+              </button>
+            )}
+          </p>
+        </div>
+      ))}
+      <div className="pagination-controls">
+        {currentIndex > 0 && (
+          <button className="prev-button" onClick={handlePrevClick}>Previous</button>
+        )}
+        {currentIndex + itemsPerPage < filteredPuzzles.length && (
+          <button className="next-button" onClick={handleNextClick}>Next</button>
+        )}
+      </div>
+    </>
+  ) : (
+    <p>No Practice Puzzles Available</p>
+  )}
+</div>
+
           {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
  
         </div>
