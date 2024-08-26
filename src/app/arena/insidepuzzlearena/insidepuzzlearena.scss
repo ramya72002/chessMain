@@ -30,13 +30,23 @@
   }
 
   .puzzle-content {
+    position: relative;
+    border-radius: 5px;
+    border: 0.5px solid black;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 100px;
     align-items: flex-start;
-    background-color: #60a3d9;
+    height: 600px;
+    width: 80%; // Adjust the width as needed
+    margin: 0 auto; // Centers the div horizontally
+    background-color: #20460b;
+    padding: 10px; // Adjust padding as needed
 
     .chessboard {
+      margin-top: 25px;
       position: relative;
+      margin-left: 10px;
       background-color: #60a3d9;
       width: 480px;
 
@@ -47,6 +57,7 @@
 
       .move-indicator {
         position: absolute;
+        border-radius: 5px;
         width: 100%;
         background-color: #ff8c00;
         color: white;
@@ -58,7 +69,8 @@
     }
 
     .puzzle-info {
-      background-color: #60a3d9;
+      margin-top: 20px;
+      background-color: #20460b;
       padding:10px;
       width: 280px;
 
