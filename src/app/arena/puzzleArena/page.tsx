@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { UserDetails } from '../../types/types';
 import Arenaresult from '@/app/Arenaresult';
+import Loading from '@/app/Loading';
 
 // Define types for file_ids and puzzles
 type FileIdDetail = {
@@ -313,11 +314,7 @@ const PuzzleArena = () => {
   return (
     <div className="puzzle-arena-page">
     {Object.values(loading).some((isLoading) => isLoading) && (
-      <div className="loading-overlay">
-        <div className="loading-page">
-          <img src="/images/loading.gif" alt="Loading..." />
-        </div>
-      </div>
+      <Loading />
     )}
       <div className="puzzle-arena-container">
         <div className="top-section">
