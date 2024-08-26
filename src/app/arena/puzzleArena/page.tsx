@@ -66,19 +66,20 @@ const PuzzleArena = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 3;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-
-  const handleCategoryClick = (category: string) => {
+  
+  const handleCategoryClick = (category: React.SetStateAction<string | null>) => {
     setSelectedCategory(category);
   };
-
-  const handleFilterClick = (filter: string) => {
+  
+  const handleFilterClick = (filter: React.SetStateAction<string>) => {
     setSelectedFilter(filter);
-    setCurrentIndex(0); // Reset pagination to first page when filter changes
+    setCurrentIndex(0); // Reset pagination to the first page when the filter changes
   };
+  
 
   const filteredPuzzles = practicePuzzles.filter((puzzle) => {
     return (
@@ -398,79 +399,83 @@ const PuzzleArena = () => {
 
 
           <div className="theme-practice">
-          <div className="filter-container">
-      <p>Theme Practice</p>
-      <div className="filter-dropdown">
+  <div className="filter-container">
+    <p>Theme Practice</p>
+  </div>
+
+  <div className="category-boxes">
+    {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
+      <div
+        key={category}
+        className={`category-box ${category} ${selectedCategory === category ? 'active' : ''}`}
+        onClick={() => handleCategoryClick(category)}
+      >
+        {category}
+      </div>
+    ))}
+
+    {/* Move filter-dropdown here */}
+    <div className="filter-dropdown">
       <button className={`filter-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
-      Filter
-    </button>
-        {isDropdownOpen && (
-          <div className="filter-options">
-            <p onClick={() => handleFilterClick('All')}>All</p>
-            <p onClick={() => handleFilterClick('Not Started')}>Not Started</p>
-            <p onClick={() => handleFilterClick('In Progress')}>In Progress</p>
-            <p onClick={() => handleFilterClick('Completed')}>Completed</p>
-          </div>
-        )}
-      </div>
-    </div>
-
-      <div className="category-boxes">
-        {['Opening', 'Middlegame', 'Endgame', 'Mixed'].map((category) => (
-          <div
-            key={category}
-            className={`category-box ${category} ${selectedCategory === category ? 'active' : ''}`}
-            onClick={() => handleCategoryClick(category)}
-          >
-            {category}
-          </div>
-        ))}
-      </div>
-
-      {filteredPuzzles.length > 0 ? (
-        <>
-          {filteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
-            <div className="practice-item" key={index}>
-              <p>{puzzle.category}: {puzzle.title}</p>
-              <p>Date & Time: {puzzle.date_time}</p>
-              <p>{puzzle.statusFlag}</p>
-              <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
-              <p className='loading-page'>
-                {loading[index] ? (
-                  <button className="loading-button">Loading...</button>
-                ) : (
-                  <button
-                    className='start-button'
-                    onClick={() =>
-                      handleButtonClick(
-                        puzzle.title,
-                        puzzle.category,
-                        puzzle.date_time,
-                        Object.keys(puzzle.file_ids || {}).length,
-                        `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                        index
-                      )
-                    }
-                  >
-                    View
-                  </button>
-                )}
-              </p>
-            </div>
-          ))}
-          <div className="pagination-controls">
-            {currentIndex > 0 && (
-              <button className="prev-button" onClick={handlePrevClick}>Previous</button>
-            )}
-            {currentIndex + itemsPerPage < filteredPuzzles.length && (
-              <button className="next-button" onClick={handleNextClick}>Next</button>
-            )}
-          </div>
-        </>
-      ) : (
-        <p>No Practice Puzzles Available</p>
+        Filter
+      </button>
+      {isDropdownOpen && (
+        <div className="filter-options">
+          <p onClick={() => handleFilterClick('All')}>All</p>
+          <p onClick={() => handleFilterClick('Not Started')}>Not Started</p>
+          <p onClick={() => handleFilterClick('In Progress')}>In Progress</p>
+          <p onClick={() => handleFilterClick('Completed')}>Completed</p>
+        </div>
       )}
     </div>
+  </div>
+
+  {/* Remaining part of the component */}
+  {filteredPuzzles.length > 0 ? (
+    <>
+      {filteredPuzzles.slice(currentIndex, currentIndex + itemsPerPage).map((puzzle, index) => (
+        <div className="practice-item" key={index}>
+          <p>{puzzle.category}: {puzzle.title}</p>
+          <p>Date & Time: {puzzle.date_time}</p>
+          <p>{puzzle.statusFlag}</p>
+          <p>Total Score: {puzzle.total_title_category_score}/{Object.keys(puzzle.file_ids || {}).length}</p>
+          <p className='loading-page'>
+            {loading[index] ? (
+              <button className="loading-button">Loading...</button>
+            ) : (
+              <button
+                className='start-button'
+                onClick={() =>
+                  handleButtonClick(
+                    puzzle.title,
+                    puzzle.category,
+                    puzzle.date_time,
+                    Object.keys(puzzle.file_ids || {}).length,
+                    `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
+                    index
+                  )
+                }
+              >
+                View
+              </button>
+            )}
+          </p>
+        </div>
+      ))}
+      <div className="pagination-controls">
+        {currentIndex > 0 && (
+          <button className="prev-button" onClick={handlePrevClick}>Previous</button>
+        )}
+        {currentIndex + itemsPerPage < filteredPuzzles.length && (
+          <button className="next-button" onClick={handleNextClick}>Next</button>
+        )}
+      </div>
+    </>
+  ) : (
+    <p>No Practice Puzzles Available</p>
+  )}
+</div>
+
 
           {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
  
