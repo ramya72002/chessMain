@@ -3,13 +3,32 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import './m2.scss';
+import axios from 'axios';
 
 const M2: React.FC = () => {
     const router = useRouter();
 
-  const handleNextClick = () => {
-    router.push('/modules/m3'); // Redirect to the M2 page
-  };
+    const handleNextClick = async () => {
+      const storedEmail = localStorage.getItem('email');
+      
+      try {
+        // Sample data to send in the POST request
+        const requestData = {
+          email: storedEmail,
+          title: 'Basics of Chess',
+          completed: 2
+        };
+    
+        // Make the POST request to the API
+        const response = await axios.post('https://backend-chess-tau.vercel.app/update-course-completion', requestData);
+    
+        // Handle the response
+        console.log('API Response:', response.data);
+        router.push('/modules/m3'); // Redirect to the M2 page
+      } catch (error) {
+        console.error('API Error:', error);
+      }
+    };
   const handleNextClick1 = () => {
     router.push('/modules/m1'); // Redirect to the M2 page
   };
