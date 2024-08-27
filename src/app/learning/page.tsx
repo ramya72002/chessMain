@@ -26,11 +26,10 @@ const MyAccount = () => {
     if (storedUserDetails) {
       setUserDetails(storedUserDetails);
     }
-
     // Fetch registered courses from the API
     const fetchRegisteredCourses = async () => {
       try {
-        const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=1`);
+        const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=${storedUserDetails.email}`);
         if (response.status === 200) {
           const registeredCoursesData = response.data.registered_courses;
           setRegisteredCourses(registeredCoursesData);
