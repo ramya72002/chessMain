@@ -1,84 +1,138 @@
-// pages/account.tsx
 "use client";
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link'; // Import Link from next/link
 import './learning.scss';
-import { UserDetails } from '../types/types'; // Import the type if you have it defined
+import axios from 'axios';
+import { useRouter } from 'next/navigation'; // Import useRouter
+import { UserDetails } from '../types/types';
+
+// Define the course paths
+const coursePaths: { [key: string]: string } = {
+  'Basic Checkmates - 2': '/basic-checkmates-2/modules/m1',
+  'Basics of Chess': '/modules/m1',
+  'Good Bishop Bad Bishop': '/good-bishop-bad-bishop/modules/m1',
+  'Basic Checkmates': '/basic-checkmates/modules/m1'
+};
 
 const MyAccount = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [registeredCourses, setRegisteredCourses] = useState<{ title: string; completed_percentage: number }[]>([]);
+  const [availableCourses, setAvailableCourses] = useState<string[]>([]);
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
+    // Fetch user details from localStorage
     const userDetailsString = localStorage.getItem('userDetails');
     const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
     if (storedUserDetails) {
       setUserDetails(storedUserDetails);
     }
+
+    // Fetch registered courses from the API
+    const fetchRegisteredCourses = async () => {
+      try {
+        const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=1`);
+        if (response.status === 200) {
+          const registeredCoursesData = response.data.registered_courses;
+          setRegisteredCourses(registeredCoursesData);
+
+          // Set available courses
+          const allCourses = Object.keys(coursePaths);
+          const registeredCourseTitles = registeredCoursesData.map((course: { title: string }) => course.title);
+          const filteredCourses = allCourses.filter(course => !registeredCourseTitles.includes(course));
+          setAvailableCourses(filteredCourses);
+        }
+      } catch (error) {
+        console.error('Error fetching registered courses:', error);
+      }
+    };
+
+    fetchRegisteredCourses();
   }, []);
+
+  const handleRegister = async (courseTitle: string) => {
+    if (!userDetails || !userDetails.email) return;
+
+    try {
+      const response = await axios.post('https://backend-chess-tau.vercel.app/add-course', {
+        email: userDetails.email,
+        title: courseTitle,
+      });
+
+      if (response.status === 200) {
+        const newCourse = { title: courseTitle, completed_percentage: 0 }; // Default completion percentage
+        setRegisteredCourses((prevCourses) => [...prevCourses, newCourse]);
+        setAvailableCourses((prevCourses) => prevCourses.filter(course => course !== courseTitle));
+      }
+    } catch (error) {
+      console.error('Error registering for course:', error);
+    }
+  };
+
+  const handleViewProgress = (courseTitle: string) => {
+    // Redirect to the course's progress page using the path from coursePaths
+    const path = coursePaths[courseTitle];
+    if (path) {
+      router.push(path);
+    } else {
+      console.error('Path not found for course:', courseTitle);
+    }
+  };
+
+  const isRegistered = (courseTitle: string) => registeredCourses.some(course => course.title === courseTitle);
 
   return (
     <div className="account-page">
       <header className="account-header">
         <h1>My Learning</h1>
-       </header>
+      </header>
 
       <section className="courses-section">
         <div className="courses-header">
-          <h3>Your Courses</h3>
+          <h3>Registered Courses</h3>
         </div>
 
-        <div className="course-card">
-    <div className="course-status">
-        <h4>Basics of Chess</h4>
-        <Link href="/modules/m1">
-            <span className="progress">In Progress</span>
-        </Link>
-    </div>
-    <div className="progress-bar">
-        <div className="progress-completed" style={{ width: '0%' }}></div>
-    </div>
-    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
-</div>
+        {registeredCourses.map((course, index) => (
+          <div key={index} className="course-card">
+            <div className="course-status">
+              <h4>{course.title}</h4>
+              <button
+                className="progress"
+                style={{ backgroundColor: 'gray' }}
+                onClick={() => handleViewProgress(course.title)}
+              >
+                In Progress
+              </button>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-completed" style={{ width: `${course.completed_percentage}%` }}></div>
+            </div>
+            <p className="completed-steps">{course.completed_percentage}% COMPLETE</p>
+          </div>
+        ))}
 
-<div className="course-card">
-    <div className="course-status">
-        <h4>Good Bishop Bad Bishop</h4>
-        <Link href="/notstarted">
-            <span className="progress" style={{ backgroundColor: 'red' }}>Not Started</span>
-        </Link>
-    </div>
-    <div className="progress-bar">
-        <div className="progress-completed" style={{ width: '0%' }}></div>
-    </div>
-    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
-</div>
+        <div className="courses-header">
+          <h3>Available Courses</h3>
+        </div>
 
-<div className="course-card">
-    <div className="course-status">
-        <h4>Basic Checkmates</h4>
-        <Link href="/completed">
-            <span className="progress" style={{ backgroundColor: 'green' }}>Completed</span>
-        </Link>
-    </div>
-    <div className="progress-bar">
-        <div className="progress-completed" style={{ width: '100%' }}></div>
-    </div>
-    <p className="completed-steps">100% COMPLETE | 94/94 Steps</p>
-</div>
-
-<div className="course-card">
-    <div className="course-status">
-        <h4>Basic Checkmates - 2</h4>
-        <Link href="/register">
-            <span className="progress" style={{ backgroundColor: 'blue' }}>Register</span>
-        </Link>
-    </div>
-    <div className="progress-bar">
-        <div className="progress-completed" style={{ width: '0%' }}></div>
-    </div>
-    <p className="completed-steps">0% COMPLETE | 0/94 Steps</p>
-</div>
-
+        {availableCourses.map((course, index) => (
+          <div key={index} className="course-card">
+            <div className="course-status">
+              <h4>{course}</h4>
+              <button
+                className={`progress ${isRegistered(course) ? 'registered' : ''}`}
+                style={{ backgroundColor: isRegistered(course) ? 'gray' : 'blue' }}
+                onClick={() => handleRegister(course)}
+                disabled={isRegistered(course)}
+              >
+                {isRegistered(course) ? 'Registered' : 'Register'}
+              </button>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-completed" style={{ width: isRegistered(course) ? '100%' : '0%' }}></div>
+            </div>
+            <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
+          </div>
+        ))}
       </section>
     </div>
   );

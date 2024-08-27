@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 const topics = [
   {
     title: "1. Introduction",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "1.1 Introduction", completed: true },
@@ -13,7 +12,6 @@ const topics = [
   },
   {
     title: "2. The Chessboard",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "2.1 Board Set-up", completed: true },
@@ -26,7 +24,6 @@ const topics = [
   },
   {
     title: "3. Introduction to Pieces",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "3.1 Know the Pieces", completed: true },
@@ -41,7 +38,6 @@ const topics = [
   },
   {
     title: "4. Arraignment of Pieces",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "4.1 Light Side", completed: true },
@@ -50,7 +46,6 @@ const topics = [
   },
   {
     title: "5. Special Moves",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "5.1 Castling", completed: true },
@@ -60,7 +55,6 @@ const topics = [
   },
   {
     title: "6. Winning in Chess",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "6.1 Checkmate", completed: true },
@@ -73,7 +67,6 @@ const topics = [
   },
   {
     title: "7. Understanding Piece Exchanges",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "7.1 Fair Trade", completed: true },
@@ -85,7 +78,6 @@ const topics = [
   },
   {
     title: "8. Let’s Start Playing 3 Stages of the Game: Opening, Middlegame and Endgam",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "8.1 Opening", completed: true },
@@ -95,7 +87,6 @@ const topics = [
   },
   {
     title: "9. Understanding Notations",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "9.1 Understanding Notations", completed: true }
@@ -103,7 +94,6 @@ const topics = [
   },
   {
     title: "10. Chess Game: Let’s study a game",
-    isQuiz: false,
     completed: true,
     submodules: [
       { title: "10.1 Chess Game: Let’s study a game", completed: true }
