@@ -161,25 +161,24 @@
 
       .payment-prompt {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-
+        flex-direction: row; /* Align items horizontally */
+        align-items: center; /* Center items vertically */
+      
         p {
-          color: #FF0075;
+          color: #0022ff;
           font-size: 14px;
-          margin-bottom: 10px;
+          margin-right: 10px; /* Space between the text and input */
         }
-
+      
         input {
           padding: 10px;
           border: 1px solid #ddd;
           border-radius: 5px;
-          width: 100%;
-          max-width: 300px;
-          margin-bottom: 10px;
+          width: 200px; /* Adjust width as needed */
+          margin-right: 10px; /* Space between the input and button */
           font-size: 14px;
         }
-
+      
         button {
           background-color: #8C52FF;
           color: white;
@@ -187,17 +186,18 @@
           padding: 10px 20px;
           border-radius: 5px;
           cursor: pointer;
-
+      
           &:hover {
             background-color: #731EFC;
           }
-
+      
           &:disabled {
             background-color: #ddd;
             cursor: not-allowed;
           }
         }
       }
+      
     }
   }
 }
