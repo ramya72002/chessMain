@@ -96,7 +96,7 @@ const MyAccount = () => {
               <h4>{course.title}</h4>
               <button
                 className="progress"
-                style={{ backgroundColor: 'gray' }}
+                style={{ backgroundColor: 'red' }}
                 onClick={() => handleViewProgress(course.title)}
               >
                 In Progress
