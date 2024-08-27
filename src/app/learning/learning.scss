@@ -1,7 +1,7 @@
 .account-page {
   font-family: Arial, sans-serif;
   padding: 20px;
-  
+
   .account-header {
     text-align: center;
     padding: 20px;
@@ -13,81 +13,15 @@
       margin-bottom: 5px;
       font-size: 36px;
     }
-
-    p {
-      font-size: 18px;
-    }
-  }
-
-  .account-summary {
-    text-align: center;
-    margin: 40px 0;
-
-    .profile-picture img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-    }
-
-    h2 {
-      color: black;
-      font-size: 24px;
-      margin: 10px 0 5px;
-    }
-
-    p {
-      font-size: 14px;
-      color: gray;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-
-      .stat-item {
-        margin: 0 15px;
-        text-align: center;
-
-        span {
-          color: black;
-          display: block;
-          font-size: 24px;
-          font-weight: bold;
-        }
-
-        p {
-          margin-top: 5px;
-          font-size: 16px;
-        }
-      }
-    }
   }
 
   .courses-section {
     .courses-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       margin-bottom: 20px;
 
       h3 {
         color: black;
         font-size: 20px;
-      }
-
-      .expand-all {
-        background-color: #8C52FF;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #731EFC;
-        }
       }
     }
 
@@ -97,7 +31,6 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       padding: 20px;
       margin-bottom: 20px;
-      position: relative;
 
       .course-status {
         display: flex;
@@ -135,50 +68,27 @@
       .completed-steps {
         font-size: 14px;
         color: #777;
-        margin-bottom: 20px;
-      }
-
-      .course-table {
-        width: 100%;
-        border-collapse: collapse;
-
-        th, td {
-          color: black;
-          padding: 12px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-        }
-
-        th {
-          background-color: #FF0075;
-          color: white;
-        }
-
-        tr:last-child td {
-          border-bottom: none;
-        }
       }
 
       .payment-prompt {
         display: flex;
-        flex-direction: row; /* Align items horizontally */
-        align-items: center; /* Center items vertically */
-      
+        align-items: center;
+
         p {
           color: #0022ff;
           font-size: 14px;
-          margin-right: 10px; /* Space between the text and input */
+          margin-right: 10px;
         }
-      
+
         input {
           padding: 10px;
           border: 1px solid #ddd;
           border-radius: 5px;
-          width: 200px; /* Adjust width as needed */
-          margin-right: 10px; /* Space between the input and button */
+          width: 200px;
+          margin-right: 10px;
           font-size: 14px;
         }
-      
+
         button {
           background-color: #8C52FF;
           color: white;
@@ -186,18 +96,17 @@
           padding: 10px 20px;
           border-radius: 5px;
           cursor: pointer;
-      
+
           &:hover {
             background-color: #731EFC;
           }
-      
+
           &:disabled {
             background-color: #ddd;
             cursor: not-allowed;
           }
         }
       }
-      
     }
   }
 }

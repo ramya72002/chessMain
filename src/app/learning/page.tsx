@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import './learning.scss';
 import axios from 'axios';
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { useRouter } from 'next/navigation';
 import { UserDetails } from '../types/types';
 
 // Define the course paths
@@ -15,11 +15,10 @@ const coursePaths: { [key: string]: string } = {
 
 const MyAccount = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
-  const [registeredCourses, setRegisteredCourses] = useState<{ title: string; completed_percentage: number; transitionId?: string }[]>([]);
+  const [registeredCourses, setRegisteredCourses] = useState<{ title: string; completed_percentage: number; payment_status: string }[]>([]);
   const [availableCourses, setAvailableCourses] = useState<string[]>([]);
-  const [transitionIds, setTransitionIds] = useState<{ [key: string]: string }>({});
-  const [isPaymentCompleted, setIsPaymentCompleted] = useState<{ [key: string]: boolean }>({});
-  const router = useRouter(); // Initialize useRouter
+  const [courseWithPendingPayment, setCourseWithPendingPayment] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch user details from localStorage
@@ -28,32 +27,25 @@ const MyAccount = () => {
     if (storedUserDetails) {
       setUserDetails(storedUserDetails);
     }
+
     // Fetch registered courses from the API
     const fetchRegisteredCourses = async () => {
-      try {
-        const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=${storedUserDetails.email}`);
-        if (response.status === 200) {
-          const registeredCoursesData = response.data.registered_courses;
-          setRegisteredCourses(registeredCoursesData);
+      if (storedUserDetails) {
+        try {
+          const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=${storedUserDetails.email}`);
+          if (response.status === 200) {
+            const registeredCoursesData = response.data.registered_courses;
+            setRegisteredCourses(registeredCoursesData);
 
-          // Set available courses
-          const allCourses = Object.keys(coursePaths);
-          const registeredCourseTitles = registeredCoursesData.map((course: { title: string }) => course.title);
-          const filteredCourses = allCourses.filter(course => !registeredCourseTitles.includes(course));
-          setAvailableCourses(filteredCourses);
-
-          // Initialize transition IDs and payment statuses
-          const initialTransitionIds: { [key: string]: string } = {};
-          const initialPaymentStatuses: { [key: string]: boolean } = {};
-          registeredCoursesData.forEach((course: { title: string }) => {
-            initialTransitionIds[course.title] = '';
-            initialPaymentStatuses[course.title] = false;
-          });
-          setTransitionIds(initialTransitionIds);
-          setIsPaymentCompleted(initialPaymentStatuses);
+            // Set available courses
+            const allCourses = Object.keys(coursePaths);
+            const registeredCourseTitles = registeredCoursesData.map((course: { title: string }) => course.title);
+            const filteredCourses = allCourses.filter(course => !registeredCourseTitles.includes(course));
+            setAvailableCourses(filteredCourses);
+          }
+        } catch (error) {
+          console.error('Error fetching registered courses:', error);
         }
-      } catch (error) {
-        console.error('Error fetching registered courses:', error);
       }
     };
 
@@ -62,25 +54,26 @@ const MyAccount = () => {
 
   const handleRegister = async (courseTitle: string) => {
     if (!userDetails || !userDetails.email) return;
-  
+
     try {
       // Register for the course
       const registerResponse = await axios.post('https://backend-chess-tau.vercel.app/add-course', {
         email: userDetails.email,
         title: courseTitle,
       });
-  
+
       if (registerResponse.status === 200) {
-        const newCourse = { title: courseTitle, completed_percentage: 0 }; // Default completion percentage
+        const newCourse = { title: courseTitle, completed_percentage: 0, payment_status: 'Not started' };
         setRegisteredCourses((prevCourses) => [...prevCourses, newCourse]);
         setAvailableCourses((prevCourses) => prevCourses.filter(course => course !== courseTitle));
-  
+        setCourseWithPendingPayment(courseTitle);
+
         // Send registration confirmation email
         const emailResponse = await axios.post('https://backend-chess-tau.vercel.app/send_course_reg_email', {
           email: userDetails.email,
           title: courseTitle,
         });
-  
+
         if (emailResponse.status === 200) {
           console.log('Confirmation email sent successfully');
         } else {
@@ -92,8 +85,44 @@ const MyAccount = () => {
     }
   };
 
+  const handleCheckPaymentStatus = async (courseTitle: string) => {
+    if (!userDetails || !userDetails.email) return;
+
+    try {
+      const response = await axios.get(`https://backend-chess-tau.vercel.app/check-email?email=${userDetails.email}`);
+
+      if (response.data.success) {
+        // Update payment status in the backend
+        try {
+          await axios.put('https://backend-chess-tau.vercel.app/update-payment-status', {
+            email: userDetails.email,
+            title: courseTitle,
+            payment_status: 'Completed'
+          });
+
+          // Update the local state
+          setRegisteredCourses((prevCourses) =>
+            prevCourses.map(course =>
+              course.title === courseTitle
+                ? { ...course, payment_status: 'Completed' }
+                : course
+            )
+          );
+          setCourseWithPendingPayment(null);
+        } catch (updateError) {
+          console.error('Error updating payment status:', updateError);
+          alert('An error occurred while updating payment status.');
+        }
+      } else {
+        alert('Payment not completed yet. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error checking payment status:', error);
+      alert('An error occurred while checking payment status.');
+    }
+  };
+
   const handleViewProgress = (courseTitle: string) => {
-    // Redirect to the course's progress page using the path from coursePaths
     const path = coursePaths[courseTitle];
     if (path) {
       router.push(path);
@@ -103,40 +132,6 @@ const MyAccount = () => {
   };
 
   const isRegistered = (courseTitle: string) => registeredCourses.some(course => course.title === courseTitle);
-
-  const handleTransitionIdChange = (courseTitle: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    setTransitionIds({
-      ...transitionIds,
-      [courseTitle]: event.target.value
-    });
-  };
-
-  const handlePaymentSubmit = async (courseTitle: string) => {
-    const transitionId = transitionIds[courseTitle];
-    if (transitionId) {
-      try {
-        // Simulate payment verification
-        // const paymentResponse = await axios.post('https://backend-chess-tau.vercel.app/verify-payment', {
-        //   transitionId: transitionId,
-        //   email: userDetails?.email
-        // });
-        const paymentResponse={status:200,data:"done"}
-        paymentResponse.status=200
-  
-        if (paymentResponse.status === 200) {
-          setIsPaymentCompleted({
-            ...isPaymentCompleted,
-            [courseTitle]: true
-          });
-          console.log('Payment verified successfully');
-        } else {
-          console.error('Error verifying payment:', paymentResponse.data);
-        }
-      } catch (error) {
-        console.error('Error verifying payment:', error);
-      }
-    }
-  };
 
   return (
     <div className="account-page">
@@ -153,7 +148,7 @@ const MyAccount = () => {
           <div key={index} className="course-card">
             <div className="course-status">
               <h4>{course.title}</h4>
-              {isPaymentCompleted[course.title] ? (
+              {course.payment_status === 'Completed' ? (
                 <button
                   className="progress"
                   style={{ backgroundColor: 'red' }}
@@ -161,23 +156,14 @@ const MyAccount = () => {
                 >
                   In Progress
                 </button>
-              ) : (
-                <div className="payment-prompt">
-                  <p>Please check your email and complete the payment.</p>
-                  <input
-                    type="text"
-                    value={transitionIds[course.title] || ''}
-                    onChange={(e) => handleTransitionIdChange(course.title, e)}
-                    placeholder="Enter Transition ID"
-                  />
-                  <button
-                    onClick={() => handlePaymentSubmit(course.title)}
-                    disabled={!transitionIds[course.title]}
-                  >
-                    Submit
-                  </button>
-                </div>
-              )}
+              ) : course.payment_status === 'Not started' ? (
+                <button
+                  className="check-payment"
+                  onClick={() => handleCheckPaymentStatus(course.title)}
+                >
+                  Check Payment Status
+                </button>
+              ) : null}
             </div>
             <div className="progress-bar">
               <div className="progress-completed" style={{ width: `${course.completed_percentage}%` }}></div>
