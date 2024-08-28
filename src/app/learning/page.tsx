@@ -13,6 +13,14 @@ const coursePaths: { [key: string]: string } = {
   'Basic Checkmates': '/basic-checkmates/modules/m1'
 };
 
+// Define the course images
+const courseImages: { [key: string]: string } = {
+  'Basic Checkmates - 2': '/images/basic-checkmates-2.png',
+  'Basics of Chess': '/images/basics-of-chess.png',
+  'Good Bishop Bad Bishop': '/images/good-bishop-bad-bishop.png',
+  'Basic Checkmates': '/images/basic-checkmates.png'
+};
+
 const MyAccount = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [registeredCourses, setRegisteredCourses] = useState<{ title: string; completed_percentage: number; payment_status: string }[]>([]);
@@ -146,29 +154,32 @@ const MyAccount = () => {
 
         {registeredCourses.map((course, index) => (
           <div key={index} className="course-card">
-            <div className="course-status">
-              <h4>{course.title}</h4>
-              {course.payment_status === 'Completed' ? (
-                <button
-                  className="progress"
-                  style={{ backgroundColor: 'red' }}
-                  onClick={() => handleViewProgress(course.title)}
-                >
-                  In Progress
-                </button>
-              ) : course.payment_status === 'Not started' ? (
-                <button
-                  className="check-payment"
-                  onClick={() => handleCheckPaymentStatus(course.title)}
-                >
-                  Check Payment Status
-                </button>
-              ) : null}
+            <img src={courseImages[course.title]} alt={course.title} className="course-image" />
+            <div className="course-info">
+              <div className="course-status">
+                <h4>{course.title}</h4>
+                {course.payment_status === 'Completed' ? (
+                  <button
+                    className="progress"
+                    style={{ backgroundColor: 'red' }}
+                    onClick={() => handleViewProgress(course.title)}
+                  >
+                    In Progress
+                  </button>
+                ) : course.payment_status === 'Not started' ? (
+                  <button
+                    className="check-payment"
+                    onClick={() => handleCheckPaymentStatus(course.title)}
+                  >
+                    Check Payment Status
+                  </button>
+                ) : null}
+              </div>
+              <div className="progress-bar">
+                <div className="progress-completed" style={{ width: `${course.completed_percentage}%` }}></div>
+              </div>
+              <p className="completed-steps">{course.completed_percentage}% COMPLETE</p>
             </div>
-            <div className="progress-bar">
-              <div className="progress-completed" style={{ width: `${course.completed_percentage}%` }}></div>
-            </div>
-            <p className="completed-steps">{course.completed_percentage}% COMPLETE</p>
           </div>
         ))}
 
@@ -178,21 +189,24 @@ const MyAccount = () => {
 
         {availableCourses.map((course, index) => (
           <div key={index} className="course-card">
-            <div className="course-status">
-              <h4>{course}</h4>
-              <button
-                className={`progress ${isRegistered(course) ? 'registered' : ''}`}
-                style={{ backgroundColor: isRegistered(course) ? 'gray' : 'blue' }}
-                onClick={() => handleRegister(course)}
-                disabled={isRegistered(course)}
-              >
-                {isRegistered(course) ? 'Registered' : 'Register'}
-              </button>
+            <img src={courseImages[course]} alt={course} className="course-image" />
+            <div className="course-info">
+              <div className="course-status">
+                <h4>{course}</h4>
+                <button
+                  className={`progress ${isRegistered(course) ? 'registered' : ''}`}
+                  style={{ backgroundColor: isRegistered(course) ? 'gray' : 'blue' }}
+                  onClick={() => handleRegister(course)}
+                  disabled={isRegistered(course)}
+                >
+                  {isRegistered(course) ? 'Registered' : 'Register'}
+                </button>
+              </div>
+              <div className="progress-bar">
+                <div className="progress-completed" style={{ width: isRegistered(course) ? '100%' : '0%' }}></div>
+              </div>
+              <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
             </div>
-            <div className="progress-bar">
-              <div className="progress-completed" style={{ width: isRegistered(course) ? '100%' : '0%' }}></div>
-            </div>
-            <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
           </div>
         ))}
       </section>
