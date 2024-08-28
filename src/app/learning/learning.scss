@@ -19,6 +19,11 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    background-image: url('/images/im1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
       
     .courses-header {
       margin-bottom: 20px;
