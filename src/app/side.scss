@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 .sidebar {
   width: 200px;
   height: 100vh;
@@ -24,20 +26,21 @@
       margin-top: 10px;
       font-weight: bold;
       color: #333;
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+      font-family: 'Montserrat', sans-serif;
     }
 
     .role {
       font-size: 1.25rem;
       color: #777;
       margin-top: 5px;
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+      font-family: 'Montserrat', sans-serif;
     }
 
     .viewProfile {
       margin-top: 15px;
       padding: 10px 20px;
       background-color: #007bff;
+      font-family: 'Montserrat', sans-serif;
       color: white;
       border: none;
       border-radius: 5px;
@@ -62,7 +65,7 @@
       height: 500px;
       width: 960px; /* Adjust width if necessary */
       color: #000;
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+      font-family: 'Montserrat', sans-serif;
     
       .avatarTabs {
         display: flex;
@@ -136,7 +139,7 @@
       border-radius: 15px;
       margin-bottom: 10px;
       transition: background-color 0.3s, color 0.3s;
-      font-family: 'Comic Sans MS', cursive, sans-serif; /* Playful font */
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.2rem;
 
       &:hover {

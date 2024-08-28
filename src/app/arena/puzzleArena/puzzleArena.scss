@@ -243,8 +243,9 @@
       margin-bottom: 10px;
   
       p {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
+        font-size: 1.5rem; 
+        margin-bottom: 30px;
+        margin-top: 10px;
         color: white;
       }
     }
@@ -256,52 +257,50 @@
 
     }
   
-    .filter-dropdown {
-      position: relative;
+    // .filter-dropdown {
+    //   position: relative;
     
-      .filter-button {
-        background-color: #ff5500;
-        border: 1px solid #000;
-        border-radius: 5px;
-        color: white;
-        cursor: pointer;
-        padding: 5px 10px;
-        width: 150px; /* Example fixed width */
-        height: 40px; /* Example fixed height */
+    //   .filter-button {
+    //     background-color: #ff5500;
+    //     border: 1px solid #000;
+    //     border-radius: 5px;
+    //     color: white;
+    //     cursor: pointer;
+    //     padding: 5px 10px;
+    //     width: 150px; /* Example fixed width */
+    //     height: 40px; /* Example fixed height */
     
-        &.active {
-          background-color: #fd1500; /* Change background when active */
-        }
-      }
+    //     &.active {
+    //       background-color: #fd1500; /* Change background when active */
+    //     }
+    //   }
     
-      .filter-options {
-        display: block; /* Always set to block since visibility is controlled by React */
-        position: absolute;
-        top: 100%; /* Ensure it is directly under the button */
-        right: 0;
-        width: 150px; /* Example fixed width */
-        background-color: #5ecd32;
-        border: 1px solid #000;
-        border-radius: 5px;
-        margin-top: 5px;
-        padding: 5px 0;
-        z-index: 1000;
+    //   .filter-options {
+    //     display: block; /* Always set to block since visibility is controlled by React */
+    //     position: absolute;
+    //     top: 100%; /* Ensure it is directly under the button */
+    //     right: 0;
+    //     width: 150px; /* Example fixed width */
+    //     background-color: #298b02;
+    //     border: 1px solid #000;
+    //     border-radius: 5px;
+    //     margin-top: 5px;
+    //     padding: 2px 0;
+    //     z-index: 1000;
     
-        p {
-          padding: 5px 10px;
-          margin: 0;
-          cursor: pointer;
-          color: white;
+    //     p {
+    //       padding: 5px 10px;
+    //       margin: 0;
+    //       cursor: pointer;
+    //       color: white;
     
-          &:hover {
-            background-color: #861cdd;
-          }
-        }
-      }
-    }
-    
-    
-  
+    //       &:hover {
+    //         background-color: #861cdd;
+    //       }
+    //     }
+    //   }
+    //}
+      
     .category-box {
       background-color: #48b906; // Default background color
       border: 1px solid #e3dbdb; // Border color
@@ -443,7 +442,68 @@
   img {
     width:200; /* Adjust size as needed */
     height: 200;
-  }
-  
-  
+  }  
+}
+
+.theme-practice {
+  height: auto;
+  width: 100%;
+  position: relative;
+  padding-top: 20px;
+  // text-align: center; /* Center the content horizontally */
+}
+
+.live-arena {
+  width: 100%;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 1px; /* Adjust the top margin if needed */
+}
+
+.filter-button {
+  width: 150px;
+  padding: 10px 20px;
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-options {
+  width: 150px;
+  margin-top: 10px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  top: 100%; /* Position it below the button */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  p {
+          padding: 5px 10px;
+          margin: 0;
+          cursor: pointer;
+          color: white;
+          background-color: #3a9706;
+    
+          &:hover {
+            background-color: #861cdd;
+          } 
+        }
+}
+/* Other existing styles */
+
+.puzzle-content {
+  width: 50%; /* Adjusted as needed */
+  margin: 0 auto; /* Center the div horizontally */
 }

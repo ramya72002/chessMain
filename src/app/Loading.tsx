@@ -1,4 +1,3 @@
-// Loading.tsx
 import React from 'react';
 import './Loading.scss'; // Import the SCSS file specific to the loading component
 
