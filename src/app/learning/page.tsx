@@ -186,7 +186,7 @@ const MyAccount = () => {
         <div className="courses-header">
           <h3>Available Courses</h3>
         </div>
-
+        <div className="available-courses">
         {availableCourses.map((course, index) => (
           <div key={index} className="course-card">
             <img src={courseImages[course]} alt={course} className="course-image" />
@@ -202,13 +202,14 @@ const MyAccount = () => {
                   {isRegistered(course) ? 'Registered' : 'Register'}
                 </button>
               </div>
-              <div className="progress-bar">
+              {/* <div className="progress-bar">
                 <div className="progress-completed" style={{ width: isRegistered(course) ? '100%' : '0%' }}></div>
               </div>
-              <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
+              <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p> */}
             </div>
           </div>
         ))}
+        </div>
       </section>
     </div>
   );

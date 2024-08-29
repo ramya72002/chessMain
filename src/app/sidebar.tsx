@@ -162,7 +162,7 @@ const Sidebar = () => {
   )}
 </div>
         <div className="name">{userDetails ? userDetails.name : 'Student'}</div>
-        <div className="role">Student</div>
+        {/* <div className="role">Student</div> */}
         <button onClick={handleViewProfile} className="viewProfile">
       Home
     </button>      </div>

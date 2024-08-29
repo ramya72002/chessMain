@@ -414,7 +414,7 @@ const PuzzleArena = () => {
     {/* Move filter-dropdown here */}
     <div className="filter-dropdown">
       <button className={`filter-button ${isDropdownOpen ? 'active' : ''}`} onClick={toggleDropdown}>
-        Filter
+        Select
       </button>
       {isDropdownOpen && (
         <div className="filter-options">
