@@ -19,19 +19,47 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    background-image: url('/images/im3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
 
+    
     .available-courses {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
     }
+   
       
     .courses-header {
       margin-bottom: 10px;
 
       h3 {
-        color: black;
+        color: #333333;
         font-size: 20px;
+        font-weight: bold;
+      }
+    }
+    .check-payment {
+      background-color: #4CAF50; // Green background
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: #45a049; // Slightly darker green
+        transform: scale(1.05); // Slightly enlarge the button
+      }
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
       }
     }
 
@@ -40,9 +68,14 @@
       align-items: center;
       margin-bottom: 20px;
       padding: 20px;
-      background-color: #fff;
+      background-color: #f9f9f9;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #F3F0FF;
+      }
 
       .course-image {
         width: 100px;
@@ -50,32 +83,34 @@
         border-radius: 8px;
         margin-right: 20px;
         object-fit: cover;
+        border: 2px solid #8C52FF;
       }
 
       .course-info {
         flex-grow: 1;
 
+        .course-status {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
 
-      .course-status {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
+          h4 {
+            color: #4A4A4A;
+            font-size: 18px;
+            margin: 0;
+            font-weight: bold;
+          }
 
-        h4 {
-          color: black;
-          font-size: 18px;
-          margin: 0;
-        }
-
-        .progress {
-          background-color: #FF0075;
-          color: white;
-          padding: 5px 10px;
-          border-radius: 5px;
+          .progress {
+            background-color: #FF0075;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+          }
         }
       }
-    }
 
       .progress-bar {
         background-color: #e0e0e0;
@@ -103,6 +138,7 @@
           color: #0022ff;
           font-size: 14px;
           margin-right: 10px;
+          font-weight: bold;
         }
 
         input {
@@ -112,6 +148,11 @@
           width: 200px;
           margin-right: 10px;
           font-size: 14px;
+          transition: border-color 0.3s;
+
+          &:focus {
+            border-color: #8C52FF;
+          }
         }
 
         button {
@@ -121,6 +162,8 @@
           padding: 10px 20px;
           border-radius: 5px;
           cursor: pointer;
+          font-weight: bold;
+          transition: background-color 0.3s;
 
           &:hover {
             background-color: #731EFC;
@@ -131,6 +174,7 @@
             cursor: not-allowed;
           }
         }
+        
       }
     }
   }
