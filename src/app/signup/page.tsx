@@ -10,10 +10,22 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [selectedLevel, setSelectedLevel] = useState('level1');
   const [loading, setLoading] = useState(false); // Add loading state
+  const [emailError, setEmailError] = useState(''); // Add email error state
   const router = useRouter();
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSignup = async () => {
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+
     setLoading(true); // Start loading
+    setEmailError(''); // Clear any existing error
     try {
       const response = await axios.post('https://backend-chess-tau.vercel.app/signup', { name, email, level: selectedLevel });
       console.log('Signup response:', response.data);
@@ -64,6 +76,7 @@ const Signup = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   style={{ borderRadius: '10px', color: 'black' }}
                 />
+                {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>} {/* Display email error */}
               </div>
 
               <div className="signup-field mb-4">

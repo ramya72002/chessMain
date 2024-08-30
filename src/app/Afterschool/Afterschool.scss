@@ -1,6 +1,12 @@
 .account-page {
     font-family: Arial, sans-serif;
     padding: 20px;
+    background-image: url('/images/im3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    padding: 20px;
   
     .account-header {
       text-align: center;
@@ -19,11 +25,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
-      background-image: url('/images/im3.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 20px;
+     
         
       .courses-header {
         margin-bottom: 20px;

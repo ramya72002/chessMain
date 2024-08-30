@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -11,9 +12,20 @@ const SignIn = () => {
   const [showOtpInput, setShowOtpInput] = useState(false); // State to show OTP input
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false); // Add loading state
+  const [emailError, setEmailError] = useState(''); // Add email error state
   const router = useRouter();
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const signIn = async (emailToSignIn: string) => {
+    if (!validateEmail(emailToSignIn)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+    setEmailError('');
     setLoading(true); // Start loading
     try {
       const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', { email: emailToSignIn });
@@ -81,61 +93,49 @@ const SignIn = () => {
       ) : (
         <div className="signup-form-container">
         
-        <div className="signup-form">
-          <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
-          <div className="signup-field mb-4">
-            <label className="block text-gray-700 mb-2">Email</label>
-            <input
-              type="email"
-              className="w-full p-2 border border-gray-300 rounded"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ borderRadius: '10px', color: 'black' }}
-            />
-          </div>
-          {showOtpInput && (
+          <div className="signup-form">
+            <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
             <div className="signup-field mb-4">
-              <label className="block text-gray-700 mb-2">Enter OTP</label>
+              <label className="block text-gray-700 mb-2">Email</label>
               <input
-                type="text"
+                type="email"
                 className="w-full p-2 border border-gray-300 rounded"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{ borderRadius: '10px', color: 'black' }}
               />
+              {emailError && <p className="text-red-500 text-sm mt-2">{emailError}</p>}
             </div>
-          )}
-          <button
+            {showOtpInput && (
+              <div className="signup-field mb-4">
+                <label className="block text-gray-700 mb-2">Enter OTP</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  style={{ borderRadius: '10px', color: 'black' }}
+                />
+              </div>
+            )}
+            <button
             className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
-            onClick={showOtpInput ? verifyOtp : handleManualSignIn}
+              onClick={showOtpInput ? verifyOtp : handleManualSignIn}
             style={{ borderRadius: '10px' }}
-          >
-            {showOtpInput ? 'Verify OTP' : 'Sign In'}
-          </button>
-        </div>
-       
-        </div>
-      )}
-
-      {showPopup && (
-        <div className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 signin-box slide-from-right`}>
-          <div className="bg-white p-6 rounded shadow-md" style={{ borderRadius: '10px' }}>
-            <h2 className="text-xl font-bold mb-4 text-black">Email is not registered.</h2>
-            <p className="mb-4 text-black">Please register and try again</p>
-            <button
-              className="bg-red-500 text-white font-bold py-2 px-4 rounded mr-2"
-              onClick={() => router.push('/signup')}
-              style={{ borderRadius: '10px' }}
             >
-              Register
+              {showOtpInput ? 'Verify OTP' : 'Sign In'}
             </button>
-            <button
-              className="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded"
-              onClick={() => setShowPopup(false)}
-              style={{ borderRadius: '10px' }}
-            >
-              Close
-            </button>
+            {showPopup && (
+              <div className="popup-overlay">
+                <div className="popup-content">
+                  <p className="text-center text-black text-lg mb-4">Email is not registered</p>
+                  <button className="popup-button" onClick={() => router.push('/signup')}>Go to Signup</button>
+                </div>
+              </div>
+            )}
+            <div className="text-center mt-4">
+              <p className="text-gray-700">Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a></p>
+            </div>
           </div>
         </div>
       )}

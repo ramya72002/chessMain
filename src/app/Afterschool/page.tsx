@@ -182,33 +182,6 @@ const MyAccount = () => {
             </div>
           </div>
         ))}
-
-        {/* <div className="courses-header">
-          <h3>Available Courses</h3>
-        </div>
-
-        {availableCourses.map((course, index) => (
-          <div key={index} className="course-card">
-            <img src={courseImages[course]} alt={course} className="course-image" />
-            <div className="course-info">
-              <div className="course-status">
-                <h4>{course}</h4>
-                <button
-                  className={`progress ${isRegistered(course) ? 'registered' : ''}`}
-                  style={{ backgroundColor: isRegistered(course) ? 'gray' : 'blue' }}
-                  onClick={() => handleRegister(course)}
-                  disabled={isRegistered(course)}
-                >
-                  {isRegistered(course) ? 'Registered' : 'Register'}
-                </button>
-              </div>
-              <div className="progress-bar">
-                <div className="progress-completed" style={{ width: isRegistered(course) ? '100%' : '0%' }}></div>
-              </div>
-              <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
-            </div>
-          </div>
-        ))} */}
       </section>
     </div>
   );
