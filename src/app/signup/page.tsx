@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import './Signup.scss'; // Import the SCSS file for signup styles
@@ -28,64 +28,73 @@ const Signup = () => {
     }
   };
 
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('email');
+    if (storedEmail) {
+      router.push('/portalhome');
+    }
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+    <div className="signup-background">
       {loading ? (
         <Loading /> // Use the Loading component
       ) : (
-        <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-          <h2 className="text-3xl font-bold mb-4 text-black text-center">Sign Up</h2>
-          <div className="signup-container">
-            <div className="signup-field mb-4">
-              <label className="signup-label block text-gray-700 mb-2">Name</label>
-              <input
-                type="text"
-                className="signup-input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                style={{ borderRadius: '10px', color: 'black' }}
-              />
-            </div>
+        <div className="signup-form-container">
+          <div className="signup-form">
+            <h2 className="text-3xl font-bold mb-4 text-black text-center">Create Your Account</h2>
+            <div className="signup-container">
+              <div className="signup-field mb-4">
+                <label className="signup-label block text-gray-700 mb-2">Name</label>
+                <input
+                  type="text"
+                  className="signup-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  style={{ borderRadius: '10px', color: 'black' }}
+                />
+              </div>
 
-            <div className="signup-field mb-4">
-              <label className="signup-label block text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                className="signup-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={{ borderRadius: '10px', color: 'black' }}
-              />
-            </div>
+              <div className="signup-field mb-4">
+                <label className="signup-label block text-gray-700 mb-2">Email</label>
+                <input
+                  type="email"
+                  className="signup-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ borderRadius: '10px', color: 'black' }}
+                />
+              </div>
 
-            <div className="signup-field mb-4">
-              <label className="signup-label block text-gray-700 mb-2">Level</label>
-              <select
-                className="signup-select"
-                value={selectedLevel}
-                onChange={(e) => setSelectedLevel(e.target.value)}
-                style={{ borderRadius: '10px', color: 'black' }}
+              <div className="signup-field mb-4">
+                <label className="signup-label block text-gray-700 mb-2">Level</label>
+                <select
+                  className="signup-select"
+                  value={selectedLevel}
+                  onChange={(e) => setSelectedLevel(e.target.value)}
+                  style={{ borderRadius: '10px', color: 'black' }}
+                >
+                  <option value="level1">Level 1</option>
+                  <option value="level2">Level 2</option>
+                  <option value="level3">Level 3</option>
+                  <option value="level4">Level 4</option>
+                  <option value="level5">Level 5</option>
+                  <option value="level6">Level 6</option>
+                </select>
+              </div>
+
+              <button
+                className="signup-button mt-4"
+                onClick={handleSignup}
               >
-                <option value="level1">Level 1</option>
-                <option value="level2">Level 2</option>
-                <option value="level3">Level 3</option>
-                <option value="level4">Level 4</option>
-                <option value="level5">Level 5</option>
-                <option value="level6">Level 6</option>
-              </select>
+                Create Account
+              </button>
             </div>
 
-            <button
-              className="signup-button mt-4"
-              onClick={handleSignup}
-            >
-              Create Account
-            </button>
-          </div>
-
-          {/* Add sign-in link */}
-          <div className="text-center mt-4">
-            <p className="text-gray-700">Already have an account? <a href="/signin" className="text-blue-500 hover:underline">Sign In</a></p>
+            {/* Add sign-in link */}
+            <div className="text-center mt-4">
+              <p className="text-gray-700">Already have an account? <a href="/signin" className="text-blue-500 hover:underline">Sign In</a></p>
+            </div>
           </div>
         </div>
       )}

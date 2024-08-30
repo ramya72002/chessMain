@@ -7,6 +7,8 @@ import Loading from '../Loading';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState(''); // State for OTP
+  const [showOtpInput, setShowOtpInput] = useState(false); // State to show OTP input
   const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(false); // Add loading state
   const router = useRouter();
@@ -27,7 +29,11 @@ const SignIn = () => {
 
         localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.data.data));
 
-        router.push('/portalhome');
+        if (loginResponse.data.otp_required) {
+          // If OTP is required, show the OTP input
+          setShowOtpInput(true);
+          localStorage.setItem('email', emailToSignIn); // Save email in local storage
+        }
       } else {
         setShowPopup(true);
       }
@@ -38,10 +44,29 @@ const SignIn = () => {
     }
   };
 
+  const verifyOtp = async () => {
+    setLoading(true); // Start loading
+    try {
+      const verifyOtpResponse = await axios.post('https://backend-chess-tau.vercel.app/verify_otp', { email, otp });
+      console.log('Verify OTP response:', verifyOtpResponse.data);
+
+      if (verifyOtpResponse.data.success) {
+        // Navigate to /portalhome on successful OTP verification
+        router.push('/portalhome');
+      } else {
+        alert('Invalid OTP. Please check and try again.'); // User-friendly error message
+      }
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      alert('An error occurred while verifying OTP. Please try again later.');
+    } finally {
+      setLoading(false); // End loading
+    }
+  };
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
     if (storedEmail) {
-      signIn(storedEmail);
+      router.push('/portalhome');
     }
   }, []);
 
@@ -66,12 +91,24 @@ const SignIn = () => {
               style={{ borderRadius: '10px', color: 'black' }}
             />
           </div>
+          {showOtpInput && (
+            <div className="signup-field mb-4">
+              <label className="block text-gray-700 mb-2">Enter OTP</label>
+              <input
+                type="text"
+                className="w-full p-2 border border-gray-300 rounded"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                style={{ borderRadius: '10px', color: 'black' }}
+              />
+            </div>
+          )}
           <button
             className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
-            onClick={handleManualSignIn}
+            onClick={showOtpInput ? verifyOtp : handleManualSignIn}
             style={{ borderRadius: '10px' }}
           >
-            Sign In
+            {showOtpInput ? 'Verify OTP' : 'Sign In'}
           </button>
         </div>
       )}
