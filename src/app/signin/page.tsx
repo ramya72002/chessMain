@@ -75,11 +75,13 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+    <div className="signup-background">
       {loading ? (
         <Loading /> // Use the Loading component here
       ) : (
-        <div className={`bg-white p-8 rounded shadow-md w-full max-w-md email-box ${showPopup ? 'slide-from-left' : ''}`} style={{ borderRadius: '10px' }}>
+        <div className="signup-form-container">
+        
+        <div className="signup-form">
           <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
           <div className="signup-field mb-4">
             <label className="block text-gray-700 mb-2">Email</label>
@@ -110,6 +112,8 @@ const SignIn = () => {
           >
             {showOtpInput ? 'Verify OTP' : 'Sign In'}
           </button>
+        </div>
+       
         </div>
       )}
 
