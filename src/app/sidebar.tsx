@@ -171,7 +171,7 @@ const Sidebar = () => {
     <FaGraduationCap /> Learning
   </a>
   
-  <a href="/Afterschool" className="navItem events">
+  <a href="/Afterschool" className="navItem school">
     <FaCalendarAlt /> After School Classes
   </a>
   

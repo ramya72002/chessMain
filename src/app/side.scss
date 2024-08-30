@@ -210,6 +210,14 @@
           background-color: #8a2be2;
         }
       }
+        &.school {
+          background-color: #888211; /* BlueViolet */
+          color: rgb(243, 244, 243);
+  
+          &:hover {
+            background-color: #8f9a12;
+          }
+      }
       &.logout {
         background-color: #ee2e08; /* BlueViolet */
         color: white;
