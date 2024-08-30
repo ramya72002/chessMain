@@ -1,8 +1,8 @@
 "use client";
 
 import { Inter } from "next/font/google";
-import { usePathname } from "next/navigation";
-import Sidebar from "./sidebar";  
+import { usePathname, useSearchParams } from "next/navigation";
+import Sidebar from "./sidebar";
 import AdminHeader from "./admin/admin_header/adminHeader";
 import "./globals.css";
 import Hero from "./hero/page";
@@ -16,6 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const afterschool = searchParams.get("afterschool");
 
   return (
     <html lang="en">
@@ -26,10 +28,17 @@ export default function RootLayout({
             ||pathname=="/levels/level3"||pathname=="/levels/level4"||pathname=="/chessPuzzle"||pathname=="/ChessPuzzle"||pathname=="/levels/level2test"||pathname=="/levels/level3test"
             ||pathname=="/levels/level4test"||pathname=="/tournaments"||pathname=="/tournamentRegistration"||pathname=="/arena/insidepuzzlearena"||pathname=="/learning"||pathname=="/Afterschool" ||pathname=="/coaching") && <Sidebar />}
             {(pathname === "/inprogress"||pathname === "/level1Modules/module1"||pathname === "/level1Modules/module2"||pathname === "/level1Modules/module3"||pathname === "/level1Modules/module4"
-            ||pathname === "/level1Modules/module5"||pathname === "/modules/m1"||pathname === "/modules/m2"||pathname === "/modules/m3"||pathname === "/modules/m4"||pathname === "/modules/m5"||pathname === "/modules/m6") && <Sidebar2/>}
-           <div className="content-container">
-            {/* {pathname !== "/" && pathname !== "/signin"&&pathname !== "/signup"&&pathname !== "/admin/admin_upcoming_activities" && pathname !== "/admin" && pathname !== "/admin/admin_image_puzzles"&&pathname !== "/admin/StudentDetails" && pathname !== "/admin/admin_tournaments" && pathname !== "/StudentDetails" && pathname !== "/homeTournament"&& pathname !== "/homeTornRegister"  && <PortalHeader />} */}
-            {(pathname === "/admin" || pathname === "/admin/admin_upcoming_activities" ||   pathname === "/admin/admin_tournaments"||pathname === "/admin/admin_image_demo"||pathname === "/admin/StudentDetails") && <AdminHeader />}
+             || pathname === "/level1Modules/module5" || 
+              (pathname === "/modules/m1" && afterschool !== "true") ||
+              pathname === "/modules/m2" ||
+              pathname === "/modules/m3" ||
+              pathname === "/modules/m4" ||
+              pathname === "/modules/m5" ||
+              pathname === "/modules/m6"
+            ) && <Sidebar2 />}
+              
+              <div className="content-container">
+             {(pathname === "/admin" || pathname === "/admin/admin_upcoming_activities" ||   pathname === "/admin/admin_tournaments"||pathname === "/admin/admin_image_demo"||pathname === "/admin/StudentDetails") && <AdminHeader />}
             {pathname === "/" ? <Hero /> : <div className="scrollable-content">{children}</div>}
           </div>
         </div>

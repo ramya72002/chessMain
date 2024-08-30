@@ -8,7 +8,7 @@ import { UserDetails } from '../types/types';
 // Define the course paths
 const coursePaths: { [key: string]: string } = {
   'Basic Checkmates - 2': '/basic-checkmates-2/modules/m1',
-  'Basics of Chess': '/modules/m1',
+  'Basics of Chess': '/modules/m1?afterschool=true',
   'Good Bishop Bad Bishop': '/good-bishop-bad-bishop/modules/m1',
   'Basic Checkmates': '/basic-checkmates/modules/m1'
 };
@@ -183,7 +183,7 @@ const MyAccount = () => {
           </div>
         ))}
 
-        <div className="courses-header">
+        {/* <div className="courses-header">
           <h3>Available Courses</h3>
         </div>
 
@@ -208,7 +208,7 @@ const MyAccount = () => {
               <p className="completed-steps">{isRegistered(course) ? '100%' : '0%'} COMPLETE</p>
             </div>
           </div>
-        ))}
+        ))} */}
       </section>
     </div>
   );
