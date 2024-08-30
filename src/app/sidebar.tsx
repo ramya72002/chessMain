@@ -14,6 +14,7 @@ const Sidebar = () => {
     router.push('/portalhome');
   };
   const handleSignOut = () => {
+    
    
     localStorage.clear(); // Clear all items from local storage
     router.push('/'); // Redirect to the home page

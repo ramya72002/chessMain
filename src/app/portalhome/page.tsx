@@ -4,29 +4,33 @@ import axios from 'axios';
 import './portal.scss';
 import { UserDetails, UpcomingActivity } from '../types/types';
 import Loading from '../Loading';
+import { useRouter } from 'next/navigation';
 
 const Hero = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [upcomingActivities, setUpcomingActivities] = useState<UpcomingActivity[]>([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (typeof window !== 'undefined') {
         const userDetailsString = localStorage.getItem('userDetails');
         const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-        
-        if (storedUserDetails && storedUserDetails.image) {
-          setUserDetails(storedUserDetails);
+
+        if (!storedUserDetails || !storedUserDetails.email) {
+          // Redirect to 404 page if no userDetails are found
+          router.replace('/404');
+          return;
         }
 
-        const email = storedUserDetails?.email;
+        setUserDetails(storedUserDetails);
 
         try {
-          if (email) {
-            const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
-            setUserDetails(response.data.data);
-          }
+          const response = await axios.get(
+            `https://backend-chess-tau.vercel.app/getuserdetails?email=${storedUserDetails.email}`
+          );
+          setUserDetails(response.data.data);
         } catch (error) {
           console.error('Error fetching user details:', error);
         }
@@ -37,8 +41,7 @@ const Hero = () => {
       setLoading(true);
       try {
         const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
-        const data = response.data[0].upcoming_activities;
-        setUpcomingActivities(data);
+        setUpcomingActivities(response.data[0].upcoming_activities);
       } catch (error) {
         console.error('Error fetching Upcoming Activities:', error);
       } finally {
@@ -48,11 +51,11 @@ const Hero = () => {
 
     fetchUserDetails();
     fetchUpcomingActivities();
-  }, []);
+  }, [router]);
 
   const getActiveClass = (level: string) => {
     if (!userDetails) return '';
-    
+
     const levelMap: { [key: string]: number } = {
       level1: 1,
       level2: 2,
@@ -61,19 +64,26 @@ const Hero = () => {
       level5: 5,
       level6: 6,
     };
-  
+
     const userLevel = levelMap[userDetails.level];
     const currentLevel = levelMap[level];
-  
+
     return currentLevel <= userLevel ? 'active' : 'inactive';
   };
-  
+
+  if (!userDetails) {
+    // If userDetails is null, return null to prevent rendering the page
+    return null;
+  }
+
   return (
     <div style={{ padding: '20px' }}>
-    <div className="hero">
-      <div className="header">
-        <h2>Chess Journey of <span>{userDetails ? userDetails.name : 'Student'}</span></h2>
-      </div>
+      <div className="hero">
+        <div className="header">
+          <h2>
+            Chess Journey of <span>{userDetails.name}</span>
+          </h2>
+        </div>
 
       <div className="journey-container">
         <div className="chess-journey">
