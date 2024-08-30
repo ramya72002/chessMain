@@ -23,21 +23,15 @@
 
     .name {
       font-size: 1.5rem;
-      margin-top: 10px;
+      margin-top: 1px;
       font-weight: bold;
       color: #333;
       font-family: 'Montserrat', sans-serif;
     }
 
-    .role {
-      font-size: 1.25rem;
-      color: #777;
-      margin-top: 5px;
-      font-family: 'Montserrat', sans-serif;
-    }
 
     .viewProfile {
-      margin-top: 15px;
+      margin-top: 1px;
       padding: 10px 20px;
       background-color: #007bff;
       font-family: 'Montserrat', sans-serif;
@@ -141,6 +135,7 @@
       transition: background-color 0.3s, color 0.3s;
       font-family: 'Montserrat', sans-serif;
       font-size: 1.2rem;
+      font-weight: bold;
 
       &:hover {
         background-color: #e9ecef;
@@ -176,11 +171,11 @@
       }
 
       &.test {
-        background-color: #3936ff; /* SteelBlue */
+        background-color: #403ec0; /* SteelBlue */
         color: white;
 
         &:hover {
-          background-color: #3936ff;
+          background-color: #605de1;
         }
       }
 
