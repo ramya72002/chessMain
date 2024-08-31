@@ -13,11 +13,28 @@ const Sidebar = () => {
   const handleViewProfile = () => {
     router.push('/portalhome');
   };
-  const handleSignOut = () => {
-    
-   
-    localStorage.clear(); // Clear all items from local storage
-    router.push('/'); // Redirect to the home page
+  const handleSignOut = async () => {
+    const email = localStorage.getItem('email');
+  
+    if (email) {
+      try {
+        // Make API call to delete the session_id field
+        await axios.post('https://backend-chess-tau.vercel.app/delete_session', { email });
+  
+        // Clear local storage
+        localStorage.clear();
+  
+        // Redirect to the home page
+        router.push('/');
+      } catch (error) {
+        console.error('Error during sign out:', error);
+        alert('An error occurred while signing out. Please try again later.');
+      }
+    } else {
+      // If no email found in local storage
+      localStorage.clear();
+      router.push('/');
+    }
   };
   const [profilePic, setProfilePic] = useState('/images/portal/b4.png'); // Default profile picture
   const [showAvatarOptions, setShowAvatarOptions] = useState(false); // Toggle state for avatar options visibility

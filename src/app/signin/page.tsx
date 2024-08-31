@@ -11,6 +11,7 @@ const SignIn = () => {
   const [otp, setOtp] = useState(''); // State for OTP
   const [showOtpInput, setShowOtpInput] = useState(false); // State to show OTP input
   const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState(''); // State for popup message
   const [loading, setLoading] = useState(false); // Add loading state
   const [emailError, setEmailError] = useState(''); // Add email error state
   const router = useRouter();
@@ -29,10 +30,20 @@ const SignIn = () => {
     setEmailError('');
     setLoading(true); // Start loading
     try {
-      const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', { email: emailToSignIn });
+      const userAgent = navigator.userAgent;
+      console.log(userAgent);
+      const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', { email: emailToSignIn, device_name:userAgent });
       console.log('SignIn response:', loginResponse.data);
 
       if (loginResponse.data.success) {
+        if (loginResponse.data.device) {
+          // If 'device' is true, show a message and do nothing
+          setPopupMessage(`Please log out from your previous device (${loginResponse.data.device_name}) to sign in to this device.`);
+          setShowPopup(true);
+          return; // Stop further processing
+        }
+        setShowPopup(false);
+
         localStorage.setItem('email', emailToSignIn);
 
         const userDetailsResponse = await axios.get('https://backend-chess-tau.vercel.app/getuserdetails', {
@@ -46,13 +57,16 @@ const SignIn = () => {
           // If OTP is required, show the OTP input
           setShowOtpInput(true);
           localStorage.setItem('email', emailToSignIn); // Save email in local storage
-          localStorage.setItem('signin', "true"); // Save email in local storage
+          localStorage.setItem('signin', "true"); // Save sign-in status in local storage
         }
       } else {
+        setPopupMessage('Email is not registered');
         setShowPopup(true);
       }
     } catch (error) {
       console.error('Error during SignIn:', error);
+      setPopupMessage('An error occurred during sign-in. Please try again later.');
+      setShowPopup(true);
     } finally {
       setLoading(false); // End loading
     }
@@ -84,7 +98,7 @@ const SignIn = () => {
     if (storedEmail) {
       setEmailError('');
       setEmail(storedEmail); // Automatically fill the email input
-      setShowOtpInput(true)
+      setShowOtpInput(true);
       if (signInButtonRef.current) {
         signIn(storedEmail, true); // Call signIn with skipValidation set to true
       }
@@ -140,7 +154,7 @@ const SignIn = () => {
             {showPopup && (
               <div className="popup-overlay">
                 <div className="popup-content">
-                  <p className="text-center text-black text-lg mb-4">Email is not registered</p>
+                  <p className="text-center text-black text-lg mb-4">{popupMessage}</p>
                   <button className="popup-button" onClick={() => router.push('/signup')}>Go to Signup</button>
                 </div>
               </div>
