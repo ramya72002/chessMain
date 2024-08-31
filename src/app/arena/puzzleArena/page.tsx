@@ -71,16 +71,21 @@ const PuzzleArena = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  
+
   const handleCategoryClick = (category: React.SetStateAction<string | null>) => {
     setSelectedCategory(category);
+    setIsDropdownOpen(false); // Close dropdown after selecting a category
   };
-  
+
   const handleFilterClick = (filter: React.SetStateAction<string>) => {
     setSelectedFilter(filter);
     setCurrentIndex(0); // Reset pagination to the first page when the filter changes
+    setIsDropdownOpen(false); // Close dropdown after selecting a filter
   };
   
+  
+
+
 
   const filteredPuzzles = practicePuzzles.filter((puzzle) => {
     return (
@@ -109,13 +114,13 @@ const PuzzleArena = () => {
         const storedUserDetails = userDetailsString
           ? JSON.parse(userDetailsString)
           : null;
-  
+
         if (storedUserDetails) {
           setUserDetails(storedUserDetails);
           try {
             if (!dataFetched) {
               setDataFetched(true);
-  
+
               const scoreResponse = await axios.post(
                 'https://backend-chess-tau.vercel.app/calculate_scores',
                 {
@@ -137,12 +142,12 @@ const PuzzleArena = () => {
               } else {
                 setError('Failed to fetch scores.');
               }
-  
+
               const response = await axios.get(
                 `https://backend-chess-tau.vercel.app/get_level?level=${levelMapping[storedUserDetails.level]}`
               );
               const data = response.data;
-  
+
               if (data.image_sets && Array.isArray(data.image_sets)) {
                 const fetchPuzzles = async (liveStatus: string) => {
                   return Promise.all(
@@ -162,12 +167,12 @@ const PuzzleArena = () => {
                               },
                             }
                           );
-  
+
                           let statusFlag = 'Not Started';
-  
+
                           if (arenaUserResponse.data.success) {
                             const puzzleArena = arenaUserResponse.data.puzzleArena;
-  
+
                             const isStarted = Object.values(puzzleArena).some(
                               (puzzle: any) => puzzle.option_guessed !== null
                             );
@@ -179,7 +184,7 @@ const PuzzleArena = () => {
                               (puzzle: any) =>
                                 puzzle.option_guessed !== null && puzzle.started
                             );
-  
+
                             if (isCompleted) {
                               statusFlag = 'Completed';
                             } else if (isInProgress) {
@@ -188,9 +193,9 @@ const PuzzleArena = () => {
                               statusFlag = 'Started';
                             }
                           }
-  
+
                           console.log(item.title, arenaUserResponse, statusFlag);
-  
+
                           const total_title_category_score =
                             arenaUserResponse.data.success
                               ? Object.values(arenaUserResponse.data.puzzleArena).reduce(
@@ -198,7 +203,7 @@ const PuzzleArena = () => {
                                   0
                                 )
                               : 0;
-  
+
                           return {
                             ...item,
                             total_title_category_score,
@@ -218,10 +223,10 @@ const PuzzleArena = () => {
                       })
                   );
                 };
-  
+
                 const livePuzzlesList = await fetchPuzzles('Yes');
                 const practicePuzzlesList = await fetchPuzzles('No');
-  
+
                 setLivePuzzles(livePuzzlesList);
                 setPracticePuzzles(practicePuzzlesList);
               } else {
@@ -234,10 +239,10 @@ const PuzzleArena = () => {
         }
       }
     };
-  
+
     fetchUserDetails();
   }, [dataFetched]);
-  
+
 
 
 
@@ -316,7 +321,7 @@ const PuzzleArena = () => {
     {Object.values(loading).some((isLoading) => isLoading) && (
       <Loading />
     )}
-      <div className="puzzle-arena-container">
+    <div className="puzzle-arena-container">
         <div className="top-section">
           <div className="left-section">
             <img src="/images/puzzlearena.png" alt="Puzzle Arena" />
@@ -442,23 +447,23 @@ const PuzzleArena = () => {
             ) : (
               <button
                 className='start-button'
-                onClick={() =>
-                  handleButtonClick(
-                    puzzle.title,
-                    puzzle.category,
-                    puzzle.date_time,
+                  onClick={() =>
+                    handleButtonClick(
+                      puzzle.title,
+                      puzzle.category,
+                      puzzle.date_time,
                     Object.keys(puzzle.file_ids || {}).length,
                     `${puzzle.total_title_category_score}/${Object.keys(puzzle.file_ids || {}).length}`,
-                    index
-                  )
-                }
-              >
+                      index
+                    )
+                  }
+                >
                 View
-              </button>
+                </button>
             )}
           </p>
-        </div>
-      ))}
+              </div>
+            ))}
       <div className="pagination-controls">
         {currentIndex > 0 && (
           <button className="prev-button" onClick={handlePrevClick}>Previous</button>
@@ -466,7 +471,7 @@ const PuzzleArena = () => {
         {currentIndex + itemsPerPage < filteredPuzzles.length && (
           <button className="next-button" onClick={handleNextClick}>Next</button>
         )}
-      </div>
+        </div>
     </>
   ) : (
     <p>No Practice Puzzles Available</p>
@@ -478,7 +483,7 @@ const PuzzleArena = () => {
  
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
