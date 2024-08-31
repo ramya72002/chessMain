@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import './Signin.scss'; // Import the SCSS file
@@ -14,14 +14,15 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false); // Add loading state
   const [emailError, setEmailError] = useState(''); // Add email error state
   const router = useRouter();
+  const signInButtonRef = useRef<HTMLButtonElement>(null); // Ref for the sign-in button
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const signIn = async (emailToSignIn: string) => {
-    if (!validateEmail(emailToSignIn)) {
+  const signIn = async (emailToSignIn: string, skipValidation = false) => {
+    if (!skipValidation && !validateEmail(emailToSignIn)) {
       setEmailError('Please enter a valid email address');
       return;
     }
@@ -45,6 +46,7 @@ const SignIn = () => {
           // If OTP is required, show the OTP input
           setShowOtpInput(true);
           localStorage.setItem('email', emailToSignIn); // Save email in local storage
+          localStorage.setItem('signin', "true"); // Save email in local storage
         }
       } else {
         setShowPopup(true);
@@ -75,9 +77,19 @@ const SignIn = () => {
       setLoading(false); // End loading
     }
   };
+
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
+    const signinStatus = localStorage.getItem('signin');
     if (storedEmail) {
+      setEmailError('');
+      setEmail(storedEmail); // Automatically fill the email input
+      setShowOtpInput(true)
+      if (signInButtonRef.current) {
+        signIn(storedEmail, true); // Call signIn with skipValidation set to true
+      }
+    }
+    if (storedEmail && signinStatus) {
       router.push('/portalhome');
     }
   }, []);
@@ -92,7 +104,6 @@ const SignIn = () => {
         <Loading /> // Use the Loading component here
       ) : (
         <div className="signup-form-container">
-        
           <div className="signup-form">
             <h2 className="text-2xl font-bold mb-4 text-black text-center">Sign In</h2>
             <div className="signup-field mb-4">
@@ -119,9 +130,10 @@ const SignIn = () => {
               </div>
             )}
             <button
-            className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
+              className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
               onClick={showOtpInput ? verifyOtp : handleManualSignIn}
-            style={{ borderRadius: '10px' }}
+              style={{ borderRadius: '10px' }}
+              ref={signInButtonRef} // Attach the ref to the button
             >
               {showOtpInput ? 'Verify OTP' : 'Sign In'}
             </button>

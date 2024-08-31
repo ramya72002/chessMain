@@ -30,6 +30,7 @@ const Signup = () => {
       const response = await axios.post('https://backend-chess-tau.vercel.app/signup', { name, email, level: selectedLevel });
       console.log('Signup response:', response.data);
       if (response.data.success) {
+        localStorage.setItem('email',email);
         router.push('/signin');
       }
     } catch (error) {
@@ -42,7 +43,9 @@ const Signup = () => {
 
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
-    if (storedEmail) {
+    const signin_status=localStorage.getItem('signin')
+    console.log("l",localStorage)
+    if (storedEmail && signin_status) {
       router.push('/portalhome');
     }
   }, []);

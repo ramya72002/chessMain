@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
                         onClick={() => handleImageClick(index - 1)}
                         onMouseEnter={() => index !== 2 && setHoveredImageIndex(index - 1)}
                     >
-                        <Image src={`/images/image${index}.png`} alt={`i${index}`} layout="fill" objectFit="cover" />
+                        <Image src={`/images/image${index}.jpg`} alt={`i${index}`} layout="fill" objectFit="cover" />
 
                     </div>
                 ))}
