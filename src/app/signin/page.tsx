@@ -6,6 +6,26 @@ import axios from 'axios';
 import './Signin.scss'; // Import the SCSS file
 import Loading from '../Loading';
 
+// Function to determine device type
+const getDeviceType = (): string => {
+  const userAgent = navigator.userAgent;
+
+  // Check for mobile devices
+  if (/android/i.test(userAgent) ||
+      /iPhone|iPod/.test(userAgent) ||
+      /Windows Phone/i.test(userAgent)) {
+    return 'Mobile';
+  }
+
+  // Check for tablets
+  if (/iPad/i.test(userAgent)) {
+    return 'Tablet';
+  }
+
+  // Default to desktop
+  return 'Desktop';
+};
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(''); // State for OTP
@@ -30,9 +50,14 @@ const SignIn = () => {
     setEmailError('');
     setLoading(true); // Start loading
     try {
-      const userAgent = navigator.userAgent;
-      console.log(userAgent);
-      const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', { email: emailToSignIn, device_name:userAgent });
+      const deviceType = getDeviceType(); // Get device type
+      console.log(`User Agent: ${navigator.userAgent}`);
+      console.log(`Device Type: ${deviceType}`);
+
+      const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', {
+        email: emailToSignIn,
+        device_name: deviceType // Send device type to the backend
+      });
       console.log('SignIn response:', loginResponse.data);
 
       if (loginResponse.data.success) {
