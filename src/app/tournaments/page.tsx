@@ -14,7 +14,7 @@ const AdminTournaments: React.FC = () => {
     const fetchTournaments = async () => {
       try {
         const response = await axios.get<{ tournaments: Tournament[] }[]>(
-          "https://backend-chess-tau.vercel.app/tournaments"
+          "https://backend-dev-chess.vercel.app/tournaments"
         );
         console.log("Response data:", response.data);
         if (response.data.length > 0) {

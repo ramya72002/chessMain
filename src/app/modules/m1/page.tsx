@@ -21,7 +21,7 @@ const M1: React.FC = () => {
         };
     
         // Make the POST request to the API
-        const response = await axios.post('https://backend-chess-tau.vercel.app/update-course-completion', requestData);
+        const response = await axios.post('https://backend-dev-chess.vercel.app/update-course-completion', requestData);
     
         // Handle the response
         console.log('API Response:', response.data);

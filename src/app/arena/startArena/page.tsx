@@ -46,7 +46,7 @@ const StartArena = () => {
         const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
         const email = storedUserDetails ? storedUserDetails.email : '';
         try {
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/get_Arena_user`, {
+          const response = await axios.get(`https://backend-dev-chess.vercel.app/get_Arena_user`, {
             params: {
               email: email,
               category: category,
@@ -69,7 +69,7 @@ const StartArena = () => {
     if (title && level) {
       const fetchImages = async () => {
         try {
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
+          const response = await axios.get(`https://backend-dev-chess.vercel.app/images/title?level=${encodeURIComponent(level)}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`);
           const imagesData: ImageData[] = response.data.images;
           setImages(imagesData);
           fetchAllImages(imagesData); // Fetch the image files
@@ -92,7 +92,7 @@ const StartArena = () => {
   };
 
   const fetchImageFile = (fileId: string) => {
-    axios.post('https://backend-chess-tau.vercel.app/image_get_fileid', { file_id: fileId }, { responseType: 'blob' })
+    axios.post('https://backend-dev-chess.vercel.app/image_get_fileid', { file_id: fileId }, { responseType: 'blob' })
       .then(response => {
         const url = URL.createObjectURL(new Blob([response.data], { type: response.headers['content-type'] }));
         setImageUrls(prevState => ({ ...prevState, [fileId]: url }));
@@ -110,7 +110,7 @@ const StartArena = () => {
 
     // Call API to update puzzle started flag
     try {
-      await axios.post('https://backend-chess-tau.vercel.app/update_puzzle_started', {
+      await axios.post('https://backend-dev-chess.vercel.app/update_puzzle_started', {
         email,
         category,
         title,

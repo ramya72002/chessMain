@@ -40,7 +40,7 @@ const MyAccount = () => {
     const fetchRegisteredCourses = async () => {
       if (storedUserDetails) {
         try {
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/get-registered-courses?email=${storedUserDetails.email}`);
+          const response = await axios.get(`https://backend-dev-chess.vercel.app/get-registered-courses?email=${storedUserDetails.email}`);
           if (response.status === 200) {
             const registeredCoursesData = response.data.registered_courses;
             setRegisteredCourses(registeredCoursesData);
@@ -65,7 +65,7 @@ const MyAccount = () => {
 
     try {
       // Register for the course
-      const registerResponse = await axios.post('https://backend-chess-tau.vercel.app/add-course', {
+      const registerResponse = await axios.post('https://backend-dev-chess.vercel.app/add-course', {
         email: userDetails.email,
         title: courseTitle,
       });
@@ -77,7 +77,7 @@ const MyAccount = () => {
         setCourseWithPendingPayment(courseTitle);
 
         // Send registration confirmation email
-        const emailResponse = await axios.post('https://backend-chess-tau.vercel.app/send_course_reg_email', {
+        const emailResponse = await axios.post('https://backend-dev-chess.vercel.app/send_course_reg_email', {
           email: userDetails.email,
           title: courseTitle,
         });
@@ -97,12 +97,12 @@ const MyAccount = () => {
     if (!userDetails || !userDetails.email) return;
 
     try {
-      const response = await axios.get(`https://backend-chess-tau.vercel.app/check-email?email=${userDetails.email}`);
+      const response = await axios.get(`https://backend-dev-chess.vercel.app/check-email?email=${userDetails.email}`);
 
       if (response.data.success) {
         // Update payment status in the backend
         try {
-          await axios.put('https://backend-chess-tau.vercel.app/update-payment-status', {
+          await axios.put('https://backend-dev-chess.vercel.app/update-payment-status', {
             email: userDetails.email,
             title: courseTitle,
             payment_status: 'Completed'

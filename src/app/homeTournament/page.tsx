@@ -13,7 +13,7 @@ const AdminTournaments: React.FC = () => {
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get<Tournament[]>('https://backend-chess-tau.vercel.app/tournaments');
+        const response = await axios.get<Tournament[]>('https://backend-dev-chess.vercel.app/tournaments');
         setTournaments(response.data);
       } catch (error) {
         console.error('Error fetching tournaments:', error);

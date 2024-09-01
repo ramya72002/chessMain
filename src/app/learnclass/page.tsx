@@ -22,7 +22,7 @@ const [messages, setMessages] = useState<{ [key: string]: string }>({});
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
+        const response = await axios.get('https://backend-dev-chess.vercel.app/sessions');
         setSessions(response.data[0].sessions);
       } catch (error) {
         console.error('Error fetching sessions:', error);
@@ -44,7 +44,7 @@ const [messages, setMessages] = useState<{ [key: string]: string }>({});
     }
 
     try {
-      const response = await axios.post('https://backend-chess-tau.vercel.app/send-email', {
+      const response = await axios.post('https://backend-dev-chess.vercel.app/send-email', {
         email: userEmail,
         session_link: session.session_link,
         date: session.date,

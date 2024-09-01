@@ -27,7 +27,7 @@ const Signup = () => {
     setLoading(true); // Start loading
     setEmailError(''); // Clear any existing error
     try {
-      const response = await axios.post('https://backend-chess-tau.vercel.app/signup', { name, email, level: selectedLevel });
+      const response = await axios.post('https://backend-dev-chess.vercel.app/signup', { name, email, level: selectedLevel });
       console.log('Signup response:', response.data);
       if (response.data.success) {
         localStorage.setItem('email',email);

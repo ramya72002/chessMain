@@ -28,7 +28,7 @@ const ChessPuzzle = () => {
     }
 
     try {
-      const response = await fetch('https://backend-chess-tau.vercel.app/updatepuzzlescore', {
+      const response = await fetch('https://backend-dev-chess.vercel.app/updatepuzzlescore', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

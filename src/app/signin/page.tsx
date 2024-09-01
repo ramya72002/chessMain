@@ -54,7 +54,7 @@ const SignIn = () => {
       console.log(`User Agent: ${navigator.userAgent}`);
       console.log(`Device Type: ${deviceType}`);
 
-      const loginResponse = await axios.post('https://backend-chess-tau.vercel.app/login', {
+      const loginResponse = await axios.post('https://backend-dev-chess.vercel.app/login', {
         email: emailToSignIn,
         device_name: deviceType // Send device type to the backend
       });
@@ -71,7 +71,7 @@ const SignIn = () => {
 
         localStorage.setItem('email', emailToSignIn);
 
-        const userDetailsResponse = await axios.get('https://backend-chess-tau.vercel.app/getuserdetails', {
+        const userDetailsResponse = await axios.get('https://backend-dev-chess.vercel.app/getuserdetails', {
           params: { email: emailToSignIn }
         });
         console.log('UserDetails response:', userDetailsResponse.data);
@@ -100,7 +100,7 @@ const SignIn = () => {
   const verifyOtp = async () => {
     setLoading(true); // Start loading
     try {
-      const verifyOtpResponse = await axios.post('https://backend-chess-tau.vercel.app/verify_otp', { email, otp });
+      const verifyOtpResponse = await axios.post('https://backend-dev-chess.vercel.app/verify_otp', { email, otp });
       console.log('Verify OTP response:', verifyOtpResponse.data);
 
       if (verifyOtpResponse.data.success) {

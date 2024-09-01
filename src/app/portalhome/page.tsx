@@ -28,7 +28,7 @@ const Hero = () => {
 
         try {
           const response = await axios.get(
-            `https://backend-chess-tau.vercel.app/getuserdetails?email=${storedUserDetails.email}`
+            `https://backend-dev-chess.vercel.app/getuserdetails?email=${storedUserDetails.email}`
           );
           setUserDetails(response.data.data);
         } catch (error) {
@@ -40,7 +40,7 @@ const Hero = () => {
     const fetchUpcomingActivities = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://backend-chess-tau.vercel.app/sessions');
+        const response = await axios.get('https://backend-dev-chess.vercel.app/sessions');
         setUpcomingActivities(response.data[0].upcoming_activities);
       } catch (error) {
         console.error('Error fetching Upcoming Activities:', error);

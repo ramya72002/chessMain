@@ -19,7 +19,7 @@ const Sidebar = () => {
     if (email) {
       try {
         // Make API call to delete the session_id field
-        await axios.post('https://backend-chess-tau.vercel.app/delete_session', { email });
+        await axios.post('https://backend-dev-chess.vercel.app/delete_session', { email });
   
         // Clear local storage
         localStorage.clear();
@@ -59,7 +59,7 @@ const Sidebar = () => {
         try {
           if(email){
            
-          const response = await axios.get(`https://backend-chess-tau.vercel.app/getuserdetails?email=${email}`);
+          const response = await axios.get(`https://backend-dev-chess.vercel.app/getuserdetails?email=${email}`);
           setUserDetails(response.data.data); // Assuming response.data.data contains user details
 
           if (response.data.data) {
@@ -100,7 +100,7 @@ const Sidebar = () => {
         };
   
         // Call API to update image in the database
-        const response = await axios.post('https://backend-chess-tau.vercel.app/imageupdate', data);
+        const response = await axios.post('https://backend-dev-chess.vercel.app/imageupdate', data);
         console.log('API Response:', response.data);
   
         if (response.data.success) {
