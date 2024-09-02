@@ -36,11 +36,12 @@ const MyAccount = () => {
       <header className="account-header">
         <h1>After School Program</h1>
       </header>
-
-      <section className="courses-section">
-        <div className="courses-info">
+      <div className="courses-info1">
           <h3>All Courses with Paths</h3>
         </div>
+
+      <section className="courses-section">
+        
 
         {Object.entries(coursePaths).map(([course, path], index) => (
           <div key={index} className={`course-card ${courseStyles[course]}`}>

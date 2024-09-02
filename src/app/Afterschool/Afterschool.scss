@@ -4,11 +4,11 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;  // Ensure the width covers the full page
-  height: 100vh; // Full viewport height to cover the entire screen
-  margin: 0; // Remove any default margin
+  width: 100%;
+  height: 100vh;
+  margin: 0;
   padding: 20px;
-  box-sizing: border-box; // Ensure padding does not affect the overall width
+  box-sizing: border-box;
 
   .account-header {
     text-align: center;
@@ -16,6 +16,7 @@
     border-radius: 5px;
     background: linear-gradient(180deg, #FF0075, #8C52FF);
     color: white;
+    margin-bottom: 20px;
 
     h1 {
       margin-bottom: 5px;
@@ -23,30 +24,33 @@
     }
   }
 
+  .courses-info1 {
+    margin-bottom: 20px;
+    text-align: center;
+
+    h3 {
+      color: #333333;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  }
+
   .courses-section {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 20px;
-
-    .courses-info {
-      margin-bottom: 20px;
-
-      h3 {
-        color: #333333;
-        font-size: 20px;
-        font-weight: bold;
-      }
-    }
 
     .course-card {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
+      justify-content: center;
       padding: 20px;
       background-color: #f9f9f9;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s;
+      height: 200px; /* Set a fixed height */
+      width: 100%; /* Ensure full width of the grid column */
 
       &:hover {
         background-color: #F3F0FF;
@@ -59,7 +63,6 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 10px;
 
           h4 {
             color: #4A4A4A;
@@ -88,41 +91,21 @@
 
 /* Specific Course Card Styles */
 .recently-used {
-  background: linear-gradient(to right, #f12711, #f5af19); /* Orange-red to yellow */
+  background: linear-gradient(to right, #f12711, #f5af19);
   color: white;
 }
 
 .shapes {
-  background: linear-gradient(to right, #4CA1AF, #C4E0E5); /* Light blue to white */
+  background: linear-gradient(to right, #4CA1AF, #C4E0E5);
   color: black;
 }
 
 .graphics {
-  background: linear-gradient(to right, #FF5F6D, #FFC371); /* Pink to light orange */
+  background: linear-gradient(to right, #FF5F6D, #FFC371);
   color: white;
 }
 
 .stickers {
-  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59); /* Blue to purple to pink */
-  color: white;
-}
-
-.photos {
-  background: linear-gradient(to right, #00c6ff, #0072ff); /* Light blue to dark blue */
-  color: white;
-}
-
-.videos {
-  background: linear-gradient(to right, #11998e, #38ef7d); /* Green gradients */
-  color: white;
-}
-
-.charts {
-  background: linear-gradient(to right, #bdc3c7, #2c3e50); /* Gray to dark gray */
-  color: white;
-}
-
-.tables {
-  background: linear-gradient(to right, #e65c00, #f9d423); /* Orange to yellow */
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
   color: white;
 }
