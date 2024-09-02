@@ -53,7 +53,8 @@ const Sidebar = () => {
 
         // Prepare data to send to the backend
      
-        const  email= storedUserDetails.email
+        const email = storedUserDetails?.email ?? 'default@example.com'; // Use a default value if email is null or undefined
+
        
 
         try {
