@@ -4,25 +4,18 @@ import axios from 'axios';
 import './portal.scss';
 import { UserDetails, UpcomingActivity } from '../types/types';
 import Loading from '../Loading';
-import { useRouter } from 'next/navigation';
+import withAuth from '../withAuth';
 
 const Hero = () => {
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
   const [upcomingActivities, setUpcomingActivities] = useState<UpcomingActivity[]>([]);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (typeof window !== 'undefined') {
         const userDetailsString = localStorage.getItem('userDetails');
         const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-
-        if (!storedUserDetails || !storedUserDetails.email) {
-          // Redirect to 404 page if no userDetails are found
-          router.replace('/404');
-          return;
-        }
 
         setUserDetails(storedUserDetails);
 
@@ -51,7 +44,7 @@ const Hero = () => {
 
     fetchUserDetails();
     fetchUpcomingActivities();
-  }, [router]);
+  }, []);
 
   const getActiveClass = (level: string) => {
     if (!userDetails) return '';
@@ -244,4 +237,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default withAuth(Hero);
