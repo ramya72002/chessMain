@@ -4,6 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import './m3.scss';
 import axios from 'axios';
+import withAuth from '@/app/withAuth';
 
 const M3: React.FC = () => {
     const router = useRouter();
@@ -134,4 +135,4 @@ const M3: React.FC = () => {
   );
 };
 
-export default M3;
+export default withAuth(M3);
