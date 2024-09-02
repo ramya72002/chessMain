@@ -1,6 +1,14 @@
 .account-page {
   font-family: Arial, sans-serif;
+  background-image: url('/images/im3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;  // Ensure the width covers the full page
+  height: 120vh; // Full viewport height to cover the entire screen
+  margin: 0; // Remove any default margin
   padding: 20px;
+  box-sizing: border-box; // Ensure padding does not affect the overall width
 
   .account-header {
     text-align: center;
@@ -19,10 +27,6 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
-    background-image: url('/images/im3.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     padding: 20px;
 
     

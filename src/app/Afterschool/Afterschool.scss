@@ -1,12 +1,14 @@
 .account-page {
   font-family: Arial, sans-serif;
-  padding: 20px;
   background-image: url('/images/im3.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  max-width: 100%;
+  width: 100%;  // Ensure the width covers the full page
+  height: 100vh; // Full viewport height to cover the entire screen
+  margin: 0; // Remove any default margin
   padding: 20px;
+  box-sizing: border-box; // Ensure padding does not affect the overall width
 
   .account-header {
     text-align: center;
