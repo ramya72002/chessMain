@@ -5,13 +5,11 @@ import { useRouter } from 'next/navigation';
 import './m1.scss';
 import axios from 'axios';
 
-
 const M1: React.FC = () => {
     const router = useRouter();
 
     const handleNextClick = async () => {
       const storedEmail = localStorage.getItem('email');
-      
       try {
         // Sample data to send in the POST request
         const requestData = {

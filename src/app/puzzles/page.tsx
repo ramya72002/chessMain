@@ -2,6 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import './Puzzles.scss';
+import withAuth from '../withAuth';
 
 const Puzzles = () => {
   const router = useRouter();
@@ -36,4 +37,4 @@ const Puzzles = () => {
   );
 };
 
-export default Puzzles;
+export default withAuth(Puzzles);

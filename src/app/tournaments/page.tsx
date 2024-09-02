@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import "./Tournaments.scss";
 import { Tournament } from "../types/types";
+import withAuth from '../withAuth';
 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -107,4 +108,4 @@ const AdminTournaments: React.FC = () => {
   );
 };
 
-export default AdminTournaments;
+export default withAuth(AdminTournaments);

@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Learnclass.scss';
 import { Session } from '../types/types';
 import Loading from '../Loading';
+import withAuth from '../withAuth';
 
 const Learnclass = () => {
   const [sessions, setSessions] = useState<Session[]>([]);  const [loading, setLoading] = useState(true); // State for loading indicator
@@ -90,4 +91,4 @@ const [messages, setMessages] = useState<{ [key: string]: string }>({});
   );
 };
 
-export default Learnclass;
+export default withAuth(Learnclass);

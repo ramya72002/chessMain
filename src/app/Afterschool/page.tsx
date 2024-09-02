@@ -2,6 +2,7 @@
 import React from 'react';
 import './Afterschool.scss';
 import { useRouter } from 'next/navigation';
+import withAuth from '../withAuth';
 
 // Define the course paths
 const coursePaths: { [key: string]: string } = {
@@ -64,4 +65,4 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default withAuth(MyAccount);

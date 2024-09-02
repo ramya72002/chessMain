@@ -2,6 +2,7 @@
 
 import React from 'react';
 import './inprogress.scss';
+import withAuth from '../withAuth';
 
 const InProgress: React.FC = () => {
   return (
@@ -106,4 +107,4 @@ const InProgress: React.FC = () => {
   );
 };
 
-export default InProgress;
+export default withAuth(InProgress);

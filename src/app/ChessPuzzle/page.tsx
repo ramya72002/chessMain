@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import './ChessPuzzle.scss';
+import withAuth from '../withAuth';
 
 const Chessboard = dynamic(() => import('chessboardjsx'), { ssr: false });
 
@@ -389,4 +390,4 @@ const ChessPuzzle = () => {
   return <div className="chess-puzzle">{puzzleComponent}</div>;
 };
 
-export default ChessPuzzle;
+export default withAuth(ChessPuzzle);
