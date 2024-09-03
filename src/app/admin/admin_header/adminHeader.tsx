@@ -1,8 +1,16 @@
-"use client"
+"use client";
 import React from 'react';
 import './AdminHeader.scss'; // Import SCSS directly
 
-const AdminHeader= () => {
+const AdminHeader = () => {
+
+    const handleLogout = () => {
+        // Clear local storage
+        localStorage.clear();
+        // Redirect to login page
+        window.location.href = "/adminsignin";
+    };
+
     return (
         <header className="adminHeader">
             <nav>
@@ -31,6 +39,11 @@ const AdminHeader= () => {
                         <a href="/admin/StudentDetails">
                             <p>Student Details</p>
                         </a>
+                    </li>
+                    <li className="menuItem1">
+                        <button className="logoutButton" onClick={handleLogout}>
+                            <p>Log Out</p>
+                        </button>
                     </li>
                 </ul>
             </nav>

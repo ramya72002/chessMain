@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './upcoming_activities.scss'; // Import the SCSS module directly
 import { UpcomingActivity } from '../../types/types';
+import withadminAuth from '@/app/withadminAuth';
+
 
 const AdminUpcomingActivities = () => {
   // State for upcoming activities
@@ -132,4 +134,4 @@ const AdminUpcomingActivities = () => {
   );
 };
 
-export default AdminUpcomingActivities;
+export default withadminAuth(AdminUpcomingActivities);

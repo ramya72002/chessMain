@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Session } from '../types/types';
 import { FormData } from '../types/types';
+import withadminAuth from '@/app/withadminAuth';
 
 
 const Admin: React.FC = () => {
@@ -255,4 +256,4 @@ const Admin: React.FC = () => {
   );
 };
 
-export default Admin;
+export default withadminAuth(Admin);

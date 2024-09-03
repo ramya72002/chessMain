@@ -17,6 +17,7 @@
   
     .menuItem {
       margin: 0 1rem;
+      
   
       a {
         text-decoration: none;
@@ -32,11 +33,30 @@
   
         p {
           margin: 0;
+          font-size: 23px;
         }
       }
     }
   }
+  .logoutButton{
+
+        text-decoration: none;
+        border: 1px solid black;
+        padding: 5px;
+        margin-left: 50px;
+        background-color: rgb(248, 55, 55);
+        border-radius: 8px;
+        color: #ffffff;
+        font-size: 1.1rem;
+        transition: color 0.3s;
   
+        &:hover,
+        &:focus {
+          background-color: rgb(255, 0, 0);
+          color: #ffffff;
+          outline: none;
+        }
+  }
   .adminHeader {
     background-color: #e57440;
     padding: 1rem;

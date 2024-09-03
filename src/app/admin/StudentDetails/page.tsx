@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaTrash } from 'react-icons/fa';
 import './StudentDetails.scss';
+import withadminAuth from '@/app/withadminAuth';
+
 
 interface Student {
   name: string;
@@ -156,4 +158,4 @@ function StudentDetails() {
   );
 }
 
-export default StudentDetails;
+export default withadminAuth(StudentDetails);

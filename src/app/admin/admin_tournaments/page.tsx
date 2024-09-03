@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './admin_tournaments.scss';
 import { Tournament } from '../../types/types';
+import withadminAuth from '@/app/withadminAuth';
+
 
 const AdminTournaments: React.FC = () => {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
@@ -183,4 +185,4 @@ const AdminTournaments: React.FC = () => {
   );
 };
 
-export default AdminTournaments;
+export default withadminAuth(AdminTournaments);
