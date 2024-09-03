@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { ImageData } from '../../types/types';
 import Loading from '@/app/Loading';
+import withAuth from '@/app/withAuth';
 
 const StartArena = () => {
   const [title, setTitle] = useState<string>('');
@@ -178,4 +179,4 @@ const StartArena = () => {
   );
 };
 
-export default StartArena;
+export default withAuth(StartArena);
