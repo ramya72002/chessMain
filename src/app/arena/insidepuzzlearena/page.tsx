@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import axios from 'axios';
 import './insidepuzzlearena.scss';
+import withAuth from '@/app/withAuth';
 
 const PuzzlePageContent = () => {
   const router = useRouter();
@@ -346,4 +347,4 @@ const InsidePuzzleArena = () => (
   </Suspense>
 );
 
-export default InsidePuzzleArena;
+export default withAuth(InsidePuzzleArena);

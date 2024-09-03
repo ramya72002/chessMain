@@ -6,6 +6,7 @@ import axios from 'axios';
 import { UserDetails } from '../../types/types';
 import Arenaresult from '@/app/Arenaresult';
 import Loading from '@/app/Loading';
+import withAuth from '@/app/withAuth';
 
 // Define types for file_ids and puzzles
 type FileIdDetail = {
@@ -487,4 +488,4 @@ const PuzzleArena = () => {
   );
 };
 
-export default PuzzleArena;
+export default withAuth(PuzzleArena);
