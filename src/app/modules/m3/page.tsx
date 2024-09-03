@@ -240,7 +240,7 @@ const M3: React.FC = () => {
       </section> 
       <div className="theme-practice">
       
-      <p>Theme Practice</p>
+      <h1>Theme Practice</h1>
       {puzzlesWithStatus.map((puzzle, index) => (
         <div key={index} className="practice-item">
           <p>{puzzle.category}: {puzzle.title}</p>
