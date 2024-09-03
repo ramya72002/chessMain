@@ -1,14 +1,151 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import './m1.scss';
 import axios from 'axios';
+import './m1.scss';
+import { UserDetails } from '../../types/types';
 import withAuth from '@/app/withAuth';
 
+interface Puzzle {
+  category: string;
+  title: string;
+  dateAndtime: string;
+  total_puz_count: number;
+  statusFlag?: string;
+  scoreSum?: number; // Optional property, can be number or undefined
+}
 const M1: React.FC = () => {
-    const router = useRouter();
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<{ [key: number]: boolean }>({});
+  const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [puzzlesWithStatus, setPuzzlesWithStatus] = useState<Puzzle[]>([]);
+  
+  const puzzles = [
+    { title: "dsdfgh", level: "Pawn", category: "Middlegame", dateAndtime: "2024-08-02T13:35", total_puz_count: 1, statusFlag: "Not Started" },
+    { title: "hih", level: "Pawn", category: "Endgame", dateAndtime: "2024-09-19T12:42", total_puz_count: 1, statusFlag: "Not Started" }
+  ];
 
+  const levelMapping: Record<string, string> = {
+    level1: "Pawn",
+    level2: "Knight",
+    level3: "Bishop",
+    level4: "Rook",
+    level5: "Queen",
+    level6: "King",
+  };
+
+  const handleButtonClick = async (
+    title: string,
+    category: string,
+    date_time: string,
+    puzzle_no: number,
+    score: string,
+    index: number
+  ) => {
+    setLoading((prevLoading) => ({ ...prevLoading, [index]: true }));
+    const userDetailsString = localStorage.getItem('userDetails');
+    const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+    const email = storedUserDetails?.email;
+
+    if (email) {
+      try {
+        const createArenaApiUrl = 'https://backend-dev-chess.vercel.app/create_Arena_user';
+        const imagesApiUrl = `https://backend-dev-chess.vercel.app/images/title?level=${encodeURIComponent(levelMapping[storedUserDetails.level])}&category=${encodeURIComponent(category)}&title=${encodeURIComponent(title)}`;
+
+        const createArenaResponse = await axios.post(createArenaApiUrl, { email, category, title, puzzle_no });
+
+        if (createArenaResponse.data.success) {
+          const imagesResponse = await axios.get(imagesApiUrl);
+          router.push(`/arena/startArena?title=${encodeURIComponent(title)}&level=${encodeURIComponent(levelMapping[storedUserDetails.level])}&category=${encodeURIComponent(category)}&date_time=${encodeURIComponent(date_time)}&score=${encodeURIComponent(score)}`);
+        } else {
+          setError('Failed to create or update PuzzleArena. Please try again later.');
+        }
+      } catch (error) {
+        console.error('Error during API calls:', error);
+        setError('An error occurred while processing your request. Please try again later.');
+      } finally {
+        setLoading((prevLoading) => ({ ...prevLoading, [index]: false }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (typeof window !== 'undefined') {
+        const userDetailsString = localStorage.getItem('userDetails');
+        const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
+  
+        if (storedUserDetails) {
+          setUserDetails(storedUserDetails);
+  
+          const updatedPuzzlesSet = new Set<string>();
+  
+          for (const item of puzzles) {
+            try {
+              const arenaUserResponse = await axios.get('https://backend-dev-chess.vercel.app/get_Arena_user', {
+                params: {
+                  email: storedUserDetails.email,
+                  category: item.category,
+                  title: item.title,
+                  date_time: item.dateAndtime,
+                  file_ids: {},
+                },
+              });
+  
+              if (!arenaUserResponse.data.success) {
+                // API returned success as false, handle it here
+                const updatedPuzzle: Puzzle = {
+                  ...item,
+                  statusFlag: 'Not started', // Example status for failed API
+                  scoreSum: 0, // Default to 0 if fetching fails
+                };
+                updatedPuzzlesSet.add(JSON.stringify(updatedPuzzle));
+              } else {
+                // API returned success as true
+                const puzzleArena = arenaUserResponse.data.puzzleArena;
+                const scoreSum = Object.values(puzzleArena).reduce((sum, arenaPuzzle: any) => {
+                  const score = typeof arenaPuzzle.score === 'number' ? arenaPuzzle.score : 0;
+                  return sum + score;
+                }, 0);
+  
+                let statusFlag = 'Not Started';
+                if (Object.values(puzzleArena).every((arenaPuzzle: any) => arenaPuzzle.option_guessed !== null)) {
+                  statusFlag = 'Completed';
+                } else if (Object.values(puzzleArena).some((arenaPuzzle: any) => arenaPuzzle.option_guessed !== null && arenaPuzzle.started)) {
+                  statusFlag = 'In Progress';
+                } else if (Object.values(puzzleArena).some((arenaPuzzle: any) => arenaPuzzle.option_guessed !== null)) {
+                  statusFlag = 'Started';
+                }
+  
+                const updatedPuzzle: Puzzle = {
+                  ...item,
+                  statusFlag,
+                  scoreSum: scoreSum as number,
+                };
+  
+                updatedPuzzlesSet.add(JSON.stringify(updatedPuzzle));
+              }
+            } catch (error) {
+              console.error(`Error fetching data for puzzle ${item.title}:`, error);
+              const updatedPuzzle: Puzzle = {
+                ...item,
+                statusFlag: 'Error Fetching Data', // Example status for error
+                scoreSum: 0,
+              };
+              updatedPuzzlesSet.add(JSON.stringify(updatedPuzzle));
+            }
+          }
+  
+          setPuzzlesWithStatus(Array.from(updatedPuzzlesSet).map((item: string) => JSON.parse(item) as Puzzle));
+        }
+      }
+    };
+  
+    fetchUserDetails();
+  }, []);
+  
     const handleNextClick = async () => {
       const storedEmail = localStorage.getItem('email');
       try {
@@ -100,6 +237,33 @@ const M1: React.FC = () => {
           <strong>Castling:</strong> Castling is a unique move involving the king and a rook. To castle, several conditions must be met: neither the king nor the rook involved can have moved previously; the squares between the king and the rook must be unoccupied; the king cannot be in check, nor can it move through or end up on a square that is under attack.
         </p>
       </section> 
+      <div className="theme-practice">
+      
+      <h1>Theme Practice</h1>
+      {puzzlesWithStatus.map((puzzle, index) => (
+        <div key={index} className="practice-item">
+          <p>{puzzle.category}: {puzzle.title}</p>
+          <p>Date&Time:{puzzle.dateAndtime} </p>
+          <p>{puzzle?.statusFlag}</p>
+
+          <p>Total Score: {puzzle.scoreSum}/{puzzle.total_puz_count} </p>
+          <p className='loading-page'>
+            <button onClick={() =>
+                          handleButtonClick(
+                            puzzle.title,
+                            puzzle.category,
+                            puzzle.dateAndtime,
+                            puzzle.total_puz_count,
+                            `${0}/${puzzle.total_puz_count}`,
+                            index
+                          )
+                          } className='start-button'>
+              View
+            </button>
+          </p>
+        </div>
+      ))}
+    </div>
 
       {/* New Sections */}
       <section className="additional-sections">

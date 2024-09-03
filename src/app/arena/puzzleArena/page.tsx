@@ -478,8 +478,6 @@ const PuzzleArena = () => {
     <p>No Practice Puzzles Available</p>
   )}
 </div>
-
-
           {showArenaResult && <Arenaresult isOpen={showArenaResult} onClose={() => setShowArenaResult(false)} />}
  
         </div>
