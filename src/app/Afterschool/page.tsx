@@ -23,15 +23,15 @@ const coursePaths: CoursePaths = {
 
 // Define unique images for each course
 const courseImages: CoursePaths = {
-  'Basic Checkmates - 2': '/images/chess-openings.png',
-  'Basics of Chess': '/images/Tactics.png',
-  'Good Bishop Bad Bishop': '/images/Tactics2.png',
-  'Basic Checkmates': '/images/Tactics3.png',
-  'Basic Checkmates - 3': '/images/strategy.png',
-  'Basics of Chess 1': '/images/checkmates.png',
-  'Basic Checkmates - 4': '/images/checkmate2.png',
-  'Basics of Chess 2': '/images/game.png',
-  'Good Bishop Bad Bishop 1': '/images/chesss.png'
+  'Basic Checkmates - 2': '/images/chess-openings(1)(1).png',
+  'Basics of Chess': '/images/tactics(1)(1).png',
+  'Good Bishop Bad Bishop': '/images/Tactics2(1)(1).png',
+  'Basic Checkmates': '/images/Tactics3(1)(1).png',
+  'Basic Checkmates - 3': '/images/strategy(1)(1).png',
+  'Basics of Chess 1': '/images/checkmates(1)(1).png',
+  'Basic Checkmates - 4': '/images/checkmate2(1)(1).png',
+  'Basics of Chess 2': '/images/game(1)(1).png',
+  'Good Bishop Bad Bishop 1': '/images/chesss(1)(1).png'
 };
 
 const courseStyles: CoursePaths = {
