@@ -16,7 +16,7 @@ const Hero = () => {
       if (typeof window !== 'undefined') {
         const userDetailsString = localStorage.getItem('userDetails');
         const storedUserDetails = userDetailsString ? JSON.parse(userDetailsString) : null;
-
+        console.log("local",storedUserDetails)
         setUserDetails(storedUserDetails);
 
         try {
