@@ -51,19 +51,16 @@ const SignIn = () => {
     setLoading(true); // Start loading
     try {
       const deviceType = getDeviceType(); // Get device type
-      console.log(`User Agent: ${navigator.userAgent}`);
-      console.log(`Device Type: ${deviceType}`);
 
       const loginResponse = await axios.post('https://backend-dev-chess.vercel.app/login', {
         email: emailToSignIn,
         device_name: deviceType // Send device type to the backend
       });
-      console.log('SignIn response:', loginResponse.data);
 
       if (loginResponse.data.success) {
         if (loginResponse.data.device) {
-          // If 'device' is true, show a message and do nothing
-          setPopupMessage(`Please log out from your previous device (${loginResponse.data.device_name}) to sign in to this device.`);
+          // Show the Log Out from Other Device button instead of error message
+          setPopupMessage(`You are already logged in on ${loginResponse.data.device_name}. Please log out to continue.`);
           setShowPopup(true);
           return; // Stop further processing
         }
@@ -74,26 +71,51 @@ const SignIn = () => {
         const userDetailsResponse = await axios.get('https://backend-dev-chess.vercel.app/getuserdetails', {
           params: { email: emailToSignIn }
         });
-        console.log('UserDetails response:', userDetailsResponse.data);
 
         localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.data.data));
 
         if (loginResponse.data.otp_required) {
-          // If OTP is required, show the OTP input
           setShowOtpInput(true);
-          localStorage.setItem('email', emailToSignIn); // Save email in local storage
-          localStorage.setItem('signin', "true"); // Save sign-in status in local storage
+          localStorage.setItem('email', emailToSignIn);
+          localStorage.setItem('signin', "true");
         }
       } else {
+        // If the email is not registered, show a different message or action
         setPopupMessage('Email is not registered');
         setShowPopup(true);
       }
     } catch (error) {
       console.error('Error during SignIn:', error);
-      setPopupMessage('An error occurred during sign-in. Please try again later.');
+
+      // Show the Log Out from Other Device button on error
+      setPopupMessage('An error occurred during sign-in. Please log out from the other device to continue.');
       setShowPopup(true);
     } finally {
       setLoading(false); // End loading
+    }
+  };
+
+  // Function to handle logout from the previous device
+  const handleLogoutFromPreviousDevice = async () => {
+    if (email) {
+      try {
+        // Make API call to delete the session
+        const response = await axios.post('https://backend-dev-chess.vercel.app/delete_session', { email });
+
+        if (response.data.success) {
+          // Automatically click the sign-in button
+          if (signInButtonRef.current) {
+            signInButtonRef.current.click();
+          }
+        } else {
+          setPopupMessage('An error occurred while logging out. Please try again.');
+          setShowPopup(true);
+        }
+      } catch (error) {
+        console.error('Error logging out from previous device:', error);
+        setPopupMessage('An error occurred while logging out. Please try again.');
+        setShowPopup(true);
+      }
     }
   };
 
@@ -172,18 +194,19 @@ const SignIn = () => {
               className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
               onClick={showOtpInput ? verifyOtp : handleManualSignIn}
               style={{ borderRadius: '10px' }}
-              ref={signInButtonRef} // Attach the ref to the button
+              ref={signInButtonRef} 
             >
               {showOtpInput ? 'Verify OTP' : 'Sign In'}
             </button>
             {showPopup && (
-              <div className="popup-overlay">
-                <div className="popup-content">
-                  <p className="text-center text-black text-lg mb-4">{popupMessage}</p>
-                  <button className="popup-button" onClick={() => router.push('/signup')}>Go to Signup</button>
-                </div>
-              </div>
+                  <button
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
+                    onClick={handleLogoutFromPreviousDevice}
+                  >
+                    Log Out from Other Device
+                  </button>
             )}
+
             <div className="text-center mt-4">
               <p className="text-gray-700">Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a></p>
             </div>
