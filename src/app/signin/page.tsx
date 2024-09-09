@@ -60,7 +60,7 @@ const SignIn = () => {
       if (loginResponse.data.success) {
         if (loginResponse.data.device) {
           // Show the Log Out from Other Device button instead of error message
-          setPopupMessage(`You are already logged in on ${loginResponse.data.device_name}. Please log out to continue.`);
+          setPopupMessage(`Click here to log out of the previous device and continue.`);
           setShowPopup(true);
           return; // Stop further processing
         }
