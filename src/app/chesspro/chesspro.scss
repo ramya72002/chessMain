@@ -1,0 +1,138 @@
+.registration-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #000;
+    font-family: 'Arial', sans-serif;
+  
+    .registration-header {
+      padding: 0;
+      margin: 0;
+  
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        
+        /* Set flex direction to row to keep image and title side by side */
+        flex-direction: row;
+  
+        img {
+          display: block; /* Prevent inline element gaps */
+          width: 250px;
+          margin: 0;
+          padding: 0;
+          object-fit: contain;
+          vertical-align: middle; /* Removes inline space */
+          border: 1px solid red; /* Visual border for testing */
+        }
+  
+        .logo {
+          margin-right: 15px;
+        }
+  
+        .school-title {
+          margin-left: 15px; /* Space between logo and title */
+          font-size: 2rem;
+          line-height: 1.2;
+          white-space: nowrap; /* Prevent wrapping of text */
+          border: 1px solid red; /* Visual border for testing */
+        }
+      }
+  
+      h2 {
+        color: #3A58BD;
+        font-size: 18px;
+        margin: 5px 0;
+      }
+    }
+  
+    .program-description {
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  
+    .training-info {
+      background-color: #F05727;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+  
+      p {
+        margin: 5px 0;
+      }
+  
+      strong {
+        font-size: 16px;
+      }
+    }
+  
+    .registration-form {
+      .input-group {
+        margin-bottom: 15px;
+  
+        label {
+          font-size: 14px;
+          font-weight: bold;
+          display: block;
+          margin-bottom: 5px;
+        }
+  
+        input,
+        select {
+          width: 100%;
+          padding: 10px;
+          font-size: 14px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+  
+        .input-row {
+          display: flex;
+          gap: 10px;
+  
+          input {
+            flex: 1;
+          }
+        }
+      }
+  
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+  
+        button {
+          padding: 10px 20px;
+          font-size: 14px;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+  
+          &.payment-button {
+            background-color: #F05727;
+            color: white;
+          }
+  
+          &.assistance-button {
+            background-color: #FFCC00;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+  
+  /* Global reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
