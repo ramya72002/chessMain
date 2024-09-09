@@ -200,10 +200,10 @@ const SignIn = () => {
             </button>
             {showPopup && (
                   <button
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-full"
+                    className="bg-orange-500 text-white font-bold py-2 px-4 rounded w-full"
                     onClick={handleLogoutFromPreviousDevice}
                   >
-                    Log Out from Other Device
+                    Click here to log out of the previous device and continue.
                   </button>
             )}
 
