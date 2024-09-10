@@ -10,19 +10,16 @@ import Loading from '../Loading';
 const getDeviceType = (): string => {
   const userAgent = navigator.userAgent;
 
-  // Check for mobile devices
   if (/android/i.test(userAgent) ||
       /iPhone|iPod/.test(userAgent) ||
       /Windows Phone/i.test(userAgent)) {
     return 'Mobile';
   }
 
-  // Check for tablets
   if (/iPad/i.test(userAgent)) {
     return 'Tablet';
   }
 
-  // Default to desktop
   return 'Desktop';
 };
 
@@ -30,10 +27,9 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState(''); // State for OTP
   const [showOtpInput, setShowOtpInput] = useState(false); // State to show OTP input
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState(''); // State for popup message
   const [loading, setLoading] = useState(false); // Add loading state
   const [emailError, setEmailError] = useState(''); // Add email error state
+  const [messageText, setMessageText] = useState('Only one concurrent login supported at given time.'); // Default message
   const router = useRouter();
   const signInButtonRef = useRef<HTMLButtonElement>(null); // Ref for the sign-in button
 
@@ -42,8 +38,8 @@ const SignIn = () => {
     return emailRegex.test(email);
   };
 
-  const signIn = async (emailToSignIn: string, skipValidation = false) => {
-    if (!skipValidation && !validateEmail(emailToSignIn)) {
+  const signIn = async (emailToSignIn: string) => {
+    if (!validateEmail(emailToSignIn)) {
       setEmailError('Please enter a valid email address');
       return;
     }
@@ -59,13 +55,11 @@ const SignIn = () => {
 
       if (loginResponse.data.success) {
         if (loginResponse.data.device) {
-          // Show the Log Out from Other Device button instead of error message
-          setPopupMessage(`Click here to log out of the previous device and continue.`);
-          setShowPopup(true);
+          // Automatically handle logout from previous device
+          handleLogoutFromPreviousDevice();
           return; // Stop further processing
         }
-        setShowPopup(false);
-
+        setShowOtpInput(loginResponse.data.otp_required); // Show OTP input if required
         localStorage.setItem('email', emailToSignIn);
 
         const userDetailsResponse = await axios.get('https://backend-dev-chess.vercel.app/getuserdetails', {
@@ -74,22 +68,16 @@ const SignIn = () => {
 
         localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.data.data));
 
-        if (loginResponse.data.otp_required) {
-          setShowOtpInput(true);
-          localStorage.setItem('email', emailToSignIn);
+        if (!loginResponse.data.otp_required) {
           localStorage.setItem('signin', "true");
+          router.push('/portalhome');
         }
       } else {
-        // If the email is not registered, show a different message or action
-        setPopupMessage('Email is not registered');
-        setShowPopup(true);
+        setMessageText('Email is not registered');
       }
     } catch (error) {
       console.error('Error during SignIn:', error);
-
-      // Show the Log Out from Other Device button on error
-      setPopupMessage('An error occurred during sign-in. Please log out from the other device to continue.');
-      setShowPopup(true);
+      setMessageText('An error occurred during sign-in. Please try again.');
     } finally {
       setLoading(false); // End loading
     }
@@ -103,18 +91,16 @@ const SignIn = () => {
         const response = await axios.post('https://backend-dev-chess.vercel.app/delete_session', { email });
 
         if (response.data.success) {
-          // Automatically click the sign-in button
+          // Automatically click the sign-in button to retry the sign-in process
           if (signInButtonRef.current) {
             signInButtonRef.current.click();
           }
         } else {
-          setPopupMessage('An error occurred while logging out. Please try again.');
-          setShowPopup(true);
+          setMessageText('An error occurred while logging out. Please try again.');
         }
       } catch (error) {
         console.error('Error logging out from previous device:', error);
-        setPopupMessage('An error occurred while logging out. Please try again.');
-        setShowPopup(true);
+        setMessageText('An error occurred while logging out. Please try again.');
       }
     }
   };
@@ -124,40 +110,33 @@ const SignIn = () => {
     try {
       const verifyOtpResponse = await axios.post('https://backend-dev-chess.vercel.app/verify_otp', { email, otp });
       console.log('Verify OTP response:', verifyOtpResponse.data);
-
+  
       if (verifyOtpResponse.data.success) {
-        // Navigate to /portalhome on successful OTP verification
+        localStorage.setItem('signin', "true");
         router.push('/portalhome');
       } else {
-        alert('Invalid OTP. Please check and try again.'); // User-friendly error message
+        setMessageText('Invalid OTP. Please check and try again.');
       }
     } catch (error) {
       console.error('Error verifying OTP:', error);
-      alert('An error occurred while verifying OTP. Please try again later.');
+      setMessageText('An error occurred while verifying OTP. Please try again later.');
     } finally {
       setLoading(false); // End loading
     }
   };
+  
 
   useEffect(() => {
     const storedEmail = localStorage.getItem('email');
     const signinStatus = localStorage.getItem('signin');
     if (storedEmail) {
-      setEmailError('');
       setEmail(storedEmail); // Automatically fill the email input
-      setShowOtpInput(true);
-      if (signInButtonRef.current) {
-        signIn(storedEmail, true); // Call signIn with skipValidation set to true
-      }
     }
-    if (storedEmail && signinStatus) {
+    if (storedEmail && signinStatus === "true") {
+      console.log("emailllllll",localStorage)
       router.push('/portalhome');
     }
   }, []);
-
-  const handleManualSignIn = () => {
-    signIn(email);
-  };
 
   return (
     <div className="signup-background">
@@ -190,23 +169,16 @@ const SignIn = () => {
                 />
               </div>
             )}
+            
             <button
               className="signup-field bg-blue-500 text-white font-bold py-2 px-4 rounded w-full signin-box"
-              onClick={showOtpInput ? verifyOtp : handleManualSignIn}
+              onClick={() => showOtpInput ? verifyOtp() : signIn(email)}
               style={{ borderRadius: '10px' }}
-              ref={signInButtonRef} 
+              ref={signInButtonRef}
             >
               {showOtpInput ? 'Verify OTP' : 'Sign In'}
             </button>
-            {showPopup && (
-                  <button
-                  className="bg-orange-500 text-white font-bold py-2 px-4 rounded w-full hover:bg-[#0b701c]"
-                    onClick={handleLogoutFromPreviousDevice}
-                  >
-                    Click here to log out of the previous device and continue.
-                  </button>
-            )}
-
+            <p className="text-pink-500 mb-4 text-center">{messageText}</p>
             <div className="text-center mt-4">
               <p className="text-gray-700">Don't have an account? <a href="/signup" className="text-blue-500 hover:underline">Sign Up</a></p>
             </div>
