@@ -56,11 +56,9 @@ const MyAccount = () => {
   return (
     <div className="account-page">
       <header className="account-header">
-        <h1>After School Program</h1>
+        <h1 >Knight Learning Path</h1>
       </header>
-      <div className="courses-info1">
-        <h3>All Courses with Paths</h3>
-      </div>
+
 
       <section className="courses-section">
         {Object.entries(coursePaths).map(([course, path], index) => (
