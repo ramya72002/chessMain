@@ -14,20 +14,22 @@
   }
   
   .popup-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .popup-content p {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 1.5rem;
+    margin: 0;
   }
+  
+  .popup-content p.text-orange-500 {
+    color: #f97316;
+    cursor: pointer;
+  }
+  
+   
   
   button {
     background-color: #4e89e3;
@@ -191,4 +193,18 @@
     width: 350px;
     height: 350px;
   }
+  .text-red-500 {
+    color: #f56565;
+  }
   
+  .text-center {
+    text-align: center;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .text-black {
+    color: #000;
+  }
