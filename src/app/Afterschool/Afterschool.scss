@@ -13,6 +13,8 @@
 .account-header {
   text-align: center;
   padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
   background: linear-gradient(180deg, #FF0075, #8C52FF);
   color: white;
 }
@@ -21,7 +23,9 @@
   text-align: center;
 
   h3 {
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
     color: #333;
   }
 }
@@ -63,16 +67,18 @@
 
 .in-progress-button {
   position: absolute;
-  top: 64px;
-  right:12px;
-  padding: 3px 1px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  font-size: 13px;
+  top: 80px;
+  right:15px;
+  padding: 4px 6px;
+  background-color: #006653;
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(68, 68, 68);
+  border-radius: 25px;
   cursor: pointer;
 
   &:hover {
-    background-color: #2980b9;
+    background-color: #013b28;
+    color: white;
   }
 }
